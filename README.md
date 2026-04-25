@@ -1,0 +1,2 @@
+# HuquqAI
+Huquqiy AI yordamchisi
