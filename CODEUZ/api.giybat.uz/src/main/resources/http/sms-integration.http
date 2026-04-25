@@ -1,0 +1,25 @@
+### receive token for SMS
+POST https://notify.eskiz.uz/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sardorbek.uktamov.1@mail.ru",
+  "password": "EJyP6OtVcKyjfmdYm7R8CdSnXEnAhAxuxrJ0nYiH"
+}
+
+### get yser
+GET https://notify.eskiz.uz/api/auth/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzgwMzk5MTUsImlhdCI6MTczNTQ0NzkxNSwicm9sZSI6InRlc3QiLCJzaWduIjoiYTlmMDIyMTBlNjJkMTY5ZDgzZjY4ZjZlNmU0OTJiMjRjMzgzOThhYTMyMWFjM2I5YWJiNDM5YWVkODkyZjJkYiIsInN1YiI6IjkzNTEifQ.jk4V0aKQJ0WPn3umGn6mKOlcx7jFzh-vu8-LltTHis8
+
+### send SMS
+### receive token for SMS
+POST https://notify.eskiz.uz/api/message/sms/send
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzgwMzk5MTUsImlhdCI6MTczNTQ0NzkxNSwicm9sZSI6InRlc3QiLCJzaWduIjoiYTlmMDIyMTBlNjJkMTY5ZDgzZjY4ZjZlNmU0OTJiMjRjMzgzOThhYTMyMWFjM2I5YWJiNDM5YWVkODkyZjJkYiIsInN1YiI6IjkzNTEifQ.jk4V0aKQJ0WPn3umGn6mKOlcx7jFzh-vu8-LltTHis8
+
+{
+  "mobile_phone": "998911576777",
+  "message": "Bu Eskiz dan test",
+  "from": "4546"
+}

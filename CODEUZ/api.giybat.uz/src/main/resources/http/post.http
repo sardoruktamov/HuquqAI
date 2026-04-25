@@ -1,0 +1,81 @@
+### Post create
+POST localhost:8080/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NjkxNzEzMTQsImV4cCI6MTc2OTI1NzcxNH0.ch4Ig61uv3Nlb2hOYP-tI9THD7-1Z3X1OOCUfEIsUVDVBp6BuVrzviGXF5E5B9NASfh-m0CqBcFPygkegmRMgQ
+
+{
+  "title": "2-user-93 6777 yaratgan POST",
+  "content": "Test uchun user-93 6777 yaratgan POST sf sdfsd fsd fw ef wef sdf",
+  "photo": {
+    "id": "a1ed7732-bf0b-4fee-8f75-2e351d12dbc9.jpg"
+  }
+}
+
+### Post UPDATE
+PUT localhost:8080/posts/79b3217b-cb8a-4daf-9536-a85524b820f9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NjU3MzE0MDcsImV4cCI6MTc2NTgxNzgwN30.5W6mGzRNYhwet0wYvYUgFraifqlIY4no5J4uYfWRbZYoFNlU9CyJYefEA50IRmnHFOne_i_2Kf43zMK8eBCpZw
+
+{
+  "title": "Toshkentda retsepsiz dori sotish to‘xtadi. Dorixonalarda vaziyat qanday?",
+  "content": "Kun.uz bilan suhbatda bo‘lgan sotuvchilardan birining bildirishicha, mijozlarning juda kamchiligi retsept bilan kelishyapti, aksariyati yangilikdan bexabar. Ammo “apteka”chilar ancha avval ogohlantirilgani, tizimga moslangani aytilmoqda.DMED [tibbiy axborot tizimi]ni har bittamizga tushuntirib, kompyuterdan ko‘rsatib, o‘rgatib ketishdi. Asosan faqat DMED retsept bilan beriladi deb aytishdi. Chet elda shunaqa-ku, o‘sha tizim bizga kirib kelgan. Bir tomondan yaxshi, lekin og‘ir kasallar bo‘lsa, birdaniga yosh bolalilar bor, “bering tez”, deb aytyapti, lekin [retsepti] oddiy qog‘ozda. O‘shanga ham berishimizga haqqimiz yo‘q ekan.",
+  "photo": {
+    "id": "216c6d89-a229-4b77-b774-ef968852d127.jpg"
+  }
+}
+
+### get Posts in Admin Profile filter by name, title
+POST http://localhost:8080/posts/admin-post-list/filter
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5ODQ5ODAsImV4cCI6MTc2OTA3MTM4MH0.PLbQnZoNaG0o-gCF5q4HPw9zyY7qC-SEFydi4BAbO6YYEgLSbg7Fjtk_RHaK1p1mpToDYoSobcObFoq3H3b6ow
+
+{
+  "postQuery": null,
+  "profileQuery": "6777"
+}
+
+### Profile Post List
+GET localhost:8080/posts/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MDU4NDY4NjYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMTIyIiwiaWF0IjoxNzY1NzI4NTEwLCJleHAiOjE3NjU4MTQ5MTB9.UL4sVWqcbArXJkwdcxpsUHpVtn6oMHoc9oIye7IyHc8ObOldtNmaEXyv6cmDKVl6iTFoHRS5mopDW5ZMc1uiEw
+
+### Profile Post by ID
+GET localhost:8080/api/v1/posts/public/79b3217b-cb8a-4daf-9536-a85524b820f9
+Content-Type: application/json
+
+
+### Filter Post
+POST localhost:8080/api/v1/posts/public/filter?page=1&size=3
+Content-Type: application/json
+
+{
+  "query": null,
+  "exceptId": null
+}
+
+### Get simipar Post List
+POST localhost:8080/api/v1/posts/public/similar
+Content-Type: application/json
+
+{
+  "exceptId": "79b3217b-cb8a-4daf-9536-a85524b820f9"
+}
+
+### Login -ADMIN
+POST localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+### Login -USER
+POST localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "998930766777",
+  "password": "12345"
+}

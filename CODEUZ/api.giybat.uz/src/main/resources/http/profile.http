@@ -1,0 +1,87 @@
+### Profile detail update
+PUT localhost:8080/profile/detail
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjEyMCIsImlhdCI6MTczNjA2MTY2MywiZXhwIjoxNzM2MTQ4MDYzfQ.qbS1_1KSer81vkRMJPtIuz0wgNCGEMWcfqrAJe-f84D7y9j8FdFYtoQde4ptAmCsTkBPtGTHp2TxUYK4ty1m7Q
+
+{
+  "name": "O'ktamov S"
+}
+
+### get Users by Profile filter name
+POST http://localhost:8080/profile/filter?page=1&size=6
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5ODQ5ODAsImV4cCI6MTc2OTA3MTM4MH0.PLbQnZoNaG0o-gCF5q4HPw9zyY7qC-SEFydi4BAbO6YYEgLSbg7Fjtk_RHaK1p1mpToDYoSobcObFoq3H3b6ow
+
+{
+  "query": ""
+}
+
+
+### Profile Delete
+DELETE http://localhost:8080/profile/122
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5MDA2NjAsImV4cCI6MTc2ODk4NzA2MH0.UFAIokRwSPZMdnQRSO3MXfA4HbGbjyBJmvqrEg-otx2hyTCFtQTrYURwXd_E3hX9IFJleG2myzax0VHMyVc34w
+
+
+### Profile update status
+PUT http://localhost:8080/profile/status/122
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5MDA2NjAsImV4cCI6MTc2ODk4NzA2MH0.UFAIokRwSPZMdnQRSO3MXfA4HbGbjyBJmvqrEg-otx2hyTCFtQTrYURwXd_E3hX9IFJleG2myzax0VHMyVc34w
+
+{
+  "status": "ACTIVE"
+}
+
+### Profile Password update
+PUT localhost:8080/profile/password
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjEyMCIsImlhdCI6MTczNjA2MTY2MywiZXhwIjoxNzM2MTQ4MDYzfQ.qbS1_1KSer81vkRMJPtIuz0wgNCGEMWcfqrAJe-f84D7y9j8FdFYtoQde4ptAmCsTkBPtGTHp2TxUYK4ty1m7Q
+
+{
+  "currentPswd" : "1111",
+   " newPswd" : "12345"
+}
+
+### Profile username update
+PUT localhost:8080/profile/username
+Content-Type: application/json
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJkb3JiZWsudWt0YW1vdi4xQGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxMjAiLCJpYXQiOjE3MzYyNjYzNTUsImV4cCI6MTczNjM1Mjc1NX0.taBYExzffG_bWxtfEgcpn8UTZhlXduqouDGroLjEUkbRbUWIktZ9Nx5bOCaC0_8r_LBx1AkNnA36SronsK0dEA
+
+{
+  "username" : "uktamov9198@mail.ru"
+}
+
+### Profile username update Confirm
+PUT localhost:8080/profile/username/confirm
+Content-Type: application/json
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJkb3JiZWsudWt0YW1vdi4xQGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxMjAiLCJpYXQiOjE3MzYyNjYzNTUsImV4cCI6MTczNjM1Mjc1NX0.taBYExzffG_bWxtfEgcpn8UTZhlXduqouDGroLjEUkbRbUWIktZ9Nx5bOCaC0_8r_LBx1AkNnA36SronsK0dEA
+
+{
+  "code" : "22434"
+}
+
+### Profile Photo update
+PUT localhost:8080/profile/photo
+Content-Type: application/json
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjEyMCIsImlhdCI6MTczNzY0OTM5MSwiZXhwIjoxNzM3NzM1NzkxfQ.mnI__emOvWlKDm7TybpH6IIidjJIkiVlIFD5Qr_3RquVP9tl2SrfXkxw_4BV3DoTFuXAMa2d2bpuTfRO8FZ1Pw
+
+{
+  "photoId" : "54503aa7-b7b9-48a6-98ec-54a97f36a432.png"
+}
+
+### Login
+POST localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}

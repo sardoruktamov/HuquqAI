@@ -1,0 +1,12 @@
+### Upload Attach
+POST http://localhost:8080/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MzA3NjY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMTIwIiwiaWF0IjoxNzM5MTE4NjAyLCJleHAiOjE3MzkyMDUwMDJ9.R1H69DRQEz62iKORwf8tqHmE2Oi-4gzrNSOqBVBDh-aWRFsZa1NCUX1gra1GchD11VmuMHpURCOuc9xOHYZJYQ
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="asosiy.jpg"
+
+< E:\PHOTOS\asosiy.jpg
+
+### Open Attach
+PUT http://localhost:8080/attach/open/0b46f728-1a13-4c73-be83-8d2ee3dede0c.jpg
