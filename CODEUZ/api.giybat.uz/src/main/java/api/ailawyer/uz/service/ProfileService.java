@@ -56,7 +56,7 @@ public class ProfileService {
     @Autowired
     private AttachService attachService;
 
-    public AppResponse<String> updateDetail(ProfileDetailUpdateDTO dto, AppLanguage lang){
+    public AppResponse<String> updateDetail(ProfileDetailUpdateDTO dto, AppLanguage lang) {
         Integer userId = SpringSecurityUtil.getCurrentUserId();
         profileRepository.updateDetail(userId, dto.getName());
         return new AppResponse<>(bundleService.getMessage("profile.update.detail.success", lang));
@@ -65,33 +65,33 @@ public class ProfileService {
     public AppResponse<String> updatePassword(ProfilePasswordUpdateDTO dto, AppLanguage lang) {
         Integer userId = SpringSecurityUtil.getCurrentUserId();
         ProfileEntity profile = getById(userId, lang);
-        if (!bCryptPasswordEncoder.matches(dto.getCurrentPswd(), profile.getPassword())){
-            throw new AppBadException(bundleService.getMessage("current.password.incorrectly",lang));
+        if (!bCryptPasswordEncoder.matches(dto.getCurrentPswd(), profile.getPassword())) {
+            throw new AppBadException(bundleService.getMessage("current.password.incorrectly", lang));
         }
 
         profileRepository.updatePassword(userId, bCryptPasswordEncoder.encode(dto.getNewPswd()));
-        return new AppResponse<String>(bundleService.getMessage("password.changed.successfully",lang));
+        return new AppResponse<String>(bundleService.getMessage("password.changed.successfully", lang));
     }
 
-    public AppResponse<String> updateUsername(ProfileUsernameUpdateDTO dto, AppLanguage lang){
+    public AppResponse<String> updateUsername(ProfileUsernameUpdateDTO dto, AppLanguage lang) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         // check
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             throw new AppBadException(bundleService.getMessage("email.phone.exist", lang));
         }
 
         // send sms
-        if (EmailUtil.isEmail(dto.getUsername())){
+        if (EmailUtil.isEmail(dto.getUsername())) {
             // send email
             emailSendingService.sendChangeUsernameEmail(dto.getUsername(), lang);
-        }else if (PhoneUtil.isPhone(dto.getUsername())){
+        } else if (PhoneUtil.isPhone(dto.getUsername())) {
             // send SMS
             smsSendService.sendUsernameChangeConfirmSms(dto.getUsername(), lang);
         }
         Integer userId = SpringSecurityUtil.getCurrentUserId();
         profileRepository.updateTempUsername(userId, dto.getUsername());
         String response = bundleService.getMessage("resent.password.code.sent", lang);
-        return new AppResponse<>(String.format(response,dto.getUsername()));
+        return new AppResponse<>(String.format(response, dto.getUsername()));
     }
 
     public AppResponse<String> updateUsernameConfirm(CodeConfirmDTO dto, AppLanguage lang) {
@@ -99,60 +99,58 @@ public class ProfileService {
         ProfileEntity profile = getById(userId, lang);
         String tempUsername = profile.getTempUsername();
         // check
-        if (EmailUtil.isEmail(tempUsername)){
+        if (EmailUtil.isEmail(tempUsername)) {
             // send email
             emailHistoryService.check(tempUsername, dto.getCode(), lang);
-        }else if (PhoneUtil.isPhone(tempUsername)){
+        } else if (PhoneUtil.isPhone(tempUsername)) {
             // send SMS
             smsHistoryService.check(tempUsername, dto.getCode(), lang);
         }
         // update username
-        profileRepository.updateUsername(userId,tempUsername);
+        profileRepository.updateUsername(userId, tempUsername);
         // response
         List<ProfileRole> roles = profileRoleRepository.getAllRolesListByProfileId(profile.getId());
-        String jwt = JwtUtil.encode(tempUsername,profile.getId(),roles);
+        String jwt = JwtUtil.encode(tempUsername, profile.getId(), roles);
 
         return new AppResponse<>(jwt, bundleService.getMessage("change.username.succes", lang));
     }
 
     public AppResponse<String> updatePhoto(String photoId, AppLanguage lang) {
         Integer userId = SpringSecurityUtil.getCurrentUserId();
-        ProfileEntity profile = getById(userId,lang);
-        profileRepository.updatePhoto(userId,photoId);
-        if (profile.getPhotoId() != null && !profile.getPhotoId().equals(photoId)){
+        ProfileEntity profile = getById(userId, lang);
+        profileRepository.updatePhoto(userId, photoId);
+        if (profile.getPhotoId() != null && !profile.getPhotoId().equals(photoId)) {
             attachService.delete(profile.getPhotoId()); // delete old img
         }
         return new AppResponse<>(bundleService.getMessage("change.photo.succes", lang));
     }
 
-
-
-    public ProfileEntity getById(int id, AppLanguage lang){
+    public ProfileEntity getById(int id, AppLanguage lang) {
         // 1-usul
-//        Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleTrue(id);
-//        if(optional.isEmpty()){
-//            log.error("Profile not found: {}",id);
-//            throw new AppBadException("Profile not found");
-//        }
-//        return optional.get();
+        // Optional<ProfileEntity> optional =
+        // profileRepository.findByIdAndVisibleTrue(id);
+        // if(optional.isEmpty()){
+        // log.error("Profile not found: {}",id);
+        // throw new AppBadException("Profile not found");
+        // }
+        // return optional.get();
         // 2-usul
-        return profileRepository.findByIdAndVisibleTrue(id).orElseThrow( () -> {
-            log.error("Profile not found: {}",id);
+        return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> {
+            log.error("Profile not found: {}", id);
             throw new AppBadException(bundleService.getMessage("profile.not.found", lang));
         });
     }
 
-
     public PageImpl<ProfileDTO> filter(ProfileFilterDTO dto, int page, int size, AppLanguage lang) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<ProfileDetailMapper> filterResult = null;
-        if (dto.getQuery() == null){
+        if (dto.getQuery() == null) {
             filterResult = profileRepository.findAllByVisibleIsTrueOrderByCreatedDateDesc(pageRequest);
-        }else {
+        } else {
             filterResult = profileRepository.filter("%" + dto.getQuery().toLowerCase() + "%", pageRequest);
         }
-        List<ProfileDTO> resultList =  filterResult.stream().map(this::toDto).toList();
-        return new PageImpl<>(resultList, pageRequest,filterResult.getTotalElements());
+        List<ProfileDTO> resultList = filterResult.stream().map(this::toDto).toList();
+        return new PageImpl<>(resultList, pageRequest, filterResult.getTotalElements());
     }
 
     public AppResponse<String> changeStatus(Integer id, GeneralStatus status, AppLanguage lang) {
@@ -164,29 +162,30 @@ public class ProfileService {
         profileRepository.deleteVisibleFalse(id);
         return new AppResponse<>(bundleService.getMessage("profile.delete.succes", lang));
     }
-    public ProfileDTO toDto(ProfileEntity entity){
+
+    public ProfileDTO toDto(ProfileEntity entity) {
         ProfileDTO dto = new ProfileDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setUsername(entity.getUsername());
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
-        if (entity.getRoleList() != null){
-            List<ProfileRole> rolList =  entity.getRoleList().stream().map(item -> item.getRoles()).toList();
+        if (entity.getRoleList() != null) {
+            List<ProfileRole> rolList = entity.getRoleList().stream().map(item -> item.getRoles()).toList();
             dto.setRoleList(rolList);
         }
         dto.setPhoto(attachService.attachDTO(entity.getPhotoId()));
         return dto;
     }
 
-    public ProfileDTO toDto(ProfileDetailMapper mapper){
+    public ProfileDTO toDto(ProfileDetailMapper mapper) {
         ProfileDTO dto = new ProfileDTO();
         dto.setId(mapper.getId());
         dto.setName(mapper.getName());
         dto.setUsername(mapper.getUsername());
         dto.setStatus(mapper.getStatus());
         dto.setCreatedDate(mapper.getCreatedDate());
-        if (mapper.getRoles() != null){
+        if (mapper.getRoles() != null) {
             List<ProfileRole> roleList = Arrays.stream(mapper.getRoles().split(","))
                     .map(roleName -> ProfileRole.valueOf(roleName))
                     .toList();
@@ -196,6 +195,5 @@ public class ProfileService {
         dto.setPostCount(mapper.getPostCount());
         return dto;
     }
-
 
 }

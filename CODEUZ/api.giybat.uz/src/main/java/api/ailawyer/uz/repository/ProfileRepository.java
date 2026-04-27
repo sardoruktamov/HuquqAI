@@ -14,8 +14,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>, PagingAndSortingRepository<ProfileEntity, Integer> {
+public interface ProfileRepository
+        extends CrudRepository<ProfileEntity, Integer>, PagingAndSortingRepository<ProfileEntity, Integer> {
     Optional<ProfileEntity> findByUsernameAndVisibleTrue(String username);
+
     Optional<ProfileEntity> findByIdAndVisibleTrue(Integer id);
 
     @Modifying
@@ -53,9 +55,7 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
             "(select count(*) from post as pt where pt.profile_id = p.id) as postCount, " +
             "(select string_agg(pr.roles,',') from profile_role as pr where pr.profile_id = p.id) as roles " +
             "from profile as p " +
-            "where p.visible is true order by p.created_date desc ",
-            nativeQuery = true,
-            countQuery = "select count(*) from profile where visible = true")
+            "where p.visible is true order by p.created_date desc ", nativeQuery = true, countQuery = "select count(*) from profile where visible = true")
     Page<ProfileDetailMapper> findAllByVisibleIsTrueOrderByCreatedDateDesc(PageRequest pageRequest);
 
     @Query(value = "select p.id as id, p.name as name, p.username as username, p.photo_id as photoId, " +
@@ -63,14 +63,12 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
             "(select count(*) from post as pt where pt.profile_id = p.id) as postCount, " +
             "(select string_agg(pr.roles,',') from profile_role as pr where pr.profile_id = p.id) as roles " +
             "from profile as p " +
-            "where (lower(p.username) like ?1 or lower(p.name) like ?1) and p.visible is true order by p.created_date desc ",
-            nativeQuery = true,
-            countQuery = "select count(*) from profile p where (lower(p.username) like ?1 or lower(p.name) like ?1) and visible = true")
+            "where (lower(p.username) like ?1 or lower(p.name) like ?1) and p.visible is true order by p.created_date desc ", nativeQuery = true, countQuery = "select count(*) from profile p where (lower(p.username) like ?1 or lower(p.name) like ?1) and visible = true")
     Page<ProfileDetailMapper> filter(String query, PageRequest pageRequest);
 
-//    @Query("From ProfileEntity as p inner join fetch p.roleList where " +
-//            "(lower(p.username) like ?1 or lower(p.name) like ?1) and p.visible is true")
-//    Page<ProfileEntity> filterByQuery(String query, PageRequest pageRequest);
+    // @Query("From ProfileEntity as p inner join fetch p.roleList where " +
+    // "(lower(p.username) like ?1 or lower(p.name) like ?1) and p.visible is true")
+    // Page<ProfileEntity> filterByQuery(String query, PageRequest pageRequest);
 
     @Modifying
     @Transactional

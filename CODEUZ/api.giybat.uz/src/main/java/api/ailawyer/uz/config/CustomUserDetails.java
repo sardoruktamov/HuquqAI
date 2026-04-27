@@ -14,7 +14,6 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-
     private Integer id;
     private String name;
     private String username;
@@ -23,23 +22,25 @@ public class CustomUserDetails implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(ProfileEntity profile,
-                             List<ProfileRole> roleList) {
+            List<ProfileRole> roleList) {
         this.id = profile.getId();
         this.name = profile.getName();
         this.username = profile.getUsername();
         this.password = profile.getPassword();
         this.status = profile.getStatus();
         // 1-usul
-        /*List<SimpleGrantedAuthority> roles = new ArrayList<>();
-        for(ProfileRole role: roleList){
-            roles.add(new SimpleGrantedAuthority(role.name()));
-        }
-        this.authorities = roles;*/
-        //2-usul stream orqali
+        /*
+         * List<SimpleGrantedAuthority> roles = new ArrayList<>();
+         * for(ProfileRole role: roleList){
+         * roles.add(new SimpleGrantedAuthority(role.name()));
+         * }
+         * this.authorities = roles;
+         */
+        // 2-usul stream orqali
         this.authorities = roleList.stream()
                 .map(
-                        item -> new SimpleGrantedAuthority(item.name())
-                ).toList();
+                        item -> new SimpleGrantedAuthority(item.name()))
+                .toList();
     }
 
     @Override
@@ -75,7 +76,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true; // true bo'lgani sababi avval tekshirganmiz -> profileRepository.findByUsernameAndVisibleTrue(username)
+        return true; // true bo'lgani sababi avval tekshirganmiz ->
+                     // profileRepository.findByUsernameAndVisibleTrue(username)
     }
 
     public void setId(Integer id) {

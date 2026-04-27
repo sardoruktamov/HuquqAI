@@ -34,7 +34,7 @@ public class PostService {
     @Autowired
     private CustomPostRepository customPostRepository;
 
-    public PostDTO create(PostCreateDTO dto){
+    public PostDTO create(PostCreateDTO dto) {
         if (!SpringSecurityUtil.hazRole(ProfileRole.ROLE_LAWYER)
                 && !SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN)
                 && !SpringSecurityUtil.hazRole(ProfileRole.ROLE_SUPERADMIN)) {
@@ -53,10 +53,11 @@ public class PostService {
         return toInfoDto(entity);
     }
 
-    public Page<PostDTO> getProfilePostList(int page, int size){
-        PageRequest pageRequest = PageRequest.of(page,size);
+    public Page<PostDTO> getProfilePostList(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
         Integer profId = SpringSecurityUtil.getCurrentUserId();
-        Page<PostEntity> result = postRepository.getAllByProfileIdAndVisibleTrueOrderByCreatedDateDesc(profId, pageRequest);
+        Page<PostEntity> result = postRepository.getAllByProfileIdAndVisibleTrueOrderByCreatedDateDesc(profId,
+                pageRequest);
         List<PostDTO> dtoList = result.getContent().stream()
                 .map(dto -> toInfoDto(dto))
                 .toList();
@@ -64,19 +65,20 @@ public class PostService {
         return new PageImpl<PostDTO>(dtoList, pageRequest, result.getTotalElements());
     }
 
-    public PostDTO getById(String id){
+    public PostDTO getById(String id) {
         PostEntity entity = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
         return toDto(entity);
     }
 
-    public PostDTO update(String id, PostCreateDTO dto){
+    public PostDTO update(String id, PostCreateDTO dto) {
         PostEntity entity = get(id);
-        if (!SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN) && !entity.getProfileId().equals(SpringSecurityUtil.getCurrentUserId())){
+        if (!SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN)
+                && !entity.getProfileId().equals(SpringSecurityUtil.getCurrentUserId())) {
             throw new AppBadException("You do not have permission to update this post");
         }
         String deletePhotoId = null;
-        if (!dto.getPhoto().getId().equals(entity.getPhotoId())){
+        if (!dto.getPhoto().getId().equals(entity.getPhotoId())) {
             deletePhotoId = entity.getPhotoId();
         }
         entity.setTitle(dto.getTitle());
@@ -84,27 +86,28 @@ public class PostService {
         entity.setPhotoId(dto.getPhoto().getId());
         postRepository.save(entity);
         // delete old image
-        if(deletePhotoId != null){
+        if (deletePhotoId != null) {
             attachService.delete(deletePhotoId);
         }
         return toInfoDto(entity);
     }
 
-    public AppResponse<String> delete(String id){
+    public AppResponse<String> delete(String id) {
         PostEntity entity = get(id);
-        if (!SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN) && !entity.getProfileId().equals(SpringSecurityUtil.getCurrentUserId())){
+        if (!SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN)
+                && !entity.getProfileId().equals(SpringSecurityUtil.getCurrentUserId())) {
             throw new AppBadException("You do not have permission to update this post");
         }
         postRepository.delete(id);
         return new AppResponse<>("Post muvoffaqiyatli o'chirildi.");
     }
 
-    public PageImpl<PostDTO> filter(PostFilterDTO dto, int page, int size){
+    public PageImpl<PostDTO> filter(PostFilterDTO dto, int page, int size) {
         FilterResultDTO<PostEntity> resultDto = customPostRepository.filter(dto, page, size);
         List<PostDTO> dtoList = resultDto.getList().stream()
                 .map(postEntity -> toInfoDto(postEntity))
                 .toList();
-        return new PageImpl<>(dtoList, PageRequest.of(page,size), resultDto.getTotalCount());
+        return new PageImpl<>(dtoList, PageRequest.of(page, size), resultDto.getTotalCount());
     }
 
     public PageImpl<PostDTO> adminFilter(PostAdminFilterDTO dto, int page, int size) {
@@ -112,7 +115,7 @@ public class PostService {
         List<PostDTO> dtoList = resultDto.getList().stream()
                 .map(postEntity -> toDto(postEntity))
                 .toList();
-        return new PageImpl<>(dtoList, PageRequest.of(page,size), resultDto.getTotalCount());
+        return new PageImpl<>(dtoList, PageRequest.of(page, size), resultDto.getTotalCount());
     }
 
     public List<PostDTO> getSimilarPostList(SimilarPostListDTO dto) {
@@ -124,7 +127,8 @@ public class PostService {
                 .toList();
         return dtoList;
     }
-    public PostDTO toDto(PostEntity entity){
+
+    public PostDTO toDto(PostEntity entity) {
         PostDTO dto = new PostDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
@@ -134,11 +138,11 @@ public class PostService {
         return dto;
     }
 
-    public PostDTO toDto(Object[] obj){
+    public PostDTO toDto(Object[] obj) {
         PostDTO post = new PostDTO();
         post.setId((String) obj[0]);
         post.setTitle((String) obj[1]);
-        if (obj[2] != null){
+        if (obj[2] != null) {
             post.setPhoto(attachService.attachDTO((String) obj[2]));
         }
         post.setCreatedDate((LocalDateTime) obj[3]);
@@ -152,7 +156,7 @@ public class PostService {
         return post;
     }
 
-    public PostDTO toInfoDto(PostEntity entity){
+    public PostDTO toInfoDto(PostEntity entity) {
         PostDTO dto = new PostDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
@@ -161,11 +165,10 @@ public class PostService {
         return dto;
     }
 
-    public PostEntity get(String id){
+    public PostEntity get(String id) {
         return postRepository.findById(id).orElseThrow(() -> {
             throw new AppBadException("Post not found: " + id);
         });
     }
-
 
 }

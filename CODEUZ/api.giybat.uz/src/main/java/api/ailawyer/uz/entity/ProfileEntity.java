@@ -29,7 +29,7 @@ public class ProfileEntity {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private GeneralStatus status;  // ACTIVE, BLOCK
+    private GeneralStatus status; // ACTIVE, BLOCK
 
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
