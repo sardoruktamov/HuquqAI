@@ -33,20 +33,20 @@ public class PostController {
     @PostMapping("")
     @PreAuthorize("hasAnyRole('ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Create Post", description = "Api used for Post creation ")
-    public ResponseEntity<PostDTO> create(@Valid @RequestBody PostCreateDTO dto){
+    public ResponseEntity<PostDTO> create(@Valid @RequestBody PostCreateDTO dto) {
         return ResponseEntity.ok(postService.create(dto));
     }
 
     @GetMapping("/profile")
     @Operation(summary = "Get Post List", description = "Api used for Get All Profile Post List")
     public ResponseEntity<Page<PostDTO>> postListByProfile(@RequestParam(value = "page", defaultValue = "1") int page,
-                                                           @RequestParam(value = "size", defaultValue = "3") int size){
-        return ResponseEntity.ok(postService.getProfilePostList(PageUtil.page(page),size));
+            @RequestParam(value = "size", defaultValue = "3") int size) {
+        return ResponseEntity.ok(postService.getProfilePostList(PageUtil.page(page), size));
     }
 
     @GetMapping("/public/{id}")
     @Operation(summary = "Get Post by ID", description = "Api used for Get Post by id")
-    public ResponseEntity<PostDTO> postById(@PathVariable("id") String id){
+    public ResponseEntity<PostDTO> postById(@PathVariable("id") String id) {
         return ResponseEntity.ok(postService.getById(id));
     }
 
@@ -54,28 +54,28 @@ public class PostController {
     @PreAuthorize("hasAnyRole('ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Update Post", description = "Api used for Post update")
     public ResponseEntity<PostDTO> update(@PathVariable("id") String id,
-                                            @Valid @RequestBody PostCreateDTO dto){
+            @Valid @RequestBody PostCreateDTO dto) {
         return ResponseEntity.ok(postService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Delete Post", description = "Api used for Post Delete")
-    public ResponseEntity<AppResponse<String>> delete(@PathVariable("id") String id){
+    public ResponseEntity<AppResponse<String>> delete(@PathVariable("id") String id) {
         return ResponseEntity.ok(postService.delete(id));
     }
 
     @PostMapping("/public/filter")
     @Operation(summary = "Post public filter", description = "Api used for Post filter ")
     public ResponseEntity<Page<PostDTO>> filter(@Valid @RequestBody PostFilterDTO dto,
-                                                @RequestParam(value = "page", defaultValue = "1") int page,
-                                                @RequestParam(value = "size", defaultValue = "10") int size){
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(postService.filter(dto, PageUtil.page(page), size));
     }
 
     @PostMapping("/public/similar")
     @Operation(summary = "Get similar Post list", description = "Api used for getting for similar post list ")
-    public ResponseEntity<List<PostDTO>> similarPostList(@Valid @RequestBody SimilarPostListDTO dto){
+    public ResponseEntity<List<PostDTO>> similarPostList(@Valid @RequestBody SimilarPostListDTO dto) {
         return ResponseEntity.ok(postService.getSimilarPostList(dto));
     }
 
@@ -83,8 +83,8 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Post list filter for admin", description = "Api used for filtering for admin post list ")
     public ResponseEntity<PageImpl<PostDTO>> filter(@Valid @RequestBody PostAdminFilterDTO dto,
-                                                    @RequestParam(value = "page", defaultValue = "1") int page,
-                                                    @RequestParam(value = "size", defaultValue = "10") int size){
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(postService.adminFilter(dto, PageUtil.page(page), size));
     }
 }
