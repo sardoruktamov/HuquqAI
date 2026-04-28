@@ -15,7 +15,7 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
     private Integer id;
-    private String name;
+    private String fullName;
     private String username;
     private String password;
     private GeneralStatus status;
@@ -24,7 +24,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(ProfileEntity profile,
             List<ProfileRole> roleList) {
         this.id = profile.getId();
-        this.name = profile.getName();
+        this.fullName = profile.getFullName();
         this.username = profile.getUsername();
         this.password = profile.getPassword();
         this.status = profile.getStatus();
@@ -84,15 +84,15 @@ public class CustomUserDetails implements UserDetails {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 }

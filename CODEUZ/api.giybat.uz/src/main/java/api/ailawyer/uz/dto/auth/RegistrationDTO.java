@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegistrationDTO {
-    @NotBlank(message = "Name required")
-    private String name;
+    @NotBlank(message = "To'liq ism (fullName) kiritish majburiy")
+    private String fullName;
     @NotBlank(message = "username required")
     private String username;
     @NotBlank(message = "password required")

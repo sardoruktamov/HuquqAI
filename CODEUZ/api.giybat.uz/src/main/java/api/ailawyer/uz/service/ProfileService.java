@@ -58,7 +58,7 @@ public class ProfileService {
 
     public AppResponse<String> updateDetail(ProfileDetailUpdateDTO dto, AppLanguage lang) {
         Integer userId = SpringSecurityUtil.getCurrentUserId();
-        profileRepository.updateDetail(userId, dto.getName());
+        profileRepository.updateDetail(userId, dto.getFullName());
         return new AppResponse<>(bundleService.getMessage("profile.update.detail.success", lang));
     }
 
@@ -166,7 +166,7 @@ public class ProfileService {
     public ProfileDTO toDto(ProfileEntity entity) {
         ProfileDTO dto = new ProfileDTO();
         dto.setId(entity.getId());
-        dto.setName(entity.getName());
+        dto.setFullName(entity.getFullName());
         dto.setUsername(entity.getUsername());
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -181,7 +181,7 @@ public class ProfileService {
     public ProfileDTO toDto(ProfileDetailMapper mapper) {
         ProfileDTO dto = new ProfileDTO();
         dto.setId(mapper.getId());
-        dto.setName(mapper.getName());
+        dto.setFullName(mapper.getFullName());
         dto.setUsername(mapper.getUsername());
         dto.setStatus(mapper.getStatus());
         dto.setCreatedDate(mapper.getCreatedDate());
@@ -193,6 +193,7 @@ public class ProfileService {
         }
         dto.setPhoto(attachService.attachDTO(mapper.getPhotoId()));
         dto.setPostCount(mapper.getPostCount());
+        dto.setCaseCount(mapper.getCaseCount());
         return dto;
     }
 

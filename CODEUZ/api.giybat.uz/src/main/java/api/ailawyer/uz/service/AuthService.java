@@ -73,7 +73,7 @@ public class AuthService {
         }
 
         ProfileEntity entity = new ProfileEntity();
-        entity.setName(dto.getName());
+        entity.setFullName(dto.getFullName());
         entity.setUsername(dto.getUsername());
         entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         entity.setStatus(GeneralStatus.IN_REGISTRATION);
@@ -224,7 +224,7 @@ public class AuthService {
 
     public ProfileDTO getLoginResponse(ProfileEntity profile) {
         ProfileDTO response = new ProfileDTO();
-        response.setName(profile.getName());
+        response.setFullName(profile.getFullName());
         response.setUsername(profile.getUsername());
         response.setRoleList(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
         response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(), response.getRoleList())); // jwt

@@ -18,7 +18,7 @@ import java.util.List;
 public class ProfileDTO {
 
     private Integer id;
-    private String name;
+    private String fullName;
     private String username;
     private List<ProfileRole> roleList;
     private String jwt;
@@ -26,4 +26,5 @@ public class ProfileDTO {
     private AttachDTO photo;
     private GeneralStatus status;
     private Long postCount;
+    private Long caseCount;
 }

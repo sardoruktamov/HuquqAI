@@ -149,7 +149,7 @@ public class PostService {
 
         ProfileDTO profile = new ProfileDTO();
         profile.setId((Integer) obj[4]);
-        profile.setName((String) obj[5]);
+        profile.setFullName((String) obj[5]);
         profile.setUsername((String) obj[6]);
 
         post.setProfile(profile);

@@ -21,30 +21,16 @@ public class SwaggerConfig {
         public OpenAPI customOpenAPI() {
                 // general info
                 Info info = new Info()
-                                .title("CHATNET.UZ API-lar")
-                                .version("1.0.0")
-                                .description("Quyida chatnet.uz loyihasi uchun API hujjatlar tagdim qilingan.")
+                                .title("AI Lawyer — Huquqiy Yordamchi API")
+                                .description("O'zbekiston qonunchiligi bo'yicha AI yordamchi platformasi")
                                 .contact(new Contact()
-                                                .name("Sardor")
-                                                .email("uktamov9198@mail.ru")
-                                                .url("https://t.me/s_uktamov"))
-                                .license(new License()
-                                                .name("Videohub.uz")
-                                                .url("https://videohub.uz/"))
-                                .termsOfService("Savol javob guruhi: https://t.me/code_uz_group");
+                                                .name("AI Lawyer Team")
+                                );
 
                 // servers (ishlatiladigan serverlar)
                 Server server1 = new Server()
                                 .description("Local")
                                 .url("http://localhost:8080");
-
-                Server server2 = new Server()
-                                .description("DEV")
-                                .url("http://api.chatnet.uz");
-
-                Server server3 = new Server()
-                                .description("PROD")
-                                .url("http://api.chatnet.uz");
 
                 // security type (bizning holatda JWT)
                 SecurityRequirement securityRequirement = new SecurityRequirement();
@@ -63,7 +49,7 @@ public class SwaggerConfig {
                 // collect all together
                 OpenAPI openAPI = new OpenAPI();
                 openAPI.setInfo(info);
-                openAPI.setServers(List.of(server1, server2, server3));
+                openAPI.setServers(List.of(server1));
                 openAPI.setSecurity(List.of(securityRequirement));
                 openAPI.components(components);
 

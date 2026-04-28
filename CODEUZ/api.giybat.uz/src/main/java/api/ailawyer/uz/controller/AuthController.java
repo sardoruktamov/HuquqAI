@@ -31,7 +31,7 @@ public class AuthController {
     @Operation(summary = "Profile registration", description = "Api used for registration")
     public ResponseEntity<AppResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto,
             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang) {
-        log.info("login: " + dto.getUsername() + " name: " + dto.getName());
+        log.info("login: " + dto.getUsername() + " name: " + dto.getFullName());
         return ResponseEntity.ok().body(authService.registration(dto, lang));
     }
 

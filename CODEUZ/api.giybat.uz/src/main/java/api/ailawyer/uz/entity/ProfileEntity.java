@@ -19,7 +19,7 @@ public class ProfileEntity {
     private Integer id;
 
     @Column(name = "name")
-    private String name;
+    private String fullName;
     @Column(name = "username")
     private String username;
     @Column(name = "temp_username")

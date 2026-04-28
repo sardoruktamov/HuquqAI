@@ -9,5 +9,5 @@ import lombok.Setter;
 public class ProfileDetailUpdateDTO {
 
     @NotBlank(message = "Name required")
-    private String name;
+    private String fullName;
 }

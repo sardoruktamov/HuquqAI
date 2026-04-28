@@ -32,8 +32,8 @@ public interface ProfileRepository
 
     @Modifying
     @Transactional
-    @Query("update ProfileEntity set name =?2 where id =?1")
-    void updateDetail(Integer id, String name);
+    @Query("update ProfileEntity set fullName =?2 where id =?1")
+    void updateDetail(Integer id, String fullName);
 
     @Modifying
     @Transactional
@@ -50,17 +50,19 @@ public interface ProfileRepository
     @Query("update ProfileEntity set photoId =?2 where id =?1")
     void updatePhoto(Integer id, String photoId);
 
-    @Query(value = "select p.id as id, p.name as name, p.username as username, p.photo_id as photoId, " +
+    @Query(value = "select p.id as id, p.name as fullName, p.username as username, p.photo_id as photoId, " +
             "p.status as status, p.created_date as createdDate," +
             "(select count(*) from post as pt where pt.profile_id = p.id) as postCount, " +
+            "(select coalesce(count(*), 0) from cases where profile_id = p.id) as caseCount, " +
             "(select string_agg(pr.roles,',') from profile_role as pr where pr.profile_id = p.id) as roles " +
             "from profile as p " +
             "where p.visible is true order by p.created_date desc ", nativeQuery = true, countQuery = "select count(*) from profile where visible = true")
     Page<ProfileDetailMapper> findAllByVisibleIsTrueOrderByCreatedDateDesc(PageRequest pageRequest);
 
-    @Query(value = "select p.id as id, p.name as name, p.username as username, p.photo_id as photoId, " +
+    @Query(value = "select p.id as id, p.name as fullName, p.username as username, p.photo_id as photoId, " +
             "p.status as status, p.created_date as createdDate," +
             "(select count(*) from post as pt where pt.profile_id = p.id) as postCount, " +
+            "(select coalesce(count(*), 0) from cases where profile_id = p.id) as caseCount, " +
             "(select string_agg(pr.roles,',') from profile_role as pr where pr.profile_id = p.id) as roles " +
             "from profile as p " +
             "where (lower(p.username) like ?1 or lower(p.name) like ?1) and p.visible is true order by p.created_date desc ", nativeQuery = true, countQuery = "select count(*) from profile p where (lower(p.username) like ?1 or lower(p.name) like ?1) and visible = true")
