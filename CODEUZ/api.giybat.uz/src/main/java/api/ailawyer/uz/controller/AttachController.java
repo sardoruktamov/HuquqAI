@@ -1,6 +1,6 @@
 package api.ailawyer.uz.controller;
 
-
+import api.ailawyer.uz.common.response.ApiResponse;
 import api.ailawyer.uz.dto.AttachDTO;
 import api.ailawyer.uz.service.AttachService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,8 +18,8 @@ public class AttachController {
     private AttachService attachService;
 
     @PostMapping("/upload")
-    public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file) {
-        return ResponseEntity.ok(attachService.upload(file));
+    public ResponseEntity<ApiResponse<AttachDTO>> upload(@RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(ApiResponse.success(attachService.upload(file)));
     }
 
     @GetMapping("/open/{fileName}")

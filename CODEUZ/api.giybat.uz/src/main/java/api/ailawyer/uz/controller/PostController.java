@@ -1,6 +1,6 @@
 package api.ailawyer.uz.controller;
 
-import api.ailawyer.uz.dto.AppResponse;
+import api.ailawyer.uz.common.response.ApiResponse;
 import api.ailawyer.uz.dto.post.*;
 import api.ailawyer.uz.dto.profile.ProfileSatusDTO;
 import api.ailawyer.uz.enums.AppLanguage;
@@ -10,7 +10,6 @@ import api.ailawyer.uz.util.SpringSecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,58 +32,59 @@ public class PostController {
     @PostMapping("")
     @PreAuthorize("hasAnyRole('ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Create Post", description = "Api used for Post creation ")
-    public ResponseEntity<PostDTO> create(@Valid @RequestBody PostCreateDTO dto) {
-        return ResponseEntity.ok(postService.create(dto));
+    public ResponseEntity<ApiResponse<PostDTO>> create(@Valid @RequestBody PostCreateDTO dto) {
+        return ResponseEntity.ok(ApiResponse.success(postService.create(dto)));
     }
 
     @GetMapping("/profile")
     @Operation(summary = "Get Post List", description = "Api used for Get All Profile Post List")
-    public ResponseEntity<Page<PostDTO>> postListByProfile(@RequestParam(value = "page", defaultValue = "1") int page,
+    public ResponseEntity<ApiResponse<Page<PostDTO>>> postListByProfile(@RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "3") int size) {
-        return ResponseEntity.ok(postService.getProfilePostList(PageUtil.page(page), size));
+        return ResponseEntity.ok(ApiResponse.success(postService.getProfilePostList(PageUtil.page(page), size)));
     }
 
     @GetMapping("/public/{id}")
     @Operation(summary = "Get Post by ID", description = "Api used for Get Post by id")
-    public ResponseEntity<PostDTO> postById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(postService.getById(id));
+    public ResponseEntity<ApiResponse<PostDTO>> postById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(ApiResponse.success(postService.getById(id)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Update Post", description = "Api used for Post update")
-    public ResponseEntity<PostDTO> update(@PathVariable("id") String id,
+    public ResponseEntity<ApiResponse<PostDTO>> update(@PathVariable("id") String id,
             @Valid @RequestBody PostCreateDTO dto) {
-        return ResponseEntity.ok(postService.update(id, dto));
+        return ResponseEntity.ok(ApiResponse.success(postService.update(id, dto)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Delete Post", description = "Api used for Post Delete")
-    public ResponseEntity<AppResponse<String>> delete(@PathVariable("id") String id) {
-        return ResponseEntity.ok(postService.delete(id));
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable("id") String id) {
+        postService.delete(id);
+        return ResponseEntity.ok(ApiResponse.success("Post muvaffaqiyatli o'chirildi"));
     }
 
     @PostMapping("/public/filter")
     @Operation(summary = "Post public filter", description = "Api used for Post filter ")
-    public ResponseEntity<Page<PostDTO>> filter(@Valid @RequestBody PostFilterDTO dto,
+    public ResponseEntity<ApiResponse<Page<PostDTO>>> filter(@Valid @RequestBody PostFilterDTO dto,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        return ResponseEntity.ok(postService.filter(dto, PageUtil.page(page), size));
+        return ResponseEntity.ok(ApiResponse.success(postService.filter(dto, PageUtil.page(page), size)));
     }
 
     @PostMapping("/public/similar")
     @Operation(summary = "Get similar Post list", description = "Api used for getting for similar post list ")
-    public ResponseEntity<List<PostDTO>> similarPostList(@Valid @RequestBody SimilarPostListDTO dto) {
-        return ResponseEntity.ok(postService.getSimilarPostList(dto));
+    public ResponseEntity<ApiResponse<List<PostDTO>>> similarPostList(@Valid @RequestBody SimilarPostListDTO dto) {
+        return ResponseEntity.ok(ApiResponse.success(postService.getSimilarPostList(dto)));
     }
 
     @PostMapping("/admin-post-list/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Post list filter for admin", description = "Api used for filtering for admin post list ")
-    public ResponseEntity<PageImpl<PostDTO>> filter(@Valid @RequestBody PostAdminFilterDTO dto,
+    public ResponseEntity<ApiResponse<PageImpl<PostDTO>>> filter(@Valid @RequestBody PostAdminFilterDTO dto,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        return ResponseEntity.ok(postService.adminFilter(dto, PageUtil.page(page), size));
+        return ResponseEntity.ok(ApiResponse.success(postService.adminFilter(dto, PageUtil.page(page), size)));
     }
 }

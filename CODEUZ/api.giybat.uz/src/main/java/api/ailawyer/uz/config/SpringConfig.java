@@ -40,10 +40,11 @@ public class SpringConfig {
             "/api/v1/auth/**",
             "/api/v1/attach/upload",
             "/api/v1/attach/open/**",
-            "swagger-ui/**",
+            "/api/v1/posts/public/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
             "/v3/api-docs",
-            "/v3/api-docs/**",
-            "/api/v1/posts/public/**"
+            "/v3/api-docs/**"
     };
 
     @Bean

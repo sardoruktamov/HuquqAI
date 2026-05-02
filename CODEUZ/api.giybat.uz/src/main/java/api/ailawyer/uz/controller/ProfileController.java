@@ -1,6 +1,6 @@
 package api.ailawyer.uz.controller;
 
-import api.ailawyer.uz.dto.AppResponse;
+import api.ailawyer.uz.common.response.ApiResponse;
 import api.ailawyer.uz.dto.CodeConfirmDTO;
 import api.ailawyer.uz.dto.ProfileDTO;
 import api.ailawyer.uz.dto.profile.*;
@@ -26,65 +26,62 @@ public class ProfileController {
     private ProfileService profileService;
 
     @PutMapping("/detail")
-    public ResponseEntity<AppResponse<String>> updateDetail(@Valid @RequestBody ProfileDetailUpdateDTO dto,
+    public ResponseEntity<ApiResponse<api.ailawyer.uz.dto.AppResponse<String>>> updateDetail(@Valid @RequestBody ProfileDetailUpdateDTO dto,
                                                       @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
-        AppResponse<String> res = profileService.updateDetail(dto, lang);
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(ApiResponse.success(profileService.updateDetail(dto, lang)));
     }
 
     @PutMapping("/photo")
-    public ResponseEntity<AppResponse<String>> updatePhoto(@Valid @RequestBody ProfilePhotoUpdateDTO dto,
+    public ResponseEntity<ApiResponse<api.ailawyer.uz.dto.AppResponse<String>>> updatePhoto(@Valid @RequestBody ProfilePhotoUpdateDTO dto,
                                                             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
-        AppResponse<String> res = profileService.updatePhoto(dto.getPhotoId(), lang);
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(ApiResponse.success(profileService.updatePhoto(dto.getPhotoId(), lang)));
     }
 
     @PutMapping("/password")
-    public ResponseEntity<AppResponse<String>> updatePassword(@Valid @RequestBody ProfilePasswordUpdateDTO dto,
+    public ResponseEntity<ApiResponse<String>> updatePassword(@Valid @RequestBody ProfilePasswordUpdateDTO dto,
                                                             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
-        AppResponse<String> res = profileService.updatePassword(dto, lang);
-        return ResponseEntity.ok(res);
+        profileService.updatePassword(dto, lang);
+        return ResponseEntity.ok(ApiResponse.success("Parol muvaffaqiyatli yangilandi"));
     }
 
     @PutMapping("/username")
-    public ResponseEntity<AppResponse<String>> updateUsername(@Valid @RequestBody ProfileUsernameUpdateDTO dto,
+    public ResponseEntity<ApiResponse<String>> updateUsername(@Valid @RequestBody ProfileUsernameUpdateDTO dto,
                                                               @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
-        AppResponse<String> res = profileService.updateUsername(dto, lang);
-        return ResponseEntity.ok(res);
+        profileService.updateUsername(dto, lang);
+        return ResponseEntity.ok(ApiResponse.success("Username muvaffaqiyatli yangilandi"));
     }
 
     @PutMapping("/username/confirm")
-    public ResponseEntity<AppResponse<String>> updateUsernameConfirm(@Valid @RequestBody CodeConfirmDTO dto,
+    public ResponseEntity<ApiResponse<api.ailawyer.uz.dto.AppResponse<String>>> updateUsernameConfirm(@Valid @RequestBody CodeConfirmDTO dto,
                                                               @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
-        AppResponse<String> res = profileService.updateUsernameConfirm(dto, lang);
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(ApiResponse.success(profileService.updateUsernameConfirm(dto, lang)));
     }
 
     @PostMapping("/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<PageImpl<ProfileDTO>> filter(@RequestBody ProfileFilterDTO dto,
+    public ResponseEntity<ApiResponse<PageImpl<ProfileDTO>>> filter(@RequestBody ProfileFilterDTO dto,
                                                        @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang,
                                                        @RequestParam(value = "page", defaultValue = "1") int page,
                                                        @RequestParam(value = "size", defaultValue = "10") int size
                                                       ){
-        return ResponseEntity.ok(profileService.filter(dto, PageUtil.page(page), size, lang));
+        return ResponseEntity.ok(ApiResponse.success(profileService.filter(dto, PageUtil.page(page), size, lang)));
     }
 
     @PutMapping("/status/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AppResponse<String>> status(@PathVariable("id") Integer id,
+    public ResponseEntity<ApiResponse<api.ailawyer.uz.dto.AppResponse<String>>> status(@PathVariable("id") Integer id,
                    @RequestBody ProfileSatusDTO dto,
                    @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang
                    ){
-        return ResponseEntity.ok(profileService.changeStatus(id, dto.getStatus(), lang));
+        return ResponseEntity.ok(ApiResponse.success(profileService.changeStatus(id, dto.getStatus(), lang)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AppResponse<String>> delete(@PathVariable("id") Integer id,
+    public ResponseEntity<ApiResponse<api.ailawyer.uz.dto.AppResponse<String>>> delete(@PathVariable("id") Integer id,
                                                       @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang
     ){
-        return ResponseEntity.ok(profileService.delete(id, lang));
+        return ResponseEntity.ok(ApiResponse.success(profileService.delete(id, lang)));
     }
 
 }
