@@ -44,7 +44,10 @@ public class SpringConfig {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/v3/api-docs",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            // springdoc.api-docs.path (/api-docs) bo'lsa — UI shu yo'l orqali swagger-config va JSON ni oladi
+            "/api-docs",
+            "/api-docs/**"
     };
 
     @Bean
