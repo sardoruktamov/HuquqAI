@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CODEUZ.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CODEUZ.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/common/exception/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/common/response/ApiResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/AppConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/CustomUserDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/CustomUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/SpringConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/AttachController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/CaseController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/PostController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/ProfileController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/AppResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/AttachCreateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/AttachDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/CodeConfirmDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/FilterResultDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/JwtDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/ProfileDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/AuthDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/RegistrationDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/ResetPasswordConfirmDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/ResetPasswordDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/cases/CaseCreateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/cases/CaseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostAdminFilterDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostCreateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostFilterDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/SimilarPostListDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileDetailUpdateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileFilterDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfilePasswordUpdateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfilePhotoUpdateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileSatusDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileUsernameUpdateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsAuthDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsAuthResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsAuthResponseDataDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsResentDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsSendResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsVerificationDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/AttachEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/CaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/EmailHistoryEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/PostEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/ProfileEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/ProfileRoleEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/SmsHistoryEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/SmsProviderTokenHolderEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/AppLanguage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/CaseStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/GeneralStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/ProfileRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/SmsType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/exps/AppBadException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/AttachRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/CaseRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/CustomPostRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/EmailHistoryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/PostRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/ProfileRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/ProfileRoleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/SmsHistoryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/SmsProviderTokenHolderRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/AttachService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/CaseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/EmailHistoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/EmailSendingService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/PostService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/ProfileRoleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/ProfileService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/ResourceBundleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/SmsHistoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/SmsSendService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/mapper/PostDetailMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/mapper/ProfileDetailMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/EmailUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/PageUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/PhoneUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/RandomUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/SpringSecurityUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/application-dev.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/application-local.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/attach.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/auth.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/post.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/profile.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/sms-integration.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/messages/message_en.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/messages/message_ru.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/messages/message_uz.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/templates/mail-test.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="3Da8DG6LIwYHkhZndtcShcRFjtg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="api.ailawyer.uz" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="api.ailawyer.uz.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="" />
+      <created>1778508706819</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778508706819</updated>
+      <workItem from="1778508716046" duration="1245000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

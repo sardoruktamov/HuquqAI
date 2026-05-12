@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CODEUZ.iml" filepath="$PROJECT_DIR$/.idea/CODEUZ.iml" />
-      <module fileurl="file://$PROJECT_DIR$/api.giybat.uz/api.giybat.uz.iml" filepath="$PROJECT_DIR$/api.giybat.uz/api.giybat.uz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api.ailawyer.uz/api.ailawyer.uz.iml" filepath="$PROJECT_DIR$/api.ailawyer.uz/api.ailawyer.uz.iml" />
     </modules>
   </component>
 </project>
