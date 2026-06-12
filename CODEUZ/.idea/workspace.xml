@@ -5,117 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CODEUZ.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CODEUZ.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/Application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/common/exception/GlobalExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/common/response/ApiResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/AppConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/CustomUserDetails.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/CustomUserDetailsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/SpringConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/config/SwaggerConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/AttachController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/CaseController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/PostController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/controller/ProfileController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/AppResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/AttachCreateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/AttachDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/CodeConfirmDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/FilterResultDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/JwtDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/ProfileDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/AuthDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/RegistrationDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/ResetPasswordConfirmDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/auth/ResetPasswordDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/cases/CaseCreateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/cases/CaseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostAdminFilterDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostCreateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/PostFilterDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/post/SimilarPostListDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileDetailUpdateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileFilterDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfilePasswordUpdateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfilePhotoUpdateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileSatusDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/profile/ProfileUsernameUpdateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsAuthDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsAuthResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsAuthResponseDataDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsRequestDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsResentDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsSendResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/dto/sms/SmsVerificationDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/AttachEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/CaseEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/EmailHistoryEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/PostEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/ProfileEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/ProfileRoleEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/SmsHistoryEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/entity/SmsProviderTokenHolderEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/AppLanguage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/CaseStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/GeneralStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/ProfileRole.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/enums/SmsType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/exps/AppBadException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/AttachRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/CaseRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/CustomPostRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/EmailHistoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/PostRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/ProfileRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/ProfileRoleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/SmsHistoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/repository/SmsProviderTokenHolderRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/AttachService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/AuthService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/CaseService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/EmailHistoryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/EmailSendingService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/PostService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/ProfileRoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/ProfileService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/ResourceBundleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/SmsHistoryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/SmsSendService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/mapper/PostDetailMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/service/mapper/ProfileDetailMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/EmailUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/JwtUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/PageUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/PhoneUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/RandomUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/java/api/ailawyer/uz/util/SpringSecurityUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/application-dev.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/application-local.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/attach.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/auth.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/post.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/profile.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/http/sms-integration.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/messages/message_en.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/messages/message_ru.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/messages/message_uz.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.giybat.uz/src/main/resources/templates/mail-test.html" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/AiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/AiRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/StubAiProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/ProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/ProfileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/AiMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/AiMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,6 +39,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
@@ -151,10 +51,26 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "8269b3439396c3a77113b2e2ef7f1d5f",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="4" requestIdentifier="Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="chatAi | Kutilayotgan natija: AI huquqiy maslahat bermaydi. &quot;Iltimos, savolingizni adabiy tilda va hurmat bilan qayta bering&quot; degan ma'noda javob qaytarishi kerak." type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="7" requestIdentifier="Kutilayotgan natija: AI huquqiy maslahat bermaydi. &quot;Iltimos, savolingizni adabiy tilda va hurmat bilan qayta bering&quot; degan ma'noda javob qaytarishi kerak." runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="chatAi | Kutilayotgan natija: AI javob berish o'rniga &quot;Muammoingizni batafsilroq va aniq savol shaklida yozing&quot; deb so'rashi kerak." type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="6" requestIdentifier="Kutilayotgan natija: AI javob berish o'rniga &quot;Muammoingizni batafsilroq va aniq savol shaklida yozing&quot; deb so'rashi kerak." runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="5" requestIdentifier="Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="chatAi | =========================================#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="3" requestIdentifier="=========================================#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="api.ailawyer.uz" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="api.ailawyer.uz.Application" />
@@ -162,6 +78,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
+        <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI huquqiy maslahat bermaydi. &quot;Iltimos, savolingizni adabiy tilda va hurmat bilan qayta bering&quot; degan ma'noda javob qaytarishi kerak." />
+        <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI javob berish o'rniga &quot;Muammoingizni batafsilroq va aniq savol shaklida yozing&quot; deb so'rashi kerak." />
+        <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." />
+        <item itemvalue="HTTP Request.chatAi | =========================================#1" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -172,6 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1778508706819</updated>
       <workItem from="1778508716046" duration="1245000" />
+      <workItem from="1781240857927" duration="6952000" />
     </task>
     <servers />
   </component>

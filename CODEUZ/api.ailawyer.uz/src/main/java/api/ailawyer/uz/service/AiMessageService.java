@@ -1,5 +1,6 @@
 package api.ailawyer.uz.service;
 
+import api.ailawyer.uz.ai.AiChatHistoryItem;
 import api.ailawyer.uz.ai.AiProvider;
 import api.ailawyer.uz.ai.AiPromptVersion;
 import api.ailawyer.uz.ai.AiRequest;
@@ -22,12 +23,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * AI chat message logikasi:
  * - User message saqlanadi
- * - AI provider (Gemini)ga yuboriladi
+ * - Oxirgi 6 ta xabar konteksti Gemini'ga yuboriladi
  * - AI javobi saqlanadi
  * - Trigger so'zlar bo'lsa AI message isEscalation=true bo'ladi
  */
@@ -35,8 +42,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AiMessageService {
 
-    private static final List<String> ESCALATION_TRIGGERS = List.of(
-            "advokat", "sud", "jinoiy", "huquqshunos", "xavf", "sudya"
+    private static final int HISTORY_LIMIT = 6;
+
+    private static final Pattern ESCALATION_PATTERN = Pattern.compile(
+            "advokat|narkotik|qurol|qora dori|nasha|sud|qotillik|huquqshunos|xavf",
+            Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE
     );
 
     private final AiChatService aiChatService;
@@ -74,9 +84,12 @@ public class AiMessageService {
         aiMessageRepository.save(userMsg);
         saveAttachments(userMsg.getId(), dto.getAttachIds());
 
-        // 2) AI provider (Gemini)ga yuborish
+        // 2) oxirgi 6 ta xabar tarixini Gemini'ga yuborish
+        List<AiChatHistoryItem> history = buildChatHistory(chat.getId());
+
         AiRequest req = new AiRequest();
         req.setPrompt(dto.getContent());
+        req.setHistory(history);
         req.setSystemPromptVersion(AiPromptVersion.V1);
         req.setMetadata(Map.of(
                 "aiChatId", chat.getId().toString(),
@@ -88,8 +101,8 @@ public class AiMessageService {
             throw new AppBadException("AI javob bermadi!");
         }
 
-        // 3) escalation tekshirish (AI javobiga qarab)
-        boolean escalation = containsTrigger(res.getText());
+        // 3) escalation tekshirish (user xabari va AI javobiga qarab)
+        boolean escalation = containsTrigger(userMsg.getContent()) || containsTrigger(res.getText());
 
         // 4) AI message saqlash
         AiMessageEntity aiMsg = new AiMessageEntity();
@@ -103,12 +116,28 @@ public class AiMessageService {
         return toDto(aiMsg, List.of());
     }
 
-    private boolean containsTrigger(String text) {
-        String lower = text.toLowerCase(Locale.ROOT);
-        for (String t : ESCALATION_TRIGGERS) {
-            if (lower.contains(t)) return true;
+    private List<AiChatHistoryItem> buildChatHistory(UUID aiChatId) {
+        PageRequest pr = PageRequest.of(0, HISTORY_LIMIT);
+        Page<AiMessageEntity> page = aiMessageRepository.findAllByAiChatIdOrderByCreatedDateDesc(aiChatId, pr);
+
+        List<AiMessageEntity> messages = new ArrayList<>(page.getContent());
+        Collections.reverse(messages);
+
+        List<AiChatHistoryItem> history = new ArrayList<>();
+        for (AiMessageEntity message : messages) {
+            AiChatHistoryItem item = new AiChatHistoryItem();
+            item.setRole(message.getSenderType() == AiMessageSenderType.AI ? "model" : "user");
+            item.setContent(message.getContent());
+            history.add(item);
         }
-        return false;
+        return history;
+    }
+
+    private boolean containsTrigger(String text) {
+        if (text == null || text.isBlank()) {
+            return false;
+        }
+        return ESCALATION_PATTERN.matcher(text).find();
     }
 
     private void saveAttachments(UUID messageId, List<String> attachIds) {
@@ -117,7 +146,6 @@ public class AiMessageService {
         for (String attachId : attachIds) {
             if (attachId == null || attachId.isBlank()) continue;
 
-            // mavjudligini tekshiradi (topilmasa exception)
             attachService.getEntity(attachId);
 
             AiMessageAttachEntity link = new AiMessageAttachEntity();
@@ -154,4 +182,3 @@ public class AiMessageService {
         return dto;
     }
 }
-

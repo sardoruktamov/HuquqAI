@@ -1,0 +1,46 @@
+### ============================================================
+### Gemini konfiguratsiyasi (application.properties)
+### ============================================================
+###
+### gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
+### gemini.api.key=KALITINGIZNI_SHU_YERGA_YOZING
+###
+### Eslatma: kalitning o'zi bu faylga yozilmaydi — faqat qator formati ko'rsatilgan.
+###
+### ============================================================
+### URL shakllanishi (GeminiAiProviderImpl.java, ~52-qator)
+### ============================================================
+###
+### String url = apiUrl + "?key=" + apiKey;
+###
+### Yakuniy URL misoli:
+### https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=KALITINGIZ
+###
+### ============================================================
+
+@geminiUrl = https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
+@geminiKey = KALITINGIZNI_SHU_YERGA_YOZING
+
+### Gemini API ni to'g'ridan-to'g'ri test (loyihadan mustaqil)
+POST {{geminiUrl}}?key={{geminiKey}}
+Content-Type: application/json
+
+{
+  "systemInstruction": {
+    "parts": [
+      {
+        "text": "Sen O'zbekiston Respublikasi qonunchiligini mukammal biladigan malakali huquqiy yordamchisan."
+      }
+    ]
+  },
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Assalomu alaykum. Otamdan qolgan yer merosini ukam bilan qanday bo'lishim mumkin?"
+        }
+      ]
+    }
+  ]
+}
