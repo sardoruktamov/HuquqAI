@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "fullName": "O'ktamov Sardorbek",
+    "username": "uktamov9198@mail.ru",
+    "roleList": [
+      "ROLE_USER"
+    ],
+    "jwt": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEzNzU0ODgsImV4cCI6MTc4MTQ2MTg4OH0.q3y66UDU6Jldk4D4O0QpwInrzh7ZgUZoP0sm-8gsext-YDBfO688spNuY8PQww9hWdJzSOjDjnNjX6R-l0VnAw"
+  },
+  "timestamp": "2026-06-13T23:31:28.2941915"
+}

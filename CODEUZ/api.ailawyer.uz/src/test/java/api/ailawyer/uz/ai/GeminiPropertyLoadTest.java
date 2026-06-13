@@ -15,6 +15,9 @@ class GeminiPropertyLoadTest {
     @Value("${gemini.api.key}")
     private String geminiApiKey;
 
+    @Value("${gemini.api.model}")
+    private String geminiApiModel;
+
     @Autowired
     private Environment environment;
 
@@ -40,6 +43,19 @@ class GeminiPropertyLoadTest {
         assertFalse(geminiApiKey.isBlank(), "@Value orqali inject qilingan kalit bo'sh bo'lmasligi kerak");
         org.junit.jupiter.api.Assertions.assertEquals(53, fromEnv.length(),
                 "application.properties dagi to'liq kalit uzunligi 53 bo'lishi kerak");
+    }
+
+    @Test
+    void geminiApiModelIsLoadedFromApplicationProperties() {
+        String fromEnv = environment.getProperty("gemini.api.model");
+
+        System.out.println("gemini.api.model from Environment: " + fromEnv);
+        System.out.println("@Value injected geminiApiModel: " + geminiApiModel);
+
+        assertNotNull(fromEnv);
+        assertFalse(fromEnv.isBlank());
+        org.junit.jupiter.api.Assertions.assertEquals("Gemini 2.5 Flash", fromEnv);
+        org.junit.jupiter.api.Assertions.assertEquals(fromEnv, geminiApiModel);
     }
 
     private static String mask(String value) {

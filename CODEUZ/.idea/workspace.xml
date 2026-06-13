@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-client.cookies" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-client.cookies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/gemini.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/gemini.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/ai/GeminiPropertyLoadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/ai/GeminiPropertyLoadTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,29 +38,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.4275862",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "spring.configuration.checksum": "8269b3439396c3a77113b2e2ef7f1d5f",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4275862&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8269b3439396c3a77113b2e2ef7f1d5f&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="chatAi | 1. Avval Login qilib, TOKEN ni olamiz" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="2" requestIdentifier="1. Avval Login qilib, TOKEN ni olamiz" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="4" requestIdentifier="Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -71,9 +76,6 @@
     <configuration name="chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="5" requestIdentifier="Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="chatAi | =========================================#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="3" requestIdentifier="=========================================#1" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="api.ailawyer.uz" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="api.ailawyer.uz.Application" />
@@ -83,11 +85,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
+        <item itemvalue="HTTP Request.chatAi | 1. Avval Login qilib, TOKEN ni olamiz" />
         <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." />
         <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI huquqiy maslahat bermaydi. &quot;Iltimos, savolingizni adabiy tilda va hurmat bilan qayta bering&quot; degan ma'noda javob qaytarishi kerak." />
         <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI javob berish o'rniga &quot;Muammoingizni batafsilroq va aniq savol shaklida yozing&quot; deb so'rashi kerak." />
-        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
-        <item itemvalue="HTTP Request.chatAi | =========================================#1" />
       </list>
     </recent_temporary>
   </component>
@@ -101,7 +103,8 @@
       <updated>1778508706819</updated>
       <workItem from="1778508716046" duration="1245000" />
       <workItem from="1781240857927" duration="11992000" />
-      <workItem from="1781373891902" duration="694000" />
+      <workItem from="1781373891902" duration="1855000" />
+      <workItem from="1781375966213" duration="1958000" />
     </task>
     <servers />
   </component>

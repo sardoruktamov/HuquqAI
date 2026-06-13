@@ -21,20 +21,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Google Gemini REST API (v1beta, gemini-3.5-flash) integratsiyasi.
+ * Google Gemini REST API (v1beta) integratsiyasi.
  */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class GeminiAiProviderImpl implements AiProvider {
 
-    private static final String MODEL_NAME = "gemini-3.5-flash";
-
     @Value("${gemini.api.key}")
     private String apiKey;
 
     @Value("${gemini.api.url}")
     private String apiUrl;
+
+    @Value("${gemini.api.model}")
+    private String apiModel;
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -46,12 +47,16 @@ public class GeminiAiProviderImpl implements AiProvider {
             throw new AppBadException("Gemini API kaliti sozlanmagan!");
         }
 
+        String normalizedModel = normalizeProperty(apiModel);
+        if (normalizedModel.isBlank()) {
+            throw new AppBadException("Gemini modeli sozlanmagan!");
+        }
+
         long startedAt = System.currentTimeMillis();
 
         try {
-            log.info("TRY ICHII----" + apiKey);
             Map<String, Object> body = buildRequestBody(request);
-            String url = buildRequestUrl(normalizedKey);
+            String url = buildRequestUrl(normalizedKey, normalizedModel);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -72,7 +77,7 @@ public class GeminiAiProviderImpl implements AiProvider {
 
             AiResponse aiResponse = new AiResponse();
             aiResponse.setText(text.trim());
-            aiResponse.setModel(MODEL_NAME);
+            aiResponse.setModel(normalizedModel);
             aiResponse.setLatencyMs(System.currentTimeMillis() - startedAt);
             aiResponse.setRagUsed(false);
 
@@ -86,9 +91,7 @@ public class GeminiAiProviderImpl implements AiProvider {
         } catch (AppBadException e) {
             throw e;
         } catch (RestClientException e) {
-            log.error("Gemini API chaqiruvi muvaffaqiyatsiz: {}", e.getMessage());
-            log.info(apiKey);
-            log.info(apiUrl);
+            log.error("Gemini API chaqiruvi muvaffaqiyatsiz (model={}): {}", normalizedModel, e.getMessage());
             throw new AppBadException("AI javob olishda xatolik yuz berdi!");
         } catch (Exception e) {
             log.error("Gemini javobini qayta ishlashda xatolik: {}", e.getMessage());
@@ -97,15 +100,26 @@ public class GeminiAiProviderImpl implements AiProvider {
     }
 
     /**
-     * application.properties: gemini.api.url = ...generateContent?key=
-     * Yakuniy URL: apiUrl + apiKey
+     * application.properties:
+     * gemini.api.url = https://generativelanguage.googleapis.com/v1beta/models
+     * gemini.api.model = Gemini 2.5 Flash
+     * Yakuniy URL: {apiUrl}/{modelId}:generateContent?key={apiKey}
      */
-    private String buildRequestUrl(String normalizedKey) {
-        String baseUrl = normalizeProperty(apiUrl);
-        if (baseUrl.contains("?key=")) {
-            return baseUrl + normalizedKey;
+    private String buildRequestUrl(String normalizedKey, String normalizedModel) {
+        String baseUrl = normalizeProperty(apiUrl).replaceAll("/$", "");
+        String modelId = toApiModelId(normalizedModel);
+        return baseUrl + "/" + modelId + ":generateContent?key=" + normalizedKey;
+    }
+
+    /**
+     * "Gemini 2.5 Flash" -> "gemini-2.5-flash"
+     * "gemini-2.5-flash" -> "gemini-2.5-flash"
+     */
+    private String toApiModelId(String model) {
+        if (model.contains(" ")) {
+            return model.toLowerCase().replace(' ', '-');
         }
-        return baseUrl + "?key=" + normalizedKey;
+        return model.toLowerCase();
     }
 
     private String normalizeProperty(String value) {

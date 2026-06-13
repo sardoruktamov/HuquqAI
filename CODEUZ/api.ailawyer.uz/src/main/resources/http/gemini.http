@@ -2,27 +2,28 @@
 ### Gemini konfiguratsiyasi (application.properties)
 ### ============================================================
 ###
-### gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=
+### gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models
+### gemini.api.model=Gemini 2.5 Flash
 ### gemini.api.key=KALITINGIZNI_SHU_YERGA_YOZING
 ###
-### Eslatma: kalitning o'zi bu faylga yozilmaydi — faqat qator formati ko'rsatilgan.
-###
 ### ============================================================
-### URL shakllanishi (GeminiAiProviderImpl.java, ~52-qator)
+### URL shakllanishi (GeminiAiProviderImpl.java)
 ### ============================================================
 ###
-### String url = apiUrl + apiKey;   // apiUrl oxirida ?key= bo'lishi kerak
+### {gemini.api.url}/{modelId}:generateContent?key={gemini.api.key}
+### "Gemini 2.5 Flash" -> gemini-2.5-flash
 ###
 ### Yakuniy URL misoli:
-### https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=KALITINGIZ
+### https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=KALITINGIZ
 ###
 ### ============================================================
 
-@geminiUrl = https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=
+@geminiBaseUrl = https://generativelanguage.googleapis.com/v1beta/models
+@geminiModel = gemini-2.5-flash
 @geminiKey = KALITINGIZNI_SHU_YERGA_YOZING
 
 ### Gemini API ni to'g'ridan-to'g'ri test (loyihadan mustaqil)
-POST {{geminiUrl}}{{geminiKey}}
+POST {{geminiBaseUrl}}/{{geminiModel}}:generateContent?key={{geminiKey}}
 Content-Type: application/json
 
 {
