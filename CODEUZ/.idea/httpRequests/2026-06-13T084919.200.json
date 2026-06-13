@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "id": "f434e01b-b563-4a28-93bd-e87367e3e99b",
+    "aiChatId": "20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4",
+    "senderType": "AI",
+    "content": "Va alaykum assalom! Dasturlash sohasiga qiziqishingiz juda tahsinga loyiq. \n\nBiroq, men O'zbekiston Respublikasi qonunchiligi bo'yicha huquqiy yordamchi bo'lganligim sababli, dasturlashga oid sof texnik savollarga (kod yozish, texnologiyalarni tanlash va h.k.) javob bera olmayman.\n\nAgar sizni dasturlash va IT sohasining **huquqiy tomonlari** qiziqtirayotgan bo'lsa, quyidagi masalalarda bajonidil yordam bera olaman:\n\n1. **Mualliflik huquqi:** Yaratgan dasturingiz yoki saytingizni intellektual mulk sifatida qonuniy himoya qilish va patentlash.\n2. **Frilanserlik va soliqlar:** Dasturchi sifatida qonuniy faoliyat yuritish, o'zini o'zi band qilgan shaxs sifatida ro'yxatdan o'tish va soliq imtiyozlari.\n3. **IT Park imtiyozlari:** IT kompaniya ochish va IT Park rezidenti bo'lish tartibi hamda qonuniy imtiyozlari.\n4. **Shartnomalar:** Buyurtmachi va dasturchi o'rtasidagi shartnomalarni (freelance shartnomalari, NDA — sir saqlash kelishuvi) to'g'ri rasmiylashtirish.\n\nShu kabi huquqiy savollaringiz bo'lsa, ularni batafsilroq yozib qoldirishingiz mumkin. Sizga yordam berishdan xursand bo'laman!",
+    "isEscalation": false,
+    "createdDate": "2026-06-13T08:49:19.2898559",
+    "attachments": []
+  },
+  "timestamp": "2026-06-13T08:49:19.2948572"
+}

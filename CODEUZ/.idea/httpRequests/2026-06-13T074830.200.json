@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "id": "3975ba52-9e58-45f3-9d9c-8fe93ee543c5",
+    "aiChatId": "20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4",
+    "senderType": "AI",
+    "content": "Va alaykum assalom. Qanday muammo sizni qiynamoqda? \n\nMuammoingizni batafsilroq va aniqroq tushuntirib bera olasizmi? Vaziyatni batafsil yozsangiz, uni O‘zbekiston Respublikasi qonunchiligi asosida hal qilish bo‘yicha sizga to‘g‘ri huquqiy maslahat va yordam berishga harakat qilaman.",
+    "isEscalation": false,
+    "createdDate": "2026-06-13T07:48:30.0093496",
+    "attachments": []
+  },
+  "timestamp": "2026-06-13T07:48:30.0123528"
+}

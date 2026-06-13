@@ -48,7 +48,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
 
 {
-  "content": "Salom, menda muammo bor."
+  "content": "Salom, men DASTURLASHGA QIZIQAMAN,SHU BOYICHA SAVOLIM BOR"
 }
 ### Kutilayotgan natija: AI javob berish o'rniga "Muammoingizni batafsilroq va aniq savol shaklida yozing" deb so'rashi kerak.
 

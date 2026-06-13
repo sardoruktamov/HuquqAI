@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/AiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/AiRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/StubAiProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/ProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/ProfileRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/AiMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/AiMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/gemini.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/gemini.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +50,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.4275862",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "spring.configuration.checksum": "8269b3439396c3a77113b2e2ef7f1d5f",
     "vue.rearranger.settings.migration": "true"
   }
@@ -80,10 +83,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
+        <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." />
         <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI huquqiy maslahat bermaydi. &quot;Iltimos, savolingizni adabiy tilda va hurmat bilan qayta bering&quot; degan ma'noda javob qaytarishi kerak." />
         <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI javob berish o'rniga &quot;Muammoingizni batafsilroq va aniq savol shaklida yozing&quot; deb so'rashi kerak." />
-        <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." />
+        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
         <item itemvalue="HTTP Request.chatAi | =========================================#1" />
       </list>
     </recent_temporary>
@@ -97,7 +100,8 @@
       <option name="presentableId" value="Default" />
       <updated>1778508706819</updated>
       <workItem from="1778508716046" duration="1245000" />
-      <workItem from="1781240857927" duration="6952000" />
+      <workItem from="1781240857927" duration="11992000" />
+      <workItem from="1781373891902" duration="694000" />
     </task>
     <servers />
   </component>

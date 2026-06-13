@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "id": "db0e229e-9020-47d9-b96e-fe425787d82b",
+    "aiChatId": "20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4",
+    "senderType": "AI",
+    "content": "Assalomu alaykum. Hurmatli foydalanuvchi, iltimos, muammoingizni haqoratli va nojo‘ya so‘zlarsiz, odob doirasida va adabiy tilda qayta bayon qilsangiz. \n\nSiz bergan savolga adabiy tilda va xushmuomala shaklda qayta murojaat qilganingizdan so‘ng, O‘zbekiston Respublikasi Mehnat kodeksi va amaldagi qonunchilik asosida batafsil javob berishga tayyorman.",
+    "isEscalation": false,
+    "createdDate": "2026-06-13T07:49:36.0703463",
+    "attachments": []
+  },
+  "timestamp": "2026-06-13T07:49:36.0733458"
+}

@@ -21,14 +21,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Google Gemini REST API (v1beta, gemini-1.5-flash) integratsiyasi.
+ * Google Gemini REST API (v1beta, gemini-3.5-flash) integratsiyasi.
  */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class GeminiAiProviderImpl implements AiProvider {
 
-    private static final String MODEL_NAME = "gemini-1.5-flash";
+    private static final String MODEL_NAME = "gemini-3.5-flash";
 
     @Value("${gemini.api.key}")
     private String apiKey;
@@ -41,15 +41,17 @@ public class GeminiAiProviderImpl implements AiProvider {
 
     @Override
     public AiResponse generate(AiRequest request) {
-        if (apiKey == null || apiKey.isBlank() || "YOUR_GEMINI_API_KEY".equals(apiKey)) {
+        String normalizedKey = normalizeProperty(apiKey);
+        if (normalizedKey.isBlank() || "YOUR_GEMINI_API_KEY".equals(normalizedKey)) {
             throw new AppBadException("Gemini API kaliti sozlanmagan!");
         }
 
         long startedAt = System.currentTimeMillis();
 
         try {
+            log.info("TRY ICHII----" + apiKey);
             Map<String, Object> body = buildRequestBody(request);
-            String url = apiUrl + "?key=" + apiKey;
+            String url = buildRequestUrl(normalizedKey);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -85,11 +87,32 @@ public class GeminiAiProviderImpl implements AiProvider {
             throw e;
         } catch (RestClientException e) {
             log.error("Gemini API chaqiruvi muvaffaqiyatsiz: {}", e.getMessage());
+            log.info(apiKey);
+            log.info(apiUrl);
             throw new AppBadException("AI javob olishda xatolik yuz berdi!");
         } catch (Exception e) {
             log.error("Gemini javobini qayta ishlashda xatolik: {}", e.getMessage());
             throw new AppBadException("AI javob olishda xatolik yuz berdi!");
         }
+    }
+
+    /**
+     * application.properties: gemini.api.url = ...generateContent?key=
+     * Yakuniy URL: apiUrl + apiKey
+     */
+    private String buildRequestUrl(String normalizedKey) {
+        String baseUrl = normalizeProperty(apiUrl);
+        if (baseUrl.contains("?key=")) {
+            return baseUrl + normalizedKey;
+        }
+        return baseUrl + "?key=" + normalizedKey;
+    }
+
+    private String normalizeProperty(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.trim().replaceAll("^\"|\"$", "");
     }
 
     private Map<String, Object> buildRequestBody(AiRequest request) {
