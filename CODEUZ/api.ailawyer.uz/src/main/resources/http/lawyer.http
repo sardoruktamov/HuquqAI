@@ -1,0 +1,86 @@
+@host = http://localhost:8080
+@token = YOUR_JWT_TOKEN
+@lawyerId = 1
+@lawyerChatId = 00000000-0000-0000-0000-000000000000
+@licenseAttachId = YOUR_LICENSE_ATTACH_ID
+
+### 1. Login
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+### =========================================
+### 2. Litsenziya hujjatini yuklash (attach)
+POST {{host}}/api/v1/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="license.pdf"
+Content-Type: application/pdf
+
+< ./license.pdf
+--WebAppBoundary--
+
+### =========================================
+### 3. Advokat onboarding (DRAFT)
+POST {{host}}/api/v1/lawyers/onboarding
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "specializations": "Fuqarolik huquqi,Meros",
+  "experienceYears": 12,
+  "bio": "12 yillik tajribaga ega advokat.",
+  "licenseNumber": "L-123456789",
+  "licenseDocumentId": "{{licenseAttachId}}",
+  "region": "Toshkent",
+  "languages": ["UZ", "RU"]
+}
+
+### =========================================
+### 4. Onboarding yuborish (PENDING)
+POST {{host}}/api/v1/lawyers/onboarding/submit
+Authorization: Bearer {{token}}
+
+### =========================================
+### 5. Admin: pending ro'yxat
+GET {{host}}/api/v1/admin/lawyers/pending?page=1&size=10
+Authorization: Bearer {{token}}
+
+### =========================================
+### 6. Admin: tasdiqlash (APPROVED)
+PUT {{host}}/api/v1/admin/lawyers/{{lawyerId}}/approve
+Authorization: Bearer {{token}}
+
+### =========================================
+### 7. Oddiy user: advokatlar ro'yxati
+GET {{host}}/api/v1/lawyers/public?page=1&size=10&region=Toshkent
+Authorization: Bearer {{token}}
+
+### =========================================
+### 8. Oddiy user: advokat profili + LITSENZIYA
+GET {{host}}/api/v1/lawyers/public/{{lawyerId}}
+Authorization: Bearer {{token}}
+
+### =========================================
+### 9. Advokatga chat boshlash
+POST {{host}}/api/v1/lawyer-chats/start
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "lawyerId": {{lawyerId}},
+  "message": {
+    "content": "Assalomu alaykum, meros masalasida maslahat kerak."
+  }
+}
+
+### =========================================
+### 10. Lawyer chat yopish
+PUT {{host}}/api/v1/lawyer-chats/{{lawyerChatId}}/close
+Authorization: Bearer {{token}}

@@ -41,5 +41,20 @@ public class LawyerChatController {
     public ResponseEntity<ApiResponse<LawyerChatDTO>> getById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(ApiResponse.success(lawyerChatService.getById(id)));
     }
+
+    /**
+     * PUT /api/v1/lawyer-chats/{id}/close
+     * <p>
+     * Mijoz yoki advokat chatni yopadi — holat CLOSED bo'ladi.
+     * Yopilgan chatga yangi xabar yozib bo'lmaydi.
+     *
+     * @param id yopiladigan chat UUID si
+     */
+    @PutMapping("/{id}/close")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
+    @Operation(summary = "Lawyer chat yopish", description = "Chat holatini CLOSED qilish")
+    public ResponseEntity<ApiResponse<String>> close(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(ApiResponse.success(lawyerChatService.close(id)));
+    }
 }
 

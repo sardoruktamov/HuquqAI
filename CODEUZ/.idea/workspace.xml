@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-client.cookies" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-client.cookies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/gemini.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/gemini.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/ai/GeminiPropertyLoadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/ai/GeminiPropertyLoadTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +98,7 @@
       <workItem from="1778508716046" duration="1245000" />
       <workItem from="1781240857927" duration="11992000" />
       <workItem from="1781373891902" duration="1855000" />
-      <workItem from="1781375966213" duration="1958000" />
+      <workItem from="1781375966213" duration="1985000" />
     </task>
     <servers />
   </component>

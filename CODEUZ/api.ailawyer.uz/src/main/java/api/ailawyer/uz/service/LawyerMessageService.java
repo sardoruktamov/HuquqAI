@@ -35,6 +35,7 @@ public class LawyerMessageService {
     private final LawyerMessageAttachRepository lawyerMessageAttachRepository;
     private final AttachService attachService;
     private final NotificationService notificationService;
+    private final LawyerProfileService lawyerProfileService;
 
     public PageImpl<LawyerMessageDTO> list(UUID lawyerChatId, int page, int size) {
         LawyerChatEntity chat = lawyerChatService.getEntityForRead(lawyerChatId);
@@ -53,16 +54,23 @@ public class LawyerMessageService {
     }
 
     /**
-     * Client advokatga birinchi message yozganda ishlatiladi:
-     * - chat ensure (ACTIVE)
-     * - message saqlash
-     * - notification hook
+     * Mijoz advokatga birinchi xabar yozganda chat boshlanadi.
+     * <p>
+     * Ketma-ketlik:
+     * 1. Advokat roli bo'lgan foydalanuvchi bu endpointdan foydalana olmaydi
+     * 2. Tanlangan advokat tasdiqlangan (APPROVED) ekanligi tekshiriladi
+     * 3. ACTIVE chat yaratiladi yoki mavjud chat olinadi
+     * 4. Xabar saqlanadi va advokatga bildirishnoma yuboriladi
+     *
+     * @param dto advokat id si va birinchi xabar matni
      */
     public LawyerMessageDTO startChatAndSend(LawyerChatStartDTO dto) {
         Integer clientId = SpringSecurityUtil.getCurrentUserId();
         if (SpringSecurityUtil.hazRole(ProfileRole.ROLE_LAWYER)) {
             throw new AppBadException("Advokat bu endpoint orqali chat boshlay olmaydi!");
         }
+
+        lawyerProfileService.requireApprovedLawyer(dto.getLawyerId());
 
         LawyerChatEntity chat = lawyerChatService.ensureActiveChat(clientId, dto.getLawyerId());
         LawyerMessageDTO saved = saveMessage(chat, LawyerMessageSenderType.USER, dto.getMessage());

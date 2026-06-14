@@ -75,6 +75,23 @@ public class LawyerChatService {
                 });
     }
 
+    /**
+     * Advokat chatini yopadi — status CLOSED ga o'zgaradi.
+     * Faqat chat ishtirokchisi (mijoz, advokat yoki admin) chaqira oladi.
+     *
+     * @param id chat UUID si
+     * @return muvaffaqiyat xabari
+     */
+    public String close(UUID id) {
+        LawyerChatEntity chat = getEntityForRead(id);
+        if (chat.getStatus() == LawyerChatStatus.CLOSED) {
+            throw new AppBadException("Lawyer chat allaqachon yopilgan!");
+        }
+        chat.setStatus(LawyerChatStatus.CLOSED);
+        lawyerChatRepository.save(chat);
+        return "Lawyer chat yopildi";
+    }
+
     private void requireCanRead(LawyerChatEntity e) {
         if (SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN) || SpringSecurityUtil.hazRole(ProfileRole.ROLE_SUPERADMIN)) {
             return;
