@@ -1,10 +1,20 @@
-@host = http://localhost:8080
-@token = YOUR_JWT_TOKEN
-@lawyerId = 1
-@lawyerChatId = 00000000-0000-0000-0000-000000000000
-@licenseAttachId = YOUR_LICENSE_ATTACH_ID
+### ===================================================================
+### QALQON AI - ADVOKATLAR TIZIMINI TEST QILISH (BOSQICH 5)
+### ===================================================================
 
-### 1. Login
+@host = http://localhost:8080
+
+### O'ZGARUVCHILAR (Test davomida bularni o'zgartirib borasiz)
+@token = SHU_YERGA_TOKEN_QOYASIZ
+@licenseAttachId = SHU_YERGA_HUJJAT_ID_QOYASIZ
+@lawyerId = SHU_YERGA_ADVOKAT_ID_QOYASIZ
+@lawyerChatId = SHU_YERGA_CHAT_ID_QOYASIZ
+
+### ===================================================================
+### 1-QADAM: ADVOKAT SIFATIDA LOGIN QILISH
+### Vazifa: Dasturga kirib, Token olish. 
+### Eslatma: Javobdan (Response) kelgan "token" ni nusxalab, yuqoridagi @token ga qoying.
+### ===================================================================
 POST {{host}}/api/v1/auth/login
 Content-Type: application/json
 Accept-Language: UZ
@@ -14,10 +24,15 @@ Accept-Language: UZ
   "password": "12345"
 }
 
-### =========================================
-### 2. Litsenziya hujjatini yuklash (attach)
+### ===================================================================
+### 2-QADAM: LITSENZIYA YUKLASH
+### Vazifa: Advokat litsenziyasini (PDF yoki Rasm) serverga yuklash.
+### MUHIM: Ushbu .http fayl turgan papkada "license.pdf" degan fayl bo'lishi shart! (Yoki nomini o'zgartiring).
+### Eslatma: Javobdan qaytgan fayl ID sini (masalan uuid) olib, yuqoridagi @licenseAttachId ga qoying.
+### ===================================================================
 POST {{host}}/api/v1/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer {{token}}
 
 --WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="license.pdf"
@@ -26,8 +41,11 @@ Content-Type: application/pdf
 < ./license.pdf
 --WebAppBoundary--
 
-### =========================================
-### 3. Advokat onboarding (DRAFT)
+### ===================================================================
+### 3-QADAM: ADVOKAT PROFILINI YARATISH (DRAFT holati)
+### Vazifa: Ma'lumotlarni to'ldirib, tizimda profil yaratish.
+### Eslatma: Javobdan qaytgan "id" (advokat ID si) ni yuqoridagi @lawyerId ga qoying.
+### ===================================================================
 POST {{host}}/api/v1/lawyers/onboarding
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -35,40 +53,66 @@ Authorization: Bearer {{token}}
 {
   "specializations": "Fuqarolik huquqi,Meros",
   "experienceYears": 12,
-  "bio": "12 yillik tajribaga ega advokat.",
+  "bio": "12 yillik tajribaga ega malakali advokat.",
   "licenseNumber": "L-123456789",
   "licenseDocumentId": "{{licenseAttachId}}",
   "region": "Toshkent",
   "languages": ["UZ", "RU"]
 }
 
-### =========================================
-### 4. Onboarding yuborish (PENDING)
+### ===================================================================
+### 4-QADAM: TASDIQLASHGA YUBORISH (PENDING holati)
+### Vazifa: To'ldirilgan profilni Adminga tekshirish uchun yuborish.
+### ===================================================================
 POST {{host}}/api/v1/lawyers/onboarding/submit
 Authorization: Bearer {{token}}
 
-### =========================================
-### 5. Admin: pending ro'yxat
+
+### ===================================================================
+### DIQQAT: 5 VA 6-QADAMLAR UCHUN ADMIN TOKENI KERAK!
+### 1-qadamga qaytib, bazadagi ADMIN (yoki SUPERADMIN) login/paroli bilan kiring.
+### Olingan yangi admin tokenini @token ga qo'ying.
+### ===================================================================
+
+### ===================================================================
+### 5-QADAM: ADMIN - KUTAYOTGAN ADVOKATLARNI KO'RISH
+### Vazifa: Admin tasdiqlashni kutayotgan (PENDING) advokatlar ro'yxatini oladi.
+### ===================================================================
 GET {{host}}/api/v1/admin/lawyers/pending?page=1&size=10
 Authorization: Bearer {{token}}
 
-### =========================================
-### 6. Admin: tasdiqlash (APPROVED)
+### ===================================================================
+### 6-QADAM: ADMIN - ADVOKATNI TASDIQLASH (APPROVED holati)
+### Vazifa: Admin advokatni tasdiqlaydi. Shundan so'ng u katalogda chiqishni boshlaydi.
+### ===================================================================
 PUT {{host}}/api/v1/admin/lawyers/{{lawyerId}}/approve
 Authorization: Bearer {{token}}
 
-### =========================================
-### 7. Oddiy user: advokatlar ro'yxati
+
+### ===================================================================
+### DIQQAT: 7, 8, 9, 10-QADAMLAR UCHUN ODDIY FOYDALANUVCHI TOKENI KERAK!
+### Yana 1-qadamga borib, oddiy mijoz (User) logini bilan kiring va @token ni yangilang.
+### ===================================================================
+
+### ===================================================================
+### 7-QADAM: MIJOZ - ADVOKATLAR KATALOGINI KO'RISH
+### Vazifa: Mijoz qidiruv orqali faol (APPROVED) advokatlarni izlaydi.
+### ===================================================================
 GET {{host}}/api/v1/lawyers/public?page=1&size=10&region=Toshkent
 Authorization: Bearer {{token}}
 
-### =========================================
-### 8. Oddiy user: advokat profili + LITSENZIYA
+### ===================================================================
+### 8-QADAM: MIJOZ - ADVOKAT PROFILINI OCHISH
+### Vazifa: Mijoz aniq bir advokatning to'liq ma'lumoti va litsenziyasini ko'radi.
+### ===================================================================
 GET {{host}}/api/v1/lawyers/public/{{lawyerId}}
 Authorization: Bearer {{token}}
 
-### =========================================
-### 9. Advokatga chat boshlash
+### ===================================================================
+### 9-QADAM: MIJOZ - ADVOKAT BILAN CHAT BOSHLASH
+### Vazifa: Mijoz tanlangan advokatga o'zining birinchi xabarini yuboradi.
+### Eslatma: Javobdan qaytgan "id" (Chat ID) ni olib, yuqoridagi @lawyerChatId ga qo'ying.
+### ===================================================================
 POST {{host}}/api/v1/lawyer-chats/start
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -76,11 +120,13 @@ Authorization: Bearer {{token}}
 {
   "lawyerId": {{lawyerId}},
   "message": {
-    "content": "Assalomu alaykum, meros masalasida maslahat kerak."
+    "content": "Assalomu alaykum, meros masalasida maslahat kerak. Ishni ololasizmi?"
   }
 }
 
-### =========================================
-### 10. Lawyer chat yopish
+### ===================================================================
+### 10-QADAM: CHATNI YOPISH
+### Vazifa: Mijoz yoki Advokat o'zaro chatni yopishi (yakunlashi).
+### ===================================================================
 PUT {{host}}/api/v1/lawyer-chats/{{lawyerChatId}}/close
 Authorization: Bearer {{token}}
