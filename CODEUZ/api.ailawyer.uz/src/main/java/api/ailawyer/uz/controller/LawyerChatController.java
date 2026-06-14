@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 /**
- * Lawyer chatlar ro'yxati/detail endpointlari.
+ * Advokat chatlari REST API controlleri.
+ * <p>
+ * Chat ro'yxati, detail va yopish endpointlari.
+ * Xabar yuborish {@link LawyerMessageController} da.
  */
 @RestController
 @RequestMapping("/api/v1/lawyer-chats")
@@ -23,8 +26,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LawyerChatController {
 
+    /** Chat biznes logikasi */
     private final LawyerChatService lawyerChatService;
 
+    /**
+     * GET /api/v1/lawyer-chats
+     * <p>
+     * Joriy foydalanuvchining chatlar ro'yxati.
+     * Mijoz o'z chatlarini, advokat o'ziga kelgan chatlarni ko'radi.
+     * Har bir chatda ism, rasm va oxirgi xabar preview bor.
+     *
+     * @param page sahifa (1 dan boshlanadi)
+     * @param size sahifa hajmi
+     */
     @GetMapping("")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Lawyer chatlar ro'yxati", description = "Client o'z chatlari yoki lawyer o'z chatlarini oladi")
@@ -35,6 +49,13 @@ public class LawyerChatController {
         return ResponseEntity.ok(ApiResponse.success(lawyerChatService.getMyChats(PageUtil.page(page), size)));
     }
 
+    /**
+     * GET /api/v1/lawyer-chats/{id}
+     * <p>
+     * Bitta chatning to'liq ma'lumoti — ishtirokchilar, holat, oxirgi xabar.
+     *
+     * @param id chat UUID si
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_LAWYER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN')")
     @Operation(summary = "Lawyer chat detail", description = "Chat detail")
@@ -57,4 +78,3 @@ public class LawyerChatController {
         return ResponseEntity.ok(ApiResponse.success(lawyerChatService.close(id)));
     }
 }
-

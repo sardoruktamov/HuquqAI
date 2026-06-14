@@ -2,8 +2,6 @@
 ### QALQON AI - ADVOKATLAR TIZIMINI TEST QILISH (BOSQICH 5)
 ### ===================================================================
 
-@host = http://localhost:8080
-
 ### O'ZGARUVCHILAR (Test davomida bularni o'zgartirib borasiz)
 @token = SHU_YERGA_TOKEN_QOYASIZ
 @licenseAttachId = SHU_YERGA_HUJJAT_ID_QOYASIZ
@@ -15,7 +13,7 @@
 ### Vazifa: Dasturga kirib, Token olish. 
 ### Eslatma: Javobdan (Response) kelgan "token" ni nusxalab, yuqoridagi @token ga qoying.
 ### ===================================================================
-POST {{host}}/api/v1/auth/login
+POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 Accept-Language: UZ
 
@@ -30,7 +28,7 @@ Accept-Language: UZ
 ### MUHIM: Ushbu .http fayl turgan papkada "license.pdf" degan fayl bo'lishi shart! (Yoki nomini o'zgartiring).
 ### Eslatma: Javobdan qaytgan fayl ID sini (masalan uuid) olib, yuqoridagi @licenseAttachId ga qoying.
 ### ===================================================================
-POST {{host}}/api/v1/attach/upload
+POST http://localhost:8080/api/v1/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 Authorization: Bearer {{token}}
 
@@ -46,7 +44,7 @@ Content-Type: application/pdf
 ### Vazifa: Ma'lumotlarni to'ldirib, tizimda profil yaratish.
 ### Eslatma: Javobdan qaytgan "id" (advokat ID si) ni yuqoridagi @lawyerId ga qoying.
 ### ===================================================================
-POST {{host}}/api/v1/lawyers/onboarding
+POST http://localhost:8080/api/v1/lawyers/onboarding
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -64,7 +62,7 @@ Authorization: Bearer {{token}}
 ### 4-QADAM: TASDIQLASHGA YUBORISH (PENDING holati)
 ### Vazifa: To'ldirilgan profilni Adminga tekshirish uchun yuborish.
 ### ===================================================================
-POST {{host}}/api/v1/lawyers/onboarding/submit
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
 Authorization: Bearer {{token}}
 
 
@@ -78,14 +76,14 @@ Authorization: Bearer {{token}}
 ### 5-QADAM: ADMIN - KUTAYOTGAN ADVOKATLARNI KO'RISH
 ### Vazifa: Admin tasdiqlashni kutayotgan (PENDING) advokatlar ro'yxatini oladi.
 ### ===================================================================
-GET {{host}}/api/v1/admin/lawyers/pending?page=1&size=10
+GET http://localhost:8080/api/v1/admin/lawyers/pending?page=1&size=10
 Authorization: Bearer {{token}}
 
 ### ===================================================================
 ### 6-QADAM: ADMIN - ADVOKATNI TASDIQLASH (APPROVED holati)
 ### Vazifa: Admin advokatni tasdiqlaydi. Shundan so'ng u katalogda chiqishni boshlaydi.
 ### ===================================================================
-PUT {{host}}/api/v1/admin/lawyers/{{lawyerId}}/approve
+PUT http://localhost:8080/api/v1/admin/lawyers/{{lawyerId}}/approve
 Authorization: Bearer {{token}}
 
 
@@ -98,14 +96,14 @@ Authorization: Bearer {{token}}
 ### 7-QADAM: MIJOZ - ADVOKATLAR KATALOGINI KO'RISH
 ### Vazifa: Mijoz qidiruv orqali faol (APPROVED) advokatlarni izlaydi.
 ### ===================================================================
-GET {{host}}/api/v1/lawyers/public?page=1&size=10&region=Toshkent
+GET http://localhost:8080/api/v1/lawyers/public?page=1&size=10&region=Toshkent
 Authorization: Bearer {{token}}
 
 ### ===================================================================
 ### 8-QADAM: MIJOZ - ADVOKAT PROFILINI OCHISH
 ### Vazifa: Mijoz aniq bir advokatning to'liq ma'lumoti va litsenziyasini ko'radi.
 ### ===================================================================
-GET {{host}}/api/v1/lawyers/public/{{lawyerId}}
+GET http://localhost:8080/api/v1/lawyers/public/{{lawyerId}}
 Authorization: Bearer {{token}}
 
 ### ===================================================================
@@ -113,7 +111,7 @@ Authorization: Bearer {{token}}
 ### Vazifa: Mijoz tanlangan advokatga o'zining birinchi xabarini yuboradi.
 ### Eslatma: Javobdan qaytgan "id" (Chat ID) ni olib, yuqoridagi @lawyerChatId ga qo'ying.
 ### ===================================================================
-POST {{host}}/api/v1/lawyer-chats/start
+POST http://localhost:8080/api/v1/lawyer-chats/start
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -128,5 +126,5 @@ Authorization: Bearer {{token}}
 ### 10-QADAM: CHATNI YOPISH
 ### Vazifa: Mijoz yoki Advokat o'zaro chatni yopishi (yakunlashi).
 ### ===================================================================
-PUT {{host}}/api/v1/lawyer-chats/{{lawyerChatId}}/close
+PUT http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/close
 Authorization: Bearer {{token}}

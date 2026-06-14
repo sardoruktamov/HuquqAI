@@ -41,8 +41,10 @@ Quyidagi qisqa xulosalar oxirgi commitlar va `api.ailawyer.uz` moduli tahlili as
 ### Suhbat va AI infratuzilmasi
 
 - **AI chat (izolyatsiya qilingan):** foydalanuvchi uchun `AiChat` / `AiMessage` modellari, holatlar (`ACTIVE`, `CLOSED`) va REST yo'llari (`/api/v1/ai-chats`, xabarlar uchun `/api/v1/ai-chats/{id}/messages`) joriy etilgan.
-- **Tashqi LLM ulanishi:** `AiProvider` interfeysi orqali javoblar shakllantiriladi; hozirda `@Primary` sifatida **`StubAiProvider`** ishlaydi — bu compile va to'liq so'rov oqimini saqlab, vaqtinchalik matnli javob qaytaradi (kelajakda masalan Gemini integratsiyasi uchun tayyor nuqta).
-- **Advokat bilan chat:** mijoz va advokat o'rtasidagi aloqa uchun `LawyerChat` / `LawyerMessage` va tegishli controllerlar (`/api/v1/lawyer-chats`, xabarlarni boshlash/yuborish) mavjud; kirish huquqlari chat egasi va ishtirokchiga nisbatan cheklanadi.
+- **Tashqi LLM ulanishi:** `AiProvider` interfeysi orqali javoblar shakllantiriladi; hozirda **`GeminiAiProviderImpl`** (Google Gemini 2.5 Flash) ishlaydi. Konfiguratsiya: `gemini.api.key`, `gemini.api.model` (`application.properties`).
+- **AI eskalatsiya:** AI javobida xavfli/trigger so'zlar bo'lsa `isEscalation=true` qaytariladi — mobil UI "Advokatga bog'lanish" tugmasini ko'rsatadi.
+- **Advokat tizimi (BOSQICH 5):** onboarding (`DRAFT → PENDING → APPROVED`), admin tasdiqlash, public katalog (`/api/v1/lawyers/public`), litsenziya detail. Test: `src/main/resources/http/lawyer.http`.
+- **Advokat bilan chat (BOSQICH 6):** mijoz va advokat o'rtasidagi aloqa uchun `LawyerChat` / `LawyerMessage` REST API to'liq ishlaydi. Chat ro'yxati ism, rasm va oxirgi xabar preview qaytaradi. Yopilgan chatga yozish bloklangan. Test: `src/main/resources/http/lawyer-chat.http`.
 
 ### Xavfsizlik va hujjatlashtirish (yangilangan sozlamalar)
 
@@ -59,6 +61,20 @@ Quyidagi qisqa xulosalar oxirgi commitlar va `api.ailawyer.uz` moduli tahlili as
 
 - **Fayl biriktirish:** `AttachController` orqali yuklash va ochiq URL orqali fayl ochish (`/api/v1/attach/...`) qo'llab-quvvatlanadi; ayrim yo'llar ochiq ro'yxatda.
 - **Postlar:** jamoat va admin filtrlash, o'xshash postlar qidiruvi kabi endpointlar `PostController` da rivojlantirilgan (Swagger orqali batafsil ko'rish mumkin).
+
+### Bosqichlar holati (backend)
+
+| Bosqich | Mavzu | Holat |
+|---------|-------|-------|
+| 1–2 | Auth, JWT, RBAC | Tugallangan |
+| 3 | AI/Lawyer chat izolyatsiya | Tugallangan |
+| 4 | Gemini AI integratsiya | Tugallangan |
+| 5 | Advokat onboarding + katalog | Tugallangan |
+| 6 | Lawyer chat yakunlash | Tugallangan |
+| 7 | Push notification (FCM) | Reja |
+| 8 | Mobil ilova | Reja |
+| 9 | Hujjatlar moduli | Reja |
+| 10 | RAG (O'zbekiston qonunlari) | Reja |
 
 ---
 

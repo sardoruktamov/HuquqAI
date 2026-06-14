@@ -7,6 +7,7 @@
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +100,7 @@
       <workItem from="1781240857927" duration="11992000" />
       <workItem from="1781373891902" duration="1855000" />
       <workItem from="1781375966213" duration="1985000" />
+      <workItem from="1781434209277" duration="2211000" />
     </task>
     <servers />
   </component>

@@ -1,0 +1,177 @@
+### ===================================================================
+### QALQON AI - ADVOKAT CHAT TO'LIQ TEST (BOSQICH 6)
+### ===================================================================
+### Oldindan tayyor bo'lishi kerak:
+### 1. lawyer.http dagi 1-6 qadamlar bajarilgan (advokat APPROVED holatda)
+### 2. Ikkita akkaunt: mijoz (ROLE_USER) va advokat (ROLE_LAWYER)
+### ===================================================================
+
+@clientToken = SHU_YERGA_MIJOZ_TOKEN
+@lawyerToken = SHU_YERGA_ADVOKAT_TOKEN
+@lawyerId = SHU_YERGA_ADVOKAT_PROFILE_ID
+@lawyerChatId = SHU_YERGA_CHAT_UUID
+@attachId = SHU_YERGA_FAYL_ID
+
+### ===================================================================
+### 1-QADAM: MIJOZ LOGIN
+### Vazifa: Oddiy foydalanuvchi sifatida token olish
+### Eslatma: Javobdan token ni @clientToken ga qo'ying
+### ===================================================================
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "MIJOZ_USERNAME",
+  "password": "MIJOZ_PAROL"
+}
+
+### ===================================================================
+### 2-QADAM: MIJOZ - CHAT BOSHLASH + BIRINCHI XABAR
+### Vazifa: Tasdiqlangan advokatga birinchi xabar yuborish
+### Eslatma: Javobdan chat id ni olish shart emas — keyingi qadamda ro'yxatdan olamiz
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/start
+Content-Type: application/json
+Authorization: Bearer {{clientToken}}
+
+{
+  "lawyerId": {{lawyerId}},
+  "message": {
+    "content": "Assalomu alaykum, meros masalasida maslahat kerak. Ishni ololasizmi?"
+  }
+}
+
+### ===================================================================
+### 3-QADAM: MIJOZ - QO'SHIMCHA XABAR YUBORISH
+### Vazifa: Mavjud chatga ikkinchi xabar yozish
+### Eslatma: Avval 7-qadamni bajarib @lawyerChatId ni oling, yoki start javobidan id ni oling
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/messages
+Content-Type: application/json
+Authorization: Bearer {{clientToken}}
+
+{
+  "content": "Qo'shimcha: otam 2020-yilda vafot etgan, hujjatlar tayyor."
+}
+
+### ===================================================================
+### 4-QADAM: ADVOKAT LOGIN
+### Vazifa: Advokat akkaunti bilan token olish
+### Eslatma: Javobdan token ni @lawyerToken ga qo'ying
+### ===================================================================
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "ADVOKAT_USERNAME",
+  "password": "ADVOKAT_PAROL"
+}
+
+### ===================================================================
+### 5-QADAM: ADVOKAT - CHATlar RO'YXATI
+### Vazifa: Advokat o'z chatlarini ko'radi (ism, rasm, oxirgi xabar bilan)
+### Kutilayotgan: clientName, lawyerName, lastMessageContent, lastMessageDate to'ldirilgan
+### Eslatma: Ro'yxatdan chat id ni @lawyerChatId ga qo'ying
+### ===================================================================
+GET http://localhost:8080/api/v1/lawyer-chats?page=1&size=10
+Authorization: Bearer {{lawyerToken}}
+
+### ===================================================================
+### 6-QADAM: ADVOKAT - CHAT DETAIL
+### Vazifa: Bitta chatning to'liq ma'lumotini ko'rish
+### ===================================================================
+GET http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}
+Authorization: Bearer {{lawyerToken}}
+
+### ===================================================================
+### 7-QADAM: ADVOKAT - XABARLAR TARIXINI O'QISH
+### Vazifa: Chat ichidagi barcha xabarlarni ko'rish
+### ===================================================================
+GET http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/messages?page=1&size=20
+Authorization: Bearer {{lawyerToken}}
+
+### ===================================================================
+### 8-QADAM: ADVOKAT - JAVOB YOZISH
+### Vazifa: Mijozga javob berish
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/messages
+Content-Type: application/json
+Authorization: Bearer {{lawyerToken}}
+
+{
+  "content": "Assalomu alaykum. Ha, meros bo'yicha yordam bera olaman. Hujjatlarni yuboring."
+}
+
+### ===================================================================
+### 9-QADAM: MIJOZ - CHAT RO'YXATI (clientName/lawyerName preview)
+### Vazifa: Mijoz o'z chatlarini ko'radi
+### ===================================================================
+GET http://localhost:8080/api/v1/lawyer-chats?page=1&size=10
+Authorization: Bearer {{clientToken}}
+
+### ===================================================================
+### 10-QADAM: MIJOZ - TARIXNI TEKSHIRISH
+### Vazifa: Advokat javobi ham tarixda ko'rinishi kerak
+### ===================================================================
+GET http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/messages?page=1&size=20
+Authorization: Bearer {{clientToken}}
+
+### ===================================================================
+### 11-QADAM: FAYL BILAN XABAR (ixtiyoriy)
+### Vazifa: Attach bilan xabar yuborish
+### Oldin attach/upload qiling va @attachId ga qo'ying
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/messages
+Content-Type: application/json
+Authorization: Bearer {{clientToken}}
+
+{
+  "content": "Meros hujjatini ilova qildim.",
+  "attachIds": ["{{attachId}}"]
+}
+
+### ===================================================================
+### 12-QADAM: CHAT YOPISH (MIJOZ yoki ADVOKAT)
+### Vazifa: Chat holatini CLOSED qilish
+### ===================================================================
+PUT http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/close
+Authorization: Bearer {{clientToken}}
+
+### ===================================================================
+### 13-QADAM: YOPILGAN CHATGA YOZISH — XATO KELISHI KERAK
+### Vazifa: CLOSED chatga xabar yuborish bloklanganini tekshirish
+### Kutilayotgan: 400 xato — "Lawyer chat yopilgan!"
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/messages
+Content-Type: application/json
+Authorization: Bearer {{clientToken}}
+
+{
+  "content": "Bu xabar yuborilmasligi kerak — chat yopilgan."
+}
+
+### ===================================================================
+### 14-QADAM: YOPILGAN CHATNI QAYTA YOPISH — XATO KELISHI KERAK
+### Vazifa: Allaqachon CLOSED chatni yopishga urinish
+### Kutilayotgan: 400 xato — "Lawyer chat allaqachon yopilgan!"
+### ===================================================================
+PUT http://localhost:8080/api/v1/lawyer-chats/{{lawyerChatId}}/close
+Authorization: Bearer {{clientToken}}
+
+### ===================================================================
+### 15-QADAM: TASDIQLANMAGAN ADVOKAT BILAN CHAT — XATO KELISHI KERAK
+### Vazifa: APPROVED bo'lmagan advokat id si bilan start urinish
+### Kutilayotgan: 400 xato — "Advokat hali tasdiqlanmagan!"
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/start
+Content-Type: application/json
+Authorization: Bearer {{clientToken}}
+
+{
+  "lawyerId": 99999,
+  "message": {
+    "content": "Bu chat boshlanmasligi kerak."
+  }
+}

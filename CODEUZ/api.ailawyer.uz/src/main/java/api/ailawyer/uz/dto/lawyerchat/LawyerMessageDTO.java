@@ -10,16 +10,29 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Advokat chat message DTO.
+ * Advokat chatidagi bitta xabar javob DTO.
+ * <p>
+ * Xabar yuborish va tarix olish endpointlarida qaytariladi.
  */
 @Getter
 @Setter
 public class LawyerMessageDTO {
+
+    /** Xabar UUID si */
     private UUID id;
+
+    /** Qaysi chatga tegishli */
     private UUID lawyerChatId;
+
+    /** Kim yuborgan: USER (mijoz) yoki LAWYER (advokat) */
     private LawyerMessageSenderType senderType;
+
+    /** Xabar matni */
     private String content;
+
+    /** Xabar yuborilgan vaqt */
     private LocalDateTime createdDate;
+
+    /** Xabarga biriktirilgan fayllar (rasm, PDF va hokazo) */
     private List<AttachDTO> attachments;
 }
-

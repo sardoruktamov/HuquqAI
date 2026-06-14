@@ -23,20 +23,41 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Advokat chat message'lari.
- * Client birinchi xabar yozganda chat ACTIVE bo'lib yaratiladi va NotificationService chaqiriladi.
+ * Advokat chat xabarlari biznes logikasi.
+ * <p>
+ * Vazifalari:
+ * <ul>
+ *   <li>Mijoz advokatga birinchi xabar yozganda chat boshlash</li>
+ *   <li>Mijoz yoki advokat chat ichiga xabar yuborish</li>
+ *   <li>Xabarlar tarixini olish (fayl biriktirish bilan)</li>
+ *   <li>Yangi xabar kelganda bildirishnoma yuborish (hozircha log)</li>
+ * </ul>
  */
 @Service
 @RequiredArgsConstructor
 public class LawyerMessageService {
 
+    /** Chat yaratish, huquq tekshiruvi */
     private final LawyerChatService lawyerChatService;
+    /** Xabarlarni saqlash va olish */
     private final LawyerMessageRepository lawyerMessageRepository;
+    /** Xabarga biriktirilgan fayllar */
     private final LawyerMessageAttachRepository lawyerMessageAttachRepository;
+    /** Fayl ma'lumotlarini DTO ga aylantirish */
     private final AttachService attachService;
+    /** Yangi xabar haqida bildirishnoma (FCM hook) */
     private final NotificationService notificationService;
+    /** Advokat tasdiqlanganligini tekshirish */
     private final LawyerProfileService lawyerProfileService;
 
+    /**
+     * Chat ichidagi xabarlar tarixini qaytaradi.
+     * Faqat chat ishtirokchisi ko'ra oladi.
+     *
+     * @param lawyerChatId chat UUID si
+     * @param page         sahifa (0-based)
+     * @param size         sahifa hajmi
+     */
     public PageImpl<LawyerMessageDTO> list(UUID lawyerChatId, int page, int size) {
         LawyerChatEntity chat = lawyerChatService.getEntityForRead(lawyerChatId);
 
@@ -84,6 +105,14 @@ public class LawyerMessageService {
         return saved;
     }
 
+    /**
+     * Mavjud chatga yangi xabar yuboradi.
+     * Mijoz USER, advokat LAWYER sifatida belgilanadi.
+     * Yopilgan chatga yozish mumkin emas.
+     *
+     * @param lawyerChatId chat UUID si
+     * @param dto          xabar matni va ixtiyoriy fayl id lar
+     */
     public LawyerMessageDTO sendMessage(UUID lawyerChatId, LawyerMessageCreateDTO dto) {
         LawyerChatEntity chat = lawyerChatService.getEntityForWrite(lawyerChatId);
 
@@ -114,6 +143,7 @@ public class LawyerMessageService {
         return saved;
     }
 
+    /** Xabarni bazaga saqlaydi va biriktirilgan fayllarni bog'laydi */
     private LawyerMessageDTO saveMessage(LawyerChatEntity chat, LawyerMessageSenderType senderType, LawyerMessageCreateDTO dto) {
         LawyerMessageEntity m = new LawyerMessageEntity();
         m.setLawyerChatId(chat.getId());
@@ -126,6 +156,7 @@ public class LawyerMessageService {
         return toDto(m, attachments);
     }
 
+    /** Xabarga fayl(lar) biriktiradi va AttachDTO ro'yxatini qaytaradi */
     private List<AttachDTO> saveAttachments(UUID messageId, List<String> attachIds) {
         if (attachIds == null || attachIds.isEmpty()) return List.of();
 
@@ -145,6 +176,7 @@ public class LawyerMessageService {
         return list;
     }
 
+    /** Bir nechta xabar uchun biriktirilgan fayllarni batch yuklaydi */
     private Map<UUID, List<AttachDTO>> getAttachmentMap(List<LawyerMessageEntity> messages) {
         if (messages.isEmpty()) return Map.of();
 
@@ -159,6 +191,7 @@ public class LawyerMessageService {
         return map;
     }
 
+    /** Entity ni API javobi uchun LawyerMessageDTO ga aylantiradi */
     private LawyerMessageDTO toDto(LawyerMessageEntity e, List<AttachDTO> attachments) {
         LawyerMessageDTO dto = new LawyerMessageDTO();
         dto.setId(e.getId());
@@ -170,4 +203,3 @@ public class LawyerMessageService {
         return dto;
     }
 }
-
