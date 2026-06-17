@@ -1,0 +1,53 @@
+### ===================================================================
+### QALQON AI - NOTIFICATION (FCM) TEST (BOSQICH 7)
+### ===================================================================
+
+@token = SHU_YERGA_TOKEN_QOYASIZ
+@fcmToken = SHU_YERGA_FCM_DEVICE_TOKEN
+
+### ===================================================================
+### 1-QADAM: LOGIN
+### ===================================================================
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+### ===================================================================
+### 2-QADAM: FCM DEVICE TOKEN RO'YXATDAN O'TKAZISH
+### Login muvaffaqiyatli bo'lgach token ni @token ga qo'ying
+### ===================================================================
+POST http://localhost:8080/api/v1/notifications/device-token
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "token": "{{fcmToken}}",
+  "platform": "ANDROID"
+}
+
+### ===================================================================
+### 3-QADAM: LAWYER CHAT — PUSH TRIGGER (mijoz xabar yuboradi)
+### Advokat qurilmasiga LAWYER_NEW_MESSAGE push kelishi kerak
+### (firebase.enabled=true va haqiqiy FCM token bo'lsa)
+### ===================================================================
+POST http://localhost:8080/api/v1/lawyer-chats/start
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "lawyerId": 1,
+  "message": {
+    "content": "Assalomu alaykum, maslahat kerak."
+  }
+}
+
+### ===================================================================
+### 4-QADAM: FCM TOKEN O'CHIRISH (logout)
+### ===================================================================
+DELETE http://localhost:8080/api/v1/notifications/device-token?token={{fcmToken}}
+Authorization: Bearer {{token}}

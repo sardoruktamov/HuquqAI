@@ -1,3 +1,44 @@
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "998911576777",
+  "password": "12345"
+}
+
+<> 2026-06-15T223215.200.json
+
+###
+
+POST http://localhost:8080/api/v1/auth/registration
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "fullName": "USER Omonov",
+  "username": "rfly35255@gmail.com",
+  "password": "12345"
+}
+
+<> 2026-06-15T222648.200.json
+
+###
+
+POST http://localhost:8080/api/v1/auth/registration
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "fullName": "USER Omonov",
+  "username": "998930766777",
+  "password": "12345"
+}
+
+<> 2026-06-15T222526.400.json
+
+###
+
 POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEzNzU0ODgsImV4cCI6MTc4MTQ2MTg4OH0.q3y66UDU6Jldk4D4O0QpwInrzh7ZgUZoP0sm-8gsext-YDBfO688spNuY8PQww9hWdJzSOjDjnNjX6R-l0VnAw

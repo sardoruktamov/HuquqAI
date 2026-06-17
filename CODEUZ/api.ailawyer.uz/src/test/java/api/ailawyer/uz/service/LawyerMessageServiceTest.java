@@ -78,7 +78,7 @@ class LawyerMessageServiceTest {
 
         verify(lawyerProfileService).requireApprovedLawyer(5);
         verify(lawyerChatService).ensureActiveChat(10, 5);
-        verify(notificationService).notifyNewMessage(anyString(), anyString(), anyMap());
+        verify(notificationService).notifyLawyerNewMessage(5, chat.getId());
     }
 
     @Test

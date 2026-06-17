@@ -58,4 +58,12 @@ public class LawyerChatEntity {
     /** Chat qachon yaratilgan */
     @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
+
+    /** Mijoz oxirgi o'qigan xabar id si (unread hisob uchun) */
+    @Column(name = "last_read_message_id_by_client")
+    private UUID lastReadMessageIdByClient;
+
+    /** Advokat oxirgi o'qigan xabar id si (unread hisob uchun) */
+    @Column(name = "last_read_message_id_by_lawyer")
+    private UUID lastReadMessageIdByLawyer;
 }

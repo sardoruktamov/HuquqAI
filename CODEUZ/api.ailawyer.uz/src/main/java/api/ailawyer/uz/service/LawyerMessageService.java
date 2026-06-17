@@ -71,6 +71,8 @@ public class LawyerMessageService {
                 .map(m -> toDto(m, attachments.getOrDefault(m.getId(), List.of())))
                 .toList();
 
+        lawyerChatService.markAsReadToLatest(chat);
+
         return new PageImpl<>(list, pr, p.getTotalElements());
     }
 
@@ -96,11 +98,7 @@ public class LawyerMessageService {
         LawyerChatEntity chat = lawyerChatService.ensureActiveChat(clientId, dto.getLawyerId());
         LawyerMessageDTO saved = saveMessage(chat, LawyerMessageSenderType.USER, dto.getMessage());
 
-        notificationService.notifyNewMessage(
-                "Sizda yangi xabar",
-                "Mijozdan yangi xabar keldi",
-                Map.of("chatId", chat.getId().toString())
-        );
+        notificationService.notifyLawyerNewMessage(chat.getLawyerId(), chat.getId());
 
         return saved;
     }
@@ -134,11 +132,11 @@ public class LawyerMessageService {
 
         LawyerMessageDTO saved = saveMessage(chat, senderType, dto);
 
-        notificationService.notifyNewMessage(
-                "Sizda yangi xabar",
-                "Chatda yangi xabar bor",
-                Map.of("chatId", chat.getId().toString())
-        );
+        if (senderType == LawyerMessageSenderType.USER) {
+            notificationService.notifyLawyerNewMessage(chat.getLawyerId(), chat.getId());
+        } else {
+            notificationService.notifyClientNewMessage(chat.getClientId(), chat.getId());
+        }
 
         return saved;
     }
@@ -151,6 +149,8 @@ public class LawyerMessageService {
         m.setContent(dto.getContent());
         m.setCreatedDate(LocalDateTime.now());
         lawyerMessageRepository.save(m);
+
+        lawyerChatService.markAsReadForSender(chat, senderType, m.getId());
 
         List<AttachDTO> attachments = saveAttachments(m.getId(), dto.getAttachIds());
         return toDto(m, attachments);

@@ -36,6 +36,8 @@ class LawyerProfileServiceTest {
     private ProfileRoleService profileRoleService;
     @Mock
     private AttachService attachService;
+    @Mock
+    private NotificationService notificationService;
 
     @InjectMocks
     private LawyerProfileService lawyerProfileService;

@@ -31,4 +31,8 @@ public interface ProfileRoleRepository extends CrudRepository<ProfileRoleEntity,
      * @param roles     qidiriladigan rol (masalan ROLE_LAWYER)
      */
     boolean existsByProfileIdAndRoles(Integer profileId, ProfileRole roles);
+
+    /** Berilgan rollarga ega profil id lar ro'yxati (admin push uchun) */
+    @Query("select distinct p.profileId from ProfileRoleEntity p where p.roles in ?1")
+    List<Integer> findDistinctProfileIdsByRolesIn(List<ProfileRole> roles);
 }

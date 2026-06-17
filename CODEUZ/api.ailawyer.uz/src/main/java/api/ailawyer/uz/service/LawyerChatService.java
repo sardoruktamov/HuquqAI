@@ -5,6 +5,7 @@ import api.ailawyer.uz.entity.LawyerChatEntity;
 import api.ailawyer.uz.entity.LawyerMessageEntity;
 import api.ailawyer.uz.entity.ProfileEntity;
 import api.ailawyer.uz.enums.LawyerChatStatus;
+import api.ailawyer.uz.enums.LawyerMessageSenderType;
 import api.ailawyer.uz.enums.ProfileRole;
 import api.ailawyer.uz.exps.AppBadException;
 import api.ailawyer.uz.repository.LawyerChatRepository;
@@ -74,7 +75,7 @@ public class LawyerChatService {
         Map<UUID, LawyerMessageEntity> lastMessages = loadLastMessages(chats);
 
         List<LawyerChatDTO> list = chats.stream()
-                .map(chat -> toDto(chat, profiles, lastMessages))
+                .map(chat -> toDto(chat, profiles, lastMessages, me))
                 .toList();
         return new PageImpl<>(list, pr, p.getTotalElements());
     }
@@ -89,7 +90,7 @@ public class LawyerChatService {
         LawyerChatEntity e = getEntityForRead(id);
         Map<Integer, ProfileEntity> profiles = loadProfiles(List.of(e));
         Map<UUID, LawyerMessageEntity> lastMessages = loadLastMessages(List.of(e));
-        return toDto(e, profiles, lastMessages);
+        return toDto(e, profiles, lastMessages, SpringSecurityUtil.getCurrentUserId());
     }
 
     /**
@@ -155,6 +156,36 @@ public class LawyerChatService {
         return "Lawyer chat yopildi";
     }
 
+    /**
+     * Yuboruvchi o'z xabarini o'qilgan deb belgilaydi.
+     */
+    public void markAsReadForSender(LawyerChatEntity chat, LawyerMessageSenderType senderType, UUID messageId) {
+        if (senderType == LawyerMessageSenderType.USER) {
+            chat.setLastReadMessageIdByClient(messageId);
+        } else {
+            chat.setLastReadMessageIdByLawyer(messageId);
+        }
+        lawyerChatRepository.save(chat);
+    }
+
+    /**
+     * Chat xabarlarini ochganda eng oxirgi xabargacha o'qilgan deb belgilaydi.
+     */
+    public void markAsReadToLatest(LawyerChatEntity chat) {
+        Integer me = SpringSecurityUtil.getCurrentUserId();
+        lawyerMessageRepository.findFirstByLawyerChatIdOrderByCreatedDateDesc(chat.getId())
+                .ifPresent(latest -> {
+                    if (chat.getClientId().equals(me)) {
+                        chat.setLastReadMessageIdByClient(latest.getId());
+                    } else if (chat.getLawyerId().equals(me)) {
+                        chat.setLastReadMessageIdByLawyer(latest.getId());
+                    } else {
+                        return;
+                    }
+                    lawyerChatRepository.save(chat);
+                });
+    }
+
     /** Foydalanuvchi chatni ko'rish huquqiga ega ekanini tekshiradi */
     private void requireCanRead(LawyerChatEntity e) {
         if (SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN) || SpringSecurityUtil.hazRole(ProfileRole.ROLE_SUPERADMIN)) {
@@ -204,7 +235,10 @@ public class LawyerChatService {
     }
 
     /** Entity ni mobil uchun boyitilgan LawyerChatDTO ga aylantiradi */
-    private LawyerChatDTO toDto(LawyerChatEntity e, Map<Integer, ProfileEntity> profiles, Map<UUID, LawyerMessageEntity> lastMessages) {
+    private LawyerChatDTO toDto(LawyerChatEntity e,
+                                Map<Integer, ProfileEntity> profiles,
+                                Map<UUID, LawyerMessageEntity> lastMessages,
+                                Integer viewerProfileId) {
         LawyerChatDTO dto = new LawyerChatDTO();
         dto.setId(e.getId());
         dto.setClientId(e.getClientId());
@@ -230,7 +264,39 @@ public class LawyerChatService {
             dto.setLastMessageDate(lastMessage.getCreatedDate());
         }
 
-        dto.setUnreadCount(0L);
+        dto.setUnreadCount(resolveUnreadCount(e, viewerProfileId));
         return dto;
+    }
+
+    private long resolveUnreadCount(LawyerChatEntity chat, Integer viewerProfileId) {
+        if (viewerProfileId == null) {
+            return 0L;
+        }
+        if (SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN)
+                || SpringSecurityUtil.hazRole(ProfileRole.ROLE_SUPERADMIN)) {
+            return 0L;
+        }
+
+        UUID lastReadMessageId;
+        LawyerMessageSenderType oppositeSender;
+
+        if (chat.getClientId().equals(viewerProfileId)) {
+            lastReadMessageId = chat.getLastReadMessageIdByClient();
+            oppositeSender = LawyerMessageSenderType.LAWYER;
+        } else if (chat.getLawyerId().equals(viewerProfileId)) {
+            lastReadMessageId = chat.getLastReadMessageIdByLawyer();
+            oppositeSender = LawyerMessageSenderType.USER;
+        } else {
+            return 0L;
+        }
+
+        LocalDateTime afterCreatedDate = null;
+        if (lastReadMessageId != null) {
+            afterCreatedDate = lawyerMessageRepository.findById(lastReadMessageId)
+                    .map(LawyerMessageEntity::getCreatedDate)
+                    .orElse(null);
+        }
+
+        return lawyerMessageRepository.countUnreadMessages(chat.getId(), oppositeSender, afterCreatedDate);
     }
 }

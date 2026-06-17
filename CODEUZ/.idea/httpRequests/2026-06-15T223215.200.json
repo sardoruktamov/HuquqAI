@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "fullName": "Advokat Ikromov",
+    "username": "998911576777",
+    "roleList": [
+      "ROLE_USER"
+    ],
+    "jwt": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTU0NDczNSwiZXhwIjoxNzgxNjMxMTM1fQ.yywycQfapLrzIjyI7hTvCLam40vxvAGwGHQ6VQvq4Z2DRxPFMO-Zu1wJ9inKV6XOHVyvPcNwWlSgksdBI8dYtA"
+  },
+  "timestamp": "2026-06-15T22:32:15.0449745"
+}

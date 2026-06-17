@@ -55,7 +55,7 @@ Quyidagi qisqa xulosalar oxirgi commitlar va `api.ailawyer.uz` moduli tahlili as
 
 - **Flyway:** `flyway-core` va PostgreSQL uchun `flyway-database-postgresql` qo'shimchalari mavjud — sxema o'zgarishlari migratsiya orqali boshqariladi.
 - **Email (`spring-boot-starter-mail`):** ro'yxatdan o'tishni email orqali tasdiqlash uchun HTML-shablonli xatlar, parolni tiklash oqimi, yuborishlar tarixini hisobga olish va cheklov (masalan, bir xil manzilga takroriy xat) kabi xususiyatlar `EmailSendingService` da jamlangan.
-- **Bildirishnomalar:** `NotificationService` kelajakdagi push (masalan, FCM) ulanishi uchun hook sifatida qoldirilgan; hozircha hodisalar log orqali kuzatiladi.
+- **Bildirishnomalar:** `NotificationService` FCM push (asinxron event) — device token, lawyer chat va admin onboarding eventlari. Test: `notifications.http`. Dev da `firebase.enabled=false` (log fallback).
 
 ### Fayllar va postlar
 
@@ -71,10 +71,8 @@ Quyidagi qisqa xulosalar oxirgi commitlar va `api.ailawyer.uz` moduli tahlili as
 | 4 | Gemini AI integratsiya | Tugallangan |
 | 5 | Advokat onboarding + katalog | Tugallangan |
 | 6 | Lawyer chat yakunlash | Tugallangan |
-| 7 | Push notification (FCM) | Reja |
-| 8 | Mobil ilova | Reja |
-| 9 | Hujjatlar moduli | Reja |
-| 10 | RAG (O'zbekiston qonunlari) | Reja |
+| 7 | FCM push notification | Tugallangan |
+| 8 | RAG (O'zbekiston qonunlari) | Reja |
 
 ---
 

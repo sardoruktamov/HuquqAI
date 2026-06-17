@@ -50,6 +50,8 @@ public class LawyerProfileService {
     private final ProfileRoleService profileRoleService;
     /** Rasm va litsenziya fayllarini DTO ga aylantirish */
     private final AttachService attachService;
+    /** Push bildirishnomalar (asinxron event) */
+    private final NotificationService notificationService;
 
     /**
      * Advokat onboarding — birinchi marta yoki qayta ma'lumot to'ldirish.
@@ -188,6 +190,8 @@ public class LawyerProfileService {
         entity.setUpdatedDate(LocalDateTime.now());
         lawyerProfileRepository.save(entity);
 
+        notificationService.notifyLawyerOnboardingPending(profileId);
+
         return toProfileDto(entity, profile);
     }
 
@@ -254,6 +258,8 @@ public class LawyerProfileService {
         entity.setUpdatedDate(LocalDateTime.now());
         lawyerProfileRepository.save(entity);
 
+        notificationService.notifyLawyerOnboardingApproved(profileId);
+
         return toProfileDto(entity, profile);
     }
 
@@ -279,6 +285,8 @@ public class LawyerProfileService {
         entity.setVerifiedAt(null);
         entity.setUpdatedDate(LocalDateTime.now());
         lawyerProfileRepository.save(entity);
+
+        notificationService.notifyLawyerOnboardingRejected(profileId, dto.getReason());
 
         return toProfileDto(entity, profile);
     }

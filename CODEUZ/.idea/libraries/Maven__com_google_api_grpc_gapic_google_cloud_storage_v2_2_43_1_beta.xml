@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.google.api.grpc:gapic-google-cloud-storage-v2:2.43.1-beta">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/api/grpc/gapic-google-cloud-storage-v2/2.43.1-beta/gapic-google-cloud-storage-v2-2.43.1-beta.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/api/grpc/gapic-google-cloud-storage-v2/2.43.1-beta/gapic-google-cloud-storage-v2-2.43.1-beta-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/api/grpc/gapic-google-cloud-storage-v2/2.43.1-beta/gapic-google-cloud-storage-v2-2.43.1-beta-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
