@@ -52,6 +52,12 @@ public class LawyerProfileService {
     private final AttachService attachService;
     /** Push bildirishnomalar (asinxron event) */
     private final NotificationService notificationService;
+    /** Harakatlar tarixi (audit log) */
+    private final AuditLogService auditLogService;
+
+    private static final String AUDIT_ENTITY_LAWYER_PROFILE = "lawyer_profile";
+    private static final String AUDIT_ACTION_APPROVE = "APPROVE";
+    private static final String AUDIT_ACTION_REJECT = "REJECT";
 
     /**
      * Advokat onboarding — birinchi marta yoki qayta ma'lumot to'ldirish.
@@ -258,6 +264,14 @@ public class LawyerProfileService {
         entity.setUpdatedDate(LocalDateTime.now());
         lawyerProfileRepository.save(entity);
 
+        auditLogService.logAction(
+                AUDIT_ENTITY_LAWYER_PROFILE,
+                String.valueOf(profileId),
+                AUDIT_ACTION_APPROVE,
+                SpringSecurityUtil.getCurrentUserId(),
+                null
+        );
+
         notificationService.notifyLawyerOnboardingApproved(profileId);
 
         return toProfileDto(entity, profile);
@@ -280,13 +294,23 @@ public class LawyerProfileService {
             throw new AppBadException("Faqat PENDING holatdagi profil rad etilishi mumkin!");
         }
 
+        String rejectionReason = dto.getReason().trim();
+
         entity.setOnboardingStatus(LawyerOnboardingStatus.REJECTED);
-        entity.setRejectionReason(dto.getReason().trim());
+        entity.setRejectionReason(rejectionReason);
         entity.setVerifiedAt(null);
         entity.setUpdatedDate(LocalDateTime.now());
         lawyerProfileRepository.save(entity);
 
-        notificationService.notifyLawyerOnboardingRejected(profileId, dto.getReason());
+        auditLogService.logAction(
+                AUDIT_ENTITY_LAWYER_PROFILE,
+                String.valueOf(profileId),
+                AUDIT_ACTION_REJECT,
+                SpringSecurityUtil.getCurrentUserId(),
+                rejectionReason
+        );
+
+        notificationService.notifyLawyerOnboardingRejected(profileId, rejectionReason);
 
         return toProfileDto(entity, profile);
     }

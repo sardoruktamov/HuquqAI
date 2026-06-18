@@ -1,5 +1,6 @@
 package api.ailawyer.uz.service;
 
+import api.ailawyer.uz.dto.lawyer.LawyerRejectDTO;
 import api.ailawyer.uz.entity.LawyerProfileEntity;
 import api.ailawyer.uz.entity.ProfileEntity;
 import api.ailawyer.uz.enums.GeneralStatus;
@@ -21,6 +22,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,6 +41,8 @@ class LawyerProfileServiceTest {
     private AttachService attachService;
     @Mock
     private NotificationService notificationService;
+    @Mock
+    private AuditLogService auditLogService;
 
     @InjectMocks
     private LawyerProfileService lawyerProfileService;
@@ -72,6 +77,58 @@ class LawyerProfileServiceTest {
                 () -> lawyerProfileService.approve(profileId));
 
         assertEquals("Faqat PENDING holatdagi profil tasdiqlanishi mumkin!", ex.getMessage());
+    }
+
+    @Test
+    void approve_pending_logsAuditAction() {
+        TestSecurityHelper.loginAs(1, ProfileRole.ROLE_ADMIN);
+
+        Integer profileId = 7;
+        LawyerProfileEntity entity = new LawyerProfileEntity();
+        entity.setProfileId(profileId);
+        entity.setOnboardingStatus(LawyerOnboardingStatus.PENDING);
+
+        ProfileEntity profile = new ProfileEntity();
+        profile.setId(profileId);
+        profile.setStatus(GeneralStatus.ACTIVE);
+        profile.setVisible(true);
+
+        when(lawyerProfileRepository.findByProfileId(profileId)).thenReturn(Optional.of(entity));
+        when(profileRepository.findByIdAndVisibleTrue(profileId)).thenReturn(Optional.of(profile));
+        when(profileRoleRepository.existsByProfileIdAndRoles(profileId, ProfileRole.ROLE_LAWYER)).thenReturn(true);
+        when(lawyerProfileRepository.save(any(LawyerProfileEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        lawyerProfileService.approve(profileId);
+
+        verify(auditLogService).logAction("lawyer_profile", "7", "APPROVE", 1, null);
+        verify(notificationService).notifyLawyerOnboardingApproved(profileId);
+    }
+
+    @Test
+    void reject_pending_logsAuditActionWithReason() {
+        TestSecurityHelper.loginAs(2, ProfileRole.ROLE_SUPERADMIN);
+
+        Integer profileId = 7;
+        LawyerProfileEntity entity = new LawyerProfileEntity();
+        entity.setProfileId(profileId);
+        entity.setOnboardingStatus(LawyerOnboardingStatus.PENDING);
+
+        ProfileEntity profile = new ProfileEntity();
+        profile.setId(profileId);
+        profile.setStatus(GeneralStatus.ACTIVE);
+        profile.setVisible(true);
+
+        LawyerRejectDTO rejectDto = new LawyerRejectDTO();
+        rejectDto.setReason("Hujjat xato");
+
+        when(lawyerProfileRepository.findByProfileId(profileId)).thenReturn(Optional.of(entity));
+        when(profileRepository.findByIdAndVisibleTrue(profileId)).thenReturn(Optional.of(profile));
+        when(lawyerProfileRepository.save(any(LawyerProfileEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        lawyerProfileService.reject(profileId, rejectDto);
+
+        verify(auditLogService).logAction("lawyer_profile", "7", "REJECT", 2, "Hujjat xato");
+        verify(notificationService).notifyLawyerOnboardingRejected(profileId, "Hujjat xato");
     }
 
     @Test
