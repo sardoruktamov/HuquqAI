@@ -1,3 +1,177 @@
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T172258.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T171532.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T171457.400.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T170307.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T165502.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T165449.400.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T154625.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+{
+  "specializations": "Fuqarolik huquqi,Meros",
+  "experienceYears": 12,
+  "bio": "12 yillik tajribaga ega malakali advokat.",
+  "licenseNumber": "L-123456789",
+  "licenseDocumentId": "e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf",
+  "region": "Toshkent",
+  "languages": ["UZ", "RU"]
+}
+
+<> 2026-06-18T154614.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T154558.400.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T154557.400.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T154545.400.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T154513.400.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding/submit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+<> 2026-06-18T153506.200.json
+
+###
+
+POST http://localhost:8080/api/v1/lawyers/onboarding
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+{
+  "specializations": "Fuqarolik huquqi,Meros",
+  "experienceYears": 12,
+  "bio": "12 yillik tajribaga ega malakali advokat.",
+  "licenseNumber": "L-123456789",
+  "licenseDocumentId": "e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf",
+  "region": "Toshkent",
+  "languages": ["UZ", "RU"]
+}
+
+<> 2026-06-18T153342.200.json
+
+###
+
+POST http://localhost:8080/api/v1/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="license.pdf"
+Content-Type: application/pdf
+
+< E:\WEB\PROJECTS\JAVA\STURTUP\HuquqAI\CODEUZ\api.ailawyer.uz\src\main\resources\http\license.pdf
+--WebAppBoundary--
+
+<> 2026-06-18T153259.200.json
+
+###
+
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "998911576777",
+  "password": "12345"
+}
+
+<> 2026-06-18T153007.200.json
+
+###
+
+POST http://localhost:8080/api/v1/notifications/device-token
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODE3Nzg0ODQsImV4cCI6MTc4MTg2NDg4NH0.pwiJwjgx_jZbf_g1kmRwi-vrKLn60J4U8r7ukPQKMCu_WwSdjcCpaZ_erAAd2IsXRib386dQ5Hi4LuRLMSnKlQ
+
+{
+  "token": "admin-soxta-token-123",
+  "platform": "ANDROID"
+}
+
+<> 2026-06-18T152915.200.json
+
+###
+
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+<> 2026-06-18T152804.200.json
+
+###
+
 POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 Accept-Language: UZ

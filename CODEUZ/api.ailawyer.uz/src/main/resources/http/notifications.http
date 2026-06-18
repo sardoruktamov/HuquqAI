@@ -1,5 +1,6 @@
 ### ===================================================================
 ### QALQON AI - NOTIFICATION (FCM) TEST (BOSQICH 7)
+#TEST QILISH UCHUN QO'LLANMA PASTROQDA JOYLASHGAN
 ### ===================================================================
 
 @token = SHU_YERGA_TOKEN_QOYASIZ
@@ -23,10 +24,10 @@ Accept-Language: UZ
 ### ===================================================================
 POST http://localhost:8080/api/v1/notifications/device-token
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODE3Nzg0ODQsImV4cCI6MTc4MTg2NDg4NH0.pwiJwjgx_jZbf_g1kmRwi-vrKLn60J4U8r7ukPQKMCu_WwSdjcCpaZ_erAAd2IsXRib386dQ5Hi4LuRLMSnKlQ
 
 {
-  "token": "{{fcmToken}}",
+  "token": "admin-soxta-token-123",
   "platform": "ANDROID"
 }
 
@@ -51,3 +52,44 @@ Authorization: Bearer {{token}}
 ### ===================================================================
 DELETE http://localhost:8080/api/v1/notifications/device-token?token={{fcmToken}}
 Authorization: Bearer {{token}}
+
+# TEST QILISH UCHUN QO'LLANMA =============================================
+#Bildirishnomani test qilish: Onboarding (PENDING) ssenariysi
+#Buning uchun siz IDE'dagi Console (Loglar) darchasini ochib qo'ying va ma'lumotlar bazangizdagi device_token jadvalini kuzatishga tayyor turing.
+#
+#1-bosqich: Qabul qiluvchini (Adminni) tayyorlash
+#Bu xabar Adminga borishi kerak, shuning uchun avval Admin o'z telefonini (yoki soxta tokenni) tizimga tanitishi kerak.
+#
+#lawyer.http faylidagi 1-QADAM orqali Admin (uktamov9198@mail.ru) bo'lib login qiling va tokenni oling.
+#
+#notification.http faylidagi 2-QADAM (POST .../device-token) orqali Admin tokenini ro'yxatdan o'tkazing. JSON ichidagi "token" maydoniga "admin-soxta-token-123" deb yozib yuboring.
+#
+#Natija: Endi tizim biladiki, Adminning telefoni "admin-soxta-token-123" manzilida joylashgan.
+#
+#2-bosqich: Tetiklovchini (Advokatni) tayyorlash
+#Endi harakatni amalga oshiruvchi Advokat sahifasiga o'tamiz.
+#
+#Yana lawyer.http faylidagi 1-QADAM orqali Advokat (998911576777) bo'lib login qiling va yangi tokenni oling. O'zgaruvchilardagi @token ni shu advokatniki bilan almashtiring.
+#
+#(Agar hali qilinmagan bo'lsa) 3-QADAM orqali Advokat profilini (DRAFT) yarating.
+#
+#3-bosqich: Asosiy test (Xabarni ishga tushirish)
+#Hamma narsa tayyor. Endi advokat arizasini Adminga tasdiqlash uchun yuboradi.
+#
+#lawyer.http faylidagi 4-QADAM (POST .../onboarding/submit) ni yuboring.
+#
+#Bu so'rov muvaffaqiyatli o'tganda (HTTP 200 OK), advokatning profili PENDING holatiga o'tadi.
+#
+#4-bosqich: Natijani tekshirish
+#Aynan shu jarayonda backend nima ish qilganini tekshiramiz:
+#
+#Console (Loglar) ni tekshiring: IDE loglarida Firebase ushbu "admin-soxta-token-123" ga xabar yuborishga uringani, lekin token soxta bo'lgani uchun xatolik (FirebaseMessagingException) qaytarganini ko'rishingiz kerak.
+#
+#Ma'lumotlar bazasini tekshiring: O'zingiz yozgan kod (Dead Token Cleanup) ishlaganini ko'rish uchun bazadagi device_token jadvalini yangilang (Refresh). Boyagi "admin-soxta-token-123" tokenining active maydoni false bo'lib qolganini ko'rasiz.
+#
+#Xulosa
+#.../device-token API'si — bu "Mening telefonim manzili shu, menga shu yerga xabar yuboringlar" deb tizimga ro'yxatdan o'tish uchun ishlatiladi.
+#
+#.../onboarding/submit API'si (yoki chatda xabar yozish API'si) — bu asosiy harakatni bajaruvchi qism. U bajarilganda, tizim avtomatik ravishda orqa fonda kerakli odamlarning manzillarini topib, xabarlarni jo'natadi.
+#
+#Shu ketma-ketlikni Chat misolida ham qilib ko'rishingiz mumkin: Avval Advokat bo'lib login qilib tokenni ro'yxatdan o'tkazasiz, keyin Mijoz bo'lib login qilib Advokatga xabar yozasiz. Shunda xabar Advokatning soxta tokeniga borib uriladi.

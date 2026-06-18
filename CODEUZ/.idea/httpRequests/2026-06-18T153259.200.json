@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "id": "e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf",
+    "originName": "license.pdf",
+    "size": 386289,
+    "extension": "pdf",
+    "createdData": "2026-06-18T15:32:59.8177845",
+    "url": "http://localhost:8080/api/v1/attach/open/e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf"
+  },
+  "timestamp": "2026-06-18T15:32:59.8367847"
+}

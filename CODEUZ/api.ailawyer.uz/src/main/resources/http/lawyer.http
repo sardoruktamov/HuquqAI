@@ -3,8 +3,8 @@
 ### ===================================================================
 
 ### O'ZGARUVCHILAR (Test davomida bularni o'zgartirib borasiz)
-@token = eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTU0NDczNSwiZXhwIjoxNzgxNjMxMTM1fQ.yywycQfapLrzIjyI7hTvCLam40vxvAGwGHQ6VQvq4Z2DRxPFMO-Zu1wJ9inKV6XOHVyvPcNwWlSgksdBI8dYtA
-@licenseAttachId = SHU_YERGA_HUJJAT_ID_QOYASIZ
+@token = eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
+@licenseAttachId = e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf
 @lawyerId = SHU_YERGA_ADVOKAT_ID_QOYASIZ
 @lawyerChatId = SHU_YERGA_CHAT_ID_QOYASIZ
 
@@ -41,7 +41,7 @@ Accept-Language: UZ
 ### ===================================================================
 POST http://localhost:8080/api/v1/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTU0NDczNSwiZXhwIjoxNzgxNjMxMTM1fQ.yywycQfapLrzIjyI7hTvCLam40vxvAGwGHQ6VQvq4Z2DRxPFMO-Zu1wJ9inKV6XOHVyvPcNwWlSgksdBI8dYtA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
 
 --WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="license.pdf"
@@ -57,14 +57,14 @@ Content-Type: application/pdf
 ### ===================================================================
 POST http://localhost:8080/api/v1/lawyers/onboarding
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTU0NDczNSwiZXhwIjoxNzgxNjMxMTM1fQ.yywycQfapLrzIjyI7hTvCLam40vxvAGwGHQ6VQvq4Z2DRxPFMO-Zu1wJ9inKV6XOHVyvPcNwWlSgksdBI8dYtA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
 
 {
   "specializations": "Fuqarolik huquqi,Meros",
   "experienceYears": 12,
   "bio": "12 yillik tajribaga ega malakali advokat.",
   "licenseNumber": "L-123456789",
-  "licenseDocumentId": "{{licenseAttachId}}",
+  "licenseDocumentId": "e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf",
   "region": "Toshkent",
   "languages": ["UZ", "RU"]
 }
@@ -74,7 +74,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlc
 ### Vazifa: To'ldirilgan profilni Adminga tekshirish uchun yuborish.
 ### ===================================================================
 POST http://localhost:8080/api/v1/lawyers/onboarding/submit
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTU0NDczNSwiZXhwIjoxNzgxNjMxMTM1fQ.yywycQfapLrzIjyI7hTvCLam40vxvAGwGHQ6VQvq4Z2DRxPFMO-Zu1wJ9inKV6XOHVyvPcNwWlSgksdBI8dYtA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
 
 
 ### ===================================================================

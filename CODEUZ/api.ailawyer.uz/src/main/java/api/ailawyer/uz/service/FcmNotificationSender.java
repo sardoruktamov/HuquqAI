@@ -3,6 +3,7 @@ package api.ailawyer.uz.service;
 import api.ailawyer.uz.config.FirebaseProperties;
 import api.ailawyer.uz.entity.DeviceTokenEntity;
 import api.ailawyer.uz.repository.DeviceTokenRepository;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -32,6 +33,11 @@ public class FcmNotificationSender {
     public void sendToProfile(Integer profileId, String title, String body, Map<String, String> data) {
         if (!firebaseProperties.isEnabled()) {
             log.info("FCM disabled — skip push profileId={}, title={}", profileId, title);
+            return;
+        }
+
+        if (!isFirebaseInitialized()) {
+            log.error("Firebase initsializatsiya qilinmagan — push yuborib bo'lmaydi profileId={}, title={}", profileId, title);
             return;
         }
 
@@ -69,11 +75,18 @@ public class FcmNotificationSender {
                 deviceToken.setActive(false);
                 deviceTokenRepository.save(deviceToken);
             } else {
-                log.error("FCM yuborish xatosi profileId={}: {}", deviceToken.getProfileId(), e.getMessage());
+                log.error("FCM yuborish xatosi profileId={}, code={}: {}",
+                        deviceToken.getProfileId(), e.getMessagingErrorCode(), e.getMessage(), e);
             }
+        } catch (IllegalStateException e) {
+            log.error("Firebase SDK holati noto'g'ri profileId={}: {}", deviceToken.getProfileId(), e.getMessage());
         } catch (Exception e) {
-            log.error("FCM umumiy xato profileId={}: {}", deviceToken.getProfileId(), e.getMessage());
+            log.error("FCM umumiy xato profileId={}: {}", deviceToken.getProfileId(), e.getMessage(), e);
         }
+    }
+
+    private boolean isFirebaseInitialized() {
+        return !FirebaseApp.getApps().isEmpty();
     }
 
     private boolean isDeadToken(FirebaseMessagingException e) {

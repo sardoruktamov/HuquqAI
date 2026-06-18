@@ -7,20 +7,13 @@
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/entity/LawyerChatEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/entity/LawyerChatEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/LawyerMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/LawyerMessageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/ProfileRoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/ProfileRoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/LawyerChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/LawyerChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/LawyerMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/LawyerMessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/LawyerProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/LawyerProfileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/FcmNotificationSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/FcmNotificationSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/auth.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/auth.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/service/LawyerMessageServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/service/LawyerMessageServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/service/LawyerProfileServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/service/LawyerProfileServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/notifications.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/notifications.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification.md" beforeDir="false" afterPath="$PROJECT_DIR$/notification.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,19 +62,19 @@
   }
 }</component>
   <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="auth | Registration" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/auth.http" requestIdentifier="Registration" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="chatAi | 1. Avval Login qilib, TOKEN ni olamiz" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="2" requestIdentifier="1. Avval Login qilib, TOKEN ni olamiz" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="4" requestIdentifier="Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="5" requestIdentifier="Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." runType="Run single request">
+    <configuration name="lawyer | //==========  Advokatniki ==========" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="3" requestIdentifier="//==========  Advokatniki ==========" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="lawyer | ===================================================================#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="2" requestIdentifier="===================================================================#2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="lawyer | ===================================================================#3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="4" requestIdentifier="===================================================================#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="lawyer | ===================================================================#4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="5" requestIdentifier="===================================================================#4" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="notifications | ===================================================================#3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/notifications.http" index="3" requestIdentifier="===================================================================#3" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -93,11 +86,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.lawyer | ===================================================================#4" />
+        <item itemvalue="HTTP Request.lawyer | ===================================================================#3" />
+        <item itemvalue="HTTP Request.lawyer | //==========  Advokatniki ==========" />
         <item itemvalue="HTTP Request.lawyer | ===================================================================#2" />
-        <item itemvalue="HTTP Request.auth | Registration" />
-        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
-        <item itemvalue="HTTP Request.chatAi | 1. Avval Login qilib, TOKEN ni olamiz" />
-        <item itemvalue="HTTP Request.chatAi | Kutilayotgan natija: AI madaniyatli qilib O'zbekiston qonunchiligiga (Fuqarolik kodeksiga) asoslanib javob berishi kerak. isEscalation = false bo'ladi." />
+        <item itemvalue="HTTP Request.notifications | ===================================================================#3" />
       </list>
     </recent_temporary>
   </component>
@@ -114,7 +107,8 @@
       <workItem from="1781373891902" duration="1855000" />
       <workItem from="1781375966213" duration="1985000" />
       <workItem from="1781434209277" duration="6479000" />
-      <workItem from="1781680193118" duration="3841000" />
+      <workItem from="1781680193118" duration="8751000" />
+      <workItem from="1781782958177" duration="2855000" />
     </task>
     <servers />
   </component>

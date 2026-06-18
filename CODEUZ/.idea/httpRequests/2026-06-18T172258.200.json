@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "profileId": 3,
+    "fullName": "Advokat Ikromov",
+    "specializations": [
+      "Fuqarolik huquqi",
+      "Meros"
+    ],
+    "experienceYears": 12,
+    "bio": "12 yillik tajribaga ega malakali advokat.",
+    "licenseNumber": "L-123456789",
+    "licenseDocument": {
+      "id": "e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf",
+      "url": "http://localhost:8080/api/v1/attach/open/e825dc80-79a6-4293-8115-1c0ef6dc71d9.pdf"
+    },
+    "onboardingStatus": "PENDING",
+    "region": "Toshkent",
+    "languages": [
+      "UZ",
+      "RU"
+    ],
+    "isAvailable": true,
+    "createdDate": "2026-06-18T15:46:14.358504",
+    "updatedDate": "2026-06-18T17:22:58.1594364"
+  },
+  "timestamp": "2026-06-18T17:22:58.208436"
+}
