@@ -125,6 +125,13 @@
 			<artifactId>hibernate-vector</artifactId>
 			<version>6.5.3.Final</version>
 		</dependency>
+
+		<!-- Word (.docx) hujjat parsing (RAG) -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>

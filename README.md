@@ -41,8 +41,10 @@ Quyidagi qisqa xulosalar oxirgi commitlar va `api.ailawyer.uz` moduli tahlili as
 ### Suhbat va AI infratuzilmasi
 
 - **AI chat (izolyatsiya qilingan):** foydalanuvchi uchun `AiChat` / `AiMessage` modellari, holatlar (`ACTIVE`, `CLOSED`) va REST yo'llari (`/api/v1/ai-chats`, xabarlar uchun `/api/v1/ai-chats/{id}/messages`) joriy etilgan.
-- **Tashqi LLM ulanishi:** `AiProvider` interfeysi orqali javoblar shakllantiriladi; hozirda `@Primary` sifatida **`StubAiProvider`** ishlaydi — bu compile va to'liq so'rov oqimini saqlab, vaqtinchalik matnli javob qaytaradi (kelajakda masalan Gemini integratsiyasi uchun tayyor nuqta).
-- **Advokat bilan chat:** mijoz va advokat o'rtasidagi aloqa uchun `LawyerChat` / `LawyerMessage` va tegishli controllerlar (`/api/v1/lawyer-chats`, xabarlarni boshlash/yuborish) mavjud; kirish huquqlari chat egasi va ishtirokchiga nisbatan cheklanadi.
+- **Tashqi LLM ulanishi:** `AiProvider` interfeysi orqali javoblar shakllantiriladi; hozirda **`GeminiAiProviderImpl`** (Google Gemini 2.5 Flash) ishlaydi. Konfiguratsiya: `gemini.api.key`, `gemini.api.model` (`application.properties`).
+- **AI eskalatsiya:** AI javobida xavfli/trigger so'zlar bo'lsa `isEscalation=true` qaytariladi — mobil UI "Advokatga bog'lanish" tugmasini ko'rsatadi.
+- **Advokat tizimi (BOSQICH 5):** onboarding (`DRAFT → PENDING → APPROVED`), admin tasdiqlash, public katalog (`/api/v1/lawyers/public`), litsenziya detail. Test: `src/main/resources/http/lawyer.http`.
+- **Advokat bilan chat (BOSQICH 6):** mijoz va advokat o'rtasidagi aloqa uchun `LawyerChat` / `LawyerMessage` REST API to'liq ishlaydi. Chat ro'yxati ism, rasm va oxirgi xabar preview qaytaradi. Yopilgan chatga yozish bloklangan. Test: `src/main/resources/http/lawyer-chat.http`.
 
 ### Xavfsizlik va hujjatlashtirish (yangilangan sozlamalar)
 
@@ -53,12 +55,24 @@ Quyidagi qisqa xulosalar oxirgi commitlar va `api.ailawyer.uz` moduli tahlili as
 
 - **Flyway:** `flyway-core` va PostgreSQL uchun `flyway-database-postgresql` qo'shimchalari mavjud — sxema o'zgarishlari migratsiya orqali boshqariladi.
 - **Email (`spring-boot-starter-mail`):** ro'yxatdan o'tishni email orqali tasdiqlash uchun HTML-shablonli xatlar, parolni tiklash oqimi, yuborishlar tarixini hisobga olish va cheklov (masalan, bir xil manzilga takroriy xat) kabi xususiyatlar `EmailSendingService` da jamlangan.
-- **Bildirishnomalar:** `NotificationService` kelajakdagi push (masalan, FCM) ulanishi uchun hook sifatida qoldirilgan; hozircha hodisalar log orqali kuzatiladi.
+- **Bildirishnomalar:** `NotificationService` FCM push (asinxron event) — device token, lawyer chat va admin onboarding eventlari. Test: `notifications.http`. Dev da `firebase.enabled=false` (log fallback).
 
 ### Fayllar va postlar
 
 - **Fayl biriktirish:** `AttachController` orqali yuklash va ochiq URL orqali fayl ochish (`/api/v1/attach/...`) qo'llab-quvvatlanadi; ayrim yo'llar ochiq ro'yxatda.
 - **Postlar:** jamoat va admin filtrlash, o'xshash postlar qidiruvi kabi endpointlar `PostController` da rivojlantirilgan (Swagger orqali batafsil ko'rish mumkin).
+
+### Bosqichlar holati (backend)
+
+| Bosqich | Mavzu | Holat |
+|---------|-------|-------|
+| 1–2 | Auth, JWT, RBAC | Tugallangan |
+| 3 | AI/Lawyer chat izolyatsiya | Tugallangan |
+| 4 | Gemini AI integratsiya | Tugallangan |
+| 5 | Advokat onboarding + katalog | Tugallangan |
+| 6 | Lawyer chat yakunlash | Tugallangan |
+| 7 | FCM push notification | Tugallangan |
+| 8 | RAG (O'zbekiston qonunlari) | Reja |
 
 ---
 
