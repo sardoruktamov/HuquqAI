@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/FirebaseProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/FcmNotificationSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/service/FcmNotificationSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/notifications.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/notifications.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification.md" beforeDir="false" afterPath="$PROJECT_DIR$/notification.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +102,7 @@
       <workItem from="1781375966213" duration="1985000" />
       <workItem from="1781434209277" duration="6479000" />
       <workItem from="1781680193118" duration="8751000" />
-      <workItem from="1781782958177" duration="2855000" />
+      <workItem from="1781782958177" duration="5193000" />
     </task>
     <servers />
   </component>
