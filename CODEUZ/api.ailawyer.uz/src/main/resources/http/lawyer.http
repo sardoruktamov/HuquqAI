@@ -18,7 +18,7 @@ Content-Type: application/json
 Accept-Language: UZ
 
 {
-  "username": "998911576777",
+  "username": "uktamov9198@mail.ru",
   "password": "12345"
 }
 
@@ -88,14 +88,14 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlc
 ### Vazifa: Admin tasdiqlashni kutayotgan (PENDING) advokatlar ro'yxatini oladi.
 ### ===================================================================
 GET http://localhost:8080/api/v1/admin/lawyers/pending?page=1&size=10
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxNzk4MTAwLCJleHAiOjE3ODE4ODQ1MDB9.nmCTkNEaHXSjD01RSJrv_EQXv3yVOPaQFVQ0J_nojFaDPnBiMaINsivK0zxFQmhbWcADQpkBxPDicjtfApjw4Q
 
 ### ===================================================================
 ### 6-QADAM: ADMIN - ADVOKATNI TASDIQLASH (APPROVED holati)
 ### Vazifa: Admin advokatni tasdiqlaydi. Shundan so'ng u katalogda chiqishni boshlaydi.
 ### ===================================================================
-PUT http://localhost:8080/api/v1/admin/lawyers/{{lawyerId}}/approve
-Authorization: Bearer {{token}}
+PUT http://localhost:8080/api/v1/admin/lawyers/3/approve
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxNzk4MTAwLCJleHAiOjE3ODE4ODQ1MDB9.nmCTkNEaHXSjD01RSJrv_EQXv3yVOPaQFVQ0J_nojFaDPnBiMaINsivK0zxFQmhbWcADQpkBxPDicjtfApjw4Q
 
 
 ### ===================================================================

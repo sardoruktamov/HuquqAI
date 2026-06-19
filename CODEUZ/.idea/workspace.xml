@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/mini_mehnat_kodeksi.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T110913.400.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RAG.md" beforeDir="false" afterPath="$PROJECT_DIR$/RAG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/ai/GeminiAiProviderImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/LawChunkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/repository/LawChunkRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/RagDatabaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/RagDatabaseConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/ai/GeminiAiProviderImplIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/test/java/api/ailawyer/uz/ai/GeminiAiProviderImplIntegrationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +109,7 @@
       <workItem from="1781375966213" duration="1985000" />
       <workItem from="1781434209277" duration="6479000" />
       <workItem from="1781680193118" duration="8751000" />
-      <workItem from="1781782958177" duration="12548000" />
+      <workItem from="1781782958177" duration="14101000" />
     </task>
     <servers />
   </component>

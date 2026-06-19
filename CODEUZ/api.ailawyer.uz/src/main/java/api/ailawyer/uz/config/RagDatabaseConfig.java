@@ -1,13 +1,15 @@
 package api.ailawyer.uz.config;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 /**
  * RAG uchun PostgreSQL pgvector optimizatsiyasi (HNSW indeks).
+ * Hibernate {@code law_chunks} jadvalini yaratgandan keyin ishga tushadi.
  */
 @Component
 @RequiredArgsConstructor
@@ -20,13 +22,13 @@ public class RagDatabaseConfig {
 
     private final JdbcTemplate jdbcTemplate;
 
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void ensureHnswIndex() {
         try {
             jdbcTemplate.execute(HNSW_INDEX_SQL);
             log.info("HNSW indeks tayyor: law_chunks_embedding_hnsw_idx");
         } catch (Exception e) {
-            log.warn("HNSW indeks yaratib bo'lmadi (pgvector yo'q yoki jadval hali mavjud emas): {}", e.getMessage());
+            log.warn("HNSW indeks yaratib bo'lmadi: {}", e.getMessage());
         }
     }
 }
