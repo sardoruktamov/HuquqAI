@@ -1,3 +1,30 @@
+PUT http://localhost:8080/api/v1/admin/lawyers/3/approve
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxNzk4MTAwLCJleHAiOjE3ODE4ODQ1MDB9.nmCTkNEaHXSjD01RSJrv_EQXv3yVOPaQFVQ0J_nojFaDPnBiMaINsivK0zxFQmhbWcADQpkBxPDicjtfApjw4Q
+
+<> 2026-06-18T205623.200.json
+
+###
+
+GET http://localhost:8080/api/v1/admin/lawyers/pending?page=1&size=10
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxNzk4MTAwLCJleHAiOjE3ODE4ODQ1MDB9.nmCTkNEaHXSjD01RSJrv_EQXv3yVOPaQFVQ0J_nojFaDPnBiMaINsivK0zxFQmhbWcADQpkBxPDicjtfApjw4Q
+
+<> 2026-06-18T205540.200.json
+
+###
+
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+<> 2026-06-18T205500.200.json
+
+###
+
 POST http://localhost:8080/api/v1/lawyers/onboarding/submit
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MTE1NzY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMyIsImlhdCI6MTc4MTc3ODYwNywiZXhwIjoxNzgxODY1MDA3fQ.3kbaU7yZLJNZetX9JI_VNfHO2jIAJng-lMFMdF0krKTU-Mfhu_qACsiLR5fmBvzsTo7q4upbKpK8OuOPRYyWww
 
@@ -521,41 +548,6 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
 }
 
 <> 2026-06-12T110913.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "title": "Meros va yer masalasi qanday?"
-}
-
-<> 2026-06-12T110610.200.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-{
-  "title": "Meros va yer masalasi qanday?"
-}
-
-###
-
-POST http://localhost:8080/api/v1/auth/login
-Content-Type: application/json
-Accept-Language: UZ
-
-{
-  "username": "uktamov9198@mail.ru",
-  "password": "12345"
-}
-
-<> 2026-06-12T110212.200.json
 
 ###
 

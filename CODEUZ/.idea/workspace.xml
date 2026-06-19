@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T110212.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T110610.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RAG.md" beforeDir="false" afterPath="$PROJECT_DIR$/RAG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +59,6 @@
   }
 }</component>
   <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="lawyer | //==========  Advokatniki ==========" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="3" requestIdentifier="//==========  Advokatniki ==========" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="lawyer | ===================================================================#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="2" requestIdentifier="===================================================================#2" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -69,7 +68,10 @@
     <configuration name="lawyer | ===================================================================#4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="5" requestIdentifier="===================================================================#4" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="notifications | ===================================================================#3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/notifications.http" index="3" requestIdentifier="===================================================================#3" runType="Run single request">
+    <configuration name="lawyer | ===================================================================#5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="6" requestIdentifier="===================================================================#5" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="lawyer | ===================================================================#6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="7" requestIdentifier="===================================================================#6" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -81,11 +83,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.lawyer | ===================================================================#6" />
+        <item itemvalue="HTTP Request.lawyer | ===================================================================#5" />
+        <item itemvalue="HTTP Request.lawyer | ===================================================================#2" />
         <item itemvalue="HTTP Request.lawyer | ===================================================================#4" />
         <item itemvalue="HTTP Request.lawyer | ===================================================================#3" />
-        <item itemvalue="HTTP Request.lawyer | //==========  Advokatniki ==========" />
-        <item itemvalue="HTTP Request.lawyer | ===================================================================#2" />
-        <item itemvalue="HTTP Request.notifications | ===================================================================#3" />
       </list>
     </recent_temporary>
   </component>
@@ -103,7 +105,7 @@
       <workItem from="1781375966213" duration="1985000" />
       <workItem from="1781434209277" duration="6479000" />
       <workItem from="1781680193118" duration="8751000" />
-      <workItem from="1781782958177" duration="6596000" />
+      <workItem from="1781782958177" duration="7490000" />
     </task>
     <servers />
   </component>

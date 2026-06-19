@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,21 +25,30 @@ public class LegalDocumentService {
     private final LegalDocumentRepository legalDocumentRepository;
     private final LawChunkRepository lawChunkRepository;
     private final LegalDocumentParsingService legalDocumentParsingService;
+    private final LegalDocumentDiffService legalDocumentDiffService;
 
     @Transactional
     public LegalDocumentUploadResponseDTO upload(MultipartFile file, LegalDocumentUploadDTO dto) {
-        if (legalDocumentRepository.findByDocNumber(dto.getDocNumber().trim()).isPresent()) {
-            throw new AppBadException("Bu hujjat raqami allaqachon mavjud: " + dto.getDocNumber());
+        validateSupersededById(dto.getSupersededById());
+
+        String docNumber = dto.getDocNumber().trim();
+        Optional<LegalDocumentEntity> existingDocument = legalDocumentRepository.findByDocNumber(docNumber);
+
+        if (existingDocument.isPresent()) {
+            return updateExistingDocument(file, dto, existingDocument.get());
         }
 
-        if (dto.getSupersededById() != null
-                && !legalDocumentRepository.existsById(dto.getSupersededById())) {
-            throw new AppBadException("supersededById bo'yicha hujjat topilmadi!");
-        }
+        return createNewDocument(file, dto, docNumber);
+    }
 
+    private LegalDocumentUploadResponseDTO createNewDocument(
+            MultipartFile file,
+            LegalDocumentUploadDTO dto,
+            String docNumber
+    ) {
         LegalDocumentEntity document = new LegalDocumentEntity();
         document.setType(dto.getType());
-        document.setDocNumber(dto.getDocNumber().trim());
+        document.setDocNumber(docNumber);
         document.setDocDate(dto.getDocDate());
         document.setTitle(dto.getTitle().trim());
         document.setStatus(DocumentStatus.ACTIVE);
@@ -50,6 +61,43 @@ public class LegalDocumentService {
         List<LawChunkEntity> chunks = legalDocumentParsingService.parseAndChunkDocx(file, document);
         lawChunkRepository.saveAll(chunks);
 
+        return buildResponse(document, chunks.size());
+    }
+
+    private LegalDocumentUploadResponseDTO updateExistingDocument(
+            MultipartFile file,
+            LegalDocumentUploadDTO dto,
+            LegalDocumentEntity existingDocument
+    ) {
+        applyMetadataUpdate(existingDocument, dto);
+
+        List<LawChunkEntity> newlyParsedChunks =
+                legalDocumentParsingService.parseAndChunkDocx(file, existingDocument);
+
+        legalDocumentDiffService.processDocumentUpdate(existingDocument, newlyParsedChunks);
+
+        int totalChunks = lawChunkRepository.findAllByDocumentIdOrderByArticleRefAsc(existingDocument.getId()).size();
+        return buildResponse(existingDocument, totalChunks);
+    }
+
+    private void applyMetadataUpdate(LegalDocumentEntity document, LegalDocumentUploadDTO dto) {
+        document.setType(dto.getType());
+        document.setTitle(dto.getTitle().trim());
+        document.setDocDate(dto.getDocDate());
+        if (dto.getSupersededById() != null) {
+            document.setSupersededById(dto.getSupersededById());
+        }
+        document.setUpdatedAt(LocalDateTime.now());
+        legalDocumentRepository.save(document);
+    }
+
+    private void validateSupersededById(UUID supersededById) {
+        if (supersededById != null && !legalDocumentRepository.existsById(supersededById)) {
+            throw new AppBadException("supersededById bo'yicha hujjat topilmadi!");
+        }
+    }
+
+    private LegalDocumentUploadResponseDTO buildResponse(LegalDocumentEntity document, int chunkCount) {
         LegalDocumentUploadResponseDTO response = new LegalDocumentUploadResponseDTO();
         response.setDocumentId(document.getId());
         response.setType(document.getType());
@@ -57,7 +105,7 @@ public class LegalDocumentService {
         response.setDocDate(document.getDocDate());
         response.setTitle(document.getTitle());
         response.setStatus(document.getStatus());
-        response.setChunkCount(chunks.size());
+        response.setChunkCount(chunkCount);
         return response;
     }
 }
