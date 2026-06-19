@@ -26,6 +26,7 @@ public class LegalDocumentService {
     private final LawChunkRepository lawChunkRepository;
     private final LegalDocumentParsingService legalDocumentParsingService;
     private final LegalDocumentDiffService legalDocumentDiffService;
+    private final DocumentEmbeddingProcessor documentEmbeddingProcessor;
 
     @Transactional
     public LegalDocumentUploadResponseDTO upload(MultipartFile file, LegalDocumentUploadDTO dto) {
@@ -34,11 +35,12 @@ public class LegalDocumentService {
         String docNumber = dto.getDocNumber().trim();
         Optional<LegalDocumentEntity> existingDocument = legalDocumentRepository.findByDocNumber(docNumber);
 
-        if (existingDocument.isPresent()) {
-            return updateExistingDocument(file, dto, existingDocument.get());
-        }
+        LegalDocumentUploadResponseDTO response = existingDocument.isPresent()
+                ? updateExistingDocument(file, dto, existingDocument.get())
+                : createNewDocument(file, dto, docNumber);
 
-        return createNewDocument(file, dto, docNumber);
+        documentEmbeddingProcessor.processEmbeddingsForDocument(response.getDocumentId());
+        return response;
     }
 
     private LegalDocumentUploadResponseDTO createNewDocument(

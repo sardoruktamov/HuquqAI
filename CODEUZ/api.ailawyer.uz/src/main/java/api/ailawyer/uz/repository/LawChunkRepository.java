@@ -13,6 +13,8 @@ public interface LawChunkRepository extends JpaRepository<LawChunkEntity, UUID> 
 
     List<LawChunkEntity> findAllByDocumentIdOrderByArticleRefAsc(UUID documentId);
 
+    List<LawChunkEntity> findAllByDocumentIdAndEmbeddingIsNull(UUID documentId);
+
     Optional<LawChunkEntity> findByDocumentIdAndArticleRef(UUID documentId, String articleRef);
 
     void deleteAllByDocumentId(UUID documentId);

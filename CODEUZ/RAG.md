@@ -14,11 +14,11 @@ QalqonAI uchun **RAG arxitekturasi** bosqichma-bosqich qurilmoqda.
 |---------|-------|
 | **1 — Ma'lumotlar qatlami** | ✅ Bajarildi |
 | **2 — Hujjat yuklash va parsing** | ✅ Bajarildi |
-| **3 — Aqlli yangilash (hash diff)** | ⏳ Keyingi |
-| **4 — Gemini embedding** | ⏳ Rejada |
-| **5 — Vektor qidiruv + AI kontekst** | ⏳ Rejada |
+| **3 — Aqlli yangilash (hash diff)** | ✅ Bajarildi |
+| **4 — Gemini embedding** | ✅ Bajarildi |
+| **5 — Vektor qidiruv + AI kontekst** | ⏳ Keyingi |
 
-Hozirgacha admin `.docx` hujjat yuklay oladi, tizim uni ierarxik tarzda modda/band bo'laklariga ajratadi, SHA-256 hash hisoblaydi va `law_chunks` jadvaliga saqlaydi. **Embedding hali yozilmaydi** (`embedding = null`).
+Hozirgacha admin `.docx` hujjat yuklay oladi. Tizim uni modda/band bo'laklariga ajratadi, hash diff qiladi va **fonda Gemini `text-embedding-004` orqali 768 o'lchamli vektorlarga aylantiradi**. Upload HTTP javobi embedding tugashini kutmaydi — jarayon `@Async` da ishlaydi.
 
 ---
 
@@ -27,20 +27,23 @@ Hozirgacha admin `.docx` hujjat yuklay oladi, tizim uni ierarxik tarzda modda/ba
 ```
 Admin .docx yuklaydi (POST /upload)
         │
-        ▼
-LegalDocumentEntity saqlanadi (legal_documents)
+        ├─► docNumber YANGI?  → parse → barcha chunklar save (embedding=null)
+        │
+        └─► docNumber MAVJUD? → hash diff → faqat o'zgargan chunklar yangilanadi
         │
         ▼
-LegalDocumentParsingService — Apache POI + ierarxik parsing
+HTTP 200 javob (sinxron tugaydi)
         │
-        ▼
-LawChunkEntity[] yaratiladi (content + text_hash, embedding=null)
+        ▼  @Async — embeddingExecutor thread
+DocumentEmbeddingProcessor.processEmbeddingsForDocument()
         │
-        ▼
-law_chunks jadvaliga saqlash
+        ├─► embedding IS NULL chunklarni topish
+        ├─► har biri uchun GeminiEmbeddingService.getEmbedding()
+        ├─► law_chunks.embedding ga yozish (vector 768)
+        └─► 500ms kechikish (rate limit himoyasi)
         │
-        ▼  [KEYINGI BOSQICHLAR]
-Hash diff → Gemini embedding → pgvector qidiruv → AI kontekst
+        ▼  [KEYINGI BOSQICH — 5]
+pgvector cosine qidiruv → topilgan moddalar AI kontekstiga qo'shiladi
 ```
 
 ---
@@ -49,11 +52,11 @@ Hash diff → Gemini embedding → pgvector qidiruv → AI kontekst
 
 | Bosqich | Nomi | Holat | Tavsif |
 |---------|------|-------|--------|
-| **1** | Ma'lumotlar qatlami | ✅ **Bajarildi** | `legal_documents`, `law_chunks`, enumlar, repositorylar, pgvector dependency |
+| **1** | Ma'lumotlar qatlami | ✅ **Bajarildi** | `legal_documents`, `law_chunks`, enumlar, repositorylar, pgvector |
 | **2** | Hujjat yuklash qatlami | ✅ **Bajarildi** | Apache POI, ierarxik parsing, SHA-256 hash, admin upload API |
-| **3** | Aqlli yangilash | ⏳ Keyingi | Hash-based diffing — faqat o'zgargan moddalarni qayta embedding qilish |
-| **4** | AI integratsiyasi | ⏳ Rejada | Gemini `text-embedding-004` orqali vektorlash |
-| **5** | Qidiruv qatlami | ⏳ Rejada | Cosine similarity qidiruv, faqat `ACTIVE` hujjatlar, AI kontekstiga ulash |
+| **3** | Aqlli yangilash | ✅ **Bajarildi** | Hash-based diffing — faqat o'zgargan chunklar yangilanadi |
+| **4** | AI integratsiyasi | ✅ **Bajarildi** | Gemini `text-embedding-004`, async batch embedding |
+| **5** | Qidiruv qatlami | ⏳ Keyingi | Cosine similarity qidiruv, faqat `ACTIVE` hujjatlar, AI kontekst |
 
 ---
 
@@ -61,54 +64,48 @@ Hash diff → Gemini embedding → pgvector qidiruv → AI kontekst
 
 ### 1. Fayl formati — `.docx` (PDF emas)
 
-PDF matn emas, dizayn saqlaydi — moddalarni ajratish qiyin. Shuning uchun qonunlar **asosan `.docx` formatida** yuklanadi (Lex.uz dagi `.doc` yuklab olish odatiga mos).
+PDF matn emas, dizayn saqlaydi. Qonunlar **asosan `.docx` formatida** yuklanadi.
 
 - **Kutubxona:** Apache POI (`poi-ooxml`)
-- **Parsing yondashuvi:** Butun matnni regex bilan kesish **emas**, balki `XWPFDocument` + `IBodyElement` bo'yicha **ketma-ket, holatli (stateful) ierarxik parsing**
+- **Parsing:** `XWPFDocument` + `IBodyElement` bo'yicha stateful ierarxik parsing
 
-### 2. Ierarxik parsing mantiq
+### 2. Ierarxik parsing
 
-O'zbekiston huquqiy hujjatlari turli tuzilmaga ega:
+| Hujjat turi | Bo'linish | `articleRef` misoli |
+|-------------|-----------|---------------------|
+| `CODE`, `LAW` | `-modda` | `15-modda` |
+| Qaror/farmon | `-BOB` + `-band` | `1-bob, 3-band` |
 
-| Hujjat turi | Bo'linish qoidasi | `articleRef` misoli |
-|-------------|-------------------|---------------------|
-| `CODE`, `LAW` | `-modda` bo'yicha | `15-modda` |
-| `CABINET_RESOLUTION`, `PRESIDENTIAL_DECREE`, va boshqalar | `-BOB` (bob) + `-band` / raqamlangan band | `1-bob, 3-band` |
+Bob konteksti chunk boshiga qo'shiladi. Jadvallar Markdown formatida saqlanadi.
 
-**Kontekst saqlash:** Har bir chunk yaratilganda `currentChapter` (masalan, `1-BOB. Umumiy qoidalar`) matn boshiga qo'shiladi — LLM moddani qaysi bob ichida ekanini tushunadi.
+### 3. Hash-based diffing ✅
 
-**Jadvallar:** `XWPFTable` elementlari Markdown (`|`) formatiga o'tkazilib joriy chunk ga qo'shiladi.
+Qayta yuklashda faqat o'zgargan/yangi/o'chirilgan chunklar yangilanadi. Hash bir xil bo'lsa embedding saqlanadi.
 
-### 3. Aqlli qisman yangilash — Hash-based diffing (3-bosqich)
+### 4. Async embedding ✅
 
-Admin butun kodeksni qayta yuklaganda tizim faqat **o'zgargan moddalarni** yangilaydi:
+Embedding uzoq vaqt olishi va Gemini rate limit tufayli **HTTP javobdan keyin fonda** bajariladi. Faqat `embedding IS NULL` chunklar vektorlanadi — hash diff bilan birgalikda API xarajati minimal.
 
-1. Har bir modda uchun `text_hash` (SHA-256) hisoblanadi — **2-bosqichda allaqachon yoziladi**
-2. Eski va yangi hash solishtiriladi
-3. Hash bir xil → o'tkazib yuboriladi
-4. Hash farqli → eski chunk o'chiriladi, yangi matn embedding qilinadi
+### 5. Embedding model
 
-### 4. Mustaqil bekor qilish (Independent Revocation)
+| Parametr | Qiymat |
+|----------|--------|
+| Model | Gemini `text-embedding-004` |
+| O'lcham | **768** |
+| Saqlash | PostgreSQL `pgvector` (`float[]` + `@JdbcTypeCode(SqlTypes.VECTOR)`) |
+| HTTP client | `RestTemplate` (mavjud `AppConfig` bean) |
 
-VMQ-370 kabi hujjatni alohida **REVOKED** holatiga o'tkazish mumkin. `DocumentStatus.REVOKED` bo'lgan hujjatlar RAG qidiruvidan chiqariladi (5-bosqich + status API).
+### 6. Mustaqil bekor qilish (keyinroq)
 
-### 5. Embedding va vektor baza
-
-| Komponent | Tanlov |
-|-----------|--------|
-| Embedding model | Gemini `text-embedding-004` |
-| Vektor o'lchami | **768** |
-| Vektor bazasi | PostgreSQL **pgvector** kengaytmasi |
-| O'xshashlik | Cosine distance |
+`DocumentStatus.REVOKED` bo'lgan hujjatlar RAG qidiruvidan chiqariladi (5-bosqich + status API).
 
 ---
 
 # 1-BOSQICH: Ma'lumotlar qatlami ✅
 
-## Maven dependencylar
+## Dependencylar
 
 ```xml
-<!-- PostgreSQL pgvector (RAG vektor saqlash) -->
 <dependency>
     <groupId>com.pgvector</groupId>
     <artifactId>pgvector</artifactId>
@@ -121,78 +118,20 @@ VMQ-370 kabi hujjatni alohida **REVOKED** holatiga o'tkazish mumkin. `DocumentSt
 </dependency>
 ```
 
-| Dependency | Vazifa |
-|------------|--------|
-| `com.pgvector:pgvector` | PostgreSQL pgvector JDBC qo'llab-quvvatlash |
-| `org.hibernate.orm:hibernate-vector` | Hibernate 6 da `@JdbcTypeCode(SqlTypes.VECTOR)` mapping |
-
 ## Enumlar
 
-### `DocumentStatus` — hujjat holati (RAG filtri)
+- **`DocumentStatus`:** `ACTIVE`, `PARTIALLY_AMENDED`, `SUPERSEDED`, `REVOKED`
+- **`DocumentType`:** `CODE`, `LAW`, `PRESIDENTIAL_DECREE`, `PRESIDENTIAL_RESOLUTION`, `CABINET_RESOLUTION`, `MINISTRY_ORDER`, `OTHER`
 
-| Qiymat | Tavsif |
-|--------|--------|
-| `ACTIVE` | Hujjat amalda, AI maslahatlarida ishlatiladi |
-| `PARTIALLY_AMENDED` | Ba'zi moddalar yangilangan |
-| `SUPERSEDED` | Yangi hujjat bilan almashtirilgan |
-| `REVOKED` | Bekor qilingan — AI maslahat bermaydi |
+## Jadvallar
 
-**Fayl:** `enums/DocumentStatus.java`
+### `legal_documents`
 
-### `DocumentType` — hujjat turi
+Hujjat metadata: `id`, `type`, `doc_number`, `doc_date`, `title`, `status`, `superseded_by_id`, `created_at`, `updated_at`
 
-| Qiymat | Tavsif |
-|--------|--------|
-| `CODE` | Kodeks (masalan, Mehnat kodeksi) |
-| `LAW` | Qonun |
-| `PRESIDENTIAL_DECREE` | Prezident farmoni |
-| `PRESIDENTIAL_RESOLUTION` | Prezident qarori |
-| `CABINET_RESOLUTION` | Vazirlar Mahkamasi qarori |
-| `MINISTRY_ORDER` | Vazirlik buyrug'i |
-| `OTHER` | Boshqa |
+### `law_chunks`
 
-**Fayl:** `enums/DocumentType.java`
-
-## Ma'lumotlar bazasi
-
-Jadvallar Hibernate `ddl-auto=update` orqali avtomatik yaratiladi.
-
-### PostgreSQL: pgvector ni faollashtirish
-
-```sql
-CREATE EXTENSION IF NOT EXISTS vector;
-```
-
-### Jadval: `legal_documents`
-
-| Ustun | Tip | Majburiy | Tavsif |
-|-------|-----|----------|--------|
-| `id` | UUID | Ha | Primary key |
-| `type` | VARCHAR (enum) | Ha | `DocumentType` |
-| `doc_number` | VARCHAR(64) | Ha | Masalan: `VMQ-370` |
-| `doc_date` | DATE | Yo'q | Hujjat sanasi |
-| `title` | TEXT | Ha | Hujjat nomi |
-| `status` | VARCHAR (enum) | Ha | Default: `ACTIVE` |
-| `superseded_by_id` | UUID | Yo'q | Almashtirgan hujjat id si |
-| `created_at` | TIMESTAMP | Ha | Yaratilgan vaqt |
-| `updated_at` | TIMESTAMP | Yo'q | Yangilangan vaqt |
-
-**Entity:** `entity/LegalDocumentEntity.java`
-
-### Jadval: `law_chunks`
-
-| Ustun | Tip | Majburiy | Tavsif |
-|-------|-----|----------|--------|
-| `id` | UUID | Ha | Primary key |
-| `document_id` | UUID | Ha | FK → `legal_documents.id` |
-| `article_ref` | VARCHAR(64) | Ha | Masalan: `12-modda` yoki `1-bob, 3-band` |
-| `content` | TEXT | Ha | Modda/band matni (+ bob konteksti, markdown jadvallar) |
-| `text_hash` | VARCHAR(64) | Ha | `content` ning SHA-256 hash |
-| `embedding` | **vector(768)** | Yo'q | Gemini embedding (hozircha `null`) |
-
-**Entity:** `entity/LawChunkEntity.java`
-
-**Vektor mapping:**
+Chunk + vektor: `id`, `document_id`, `article_ref`, `content`, `text_hash`, `embedding vector(768)`
 
 ```java
 @Column(name = "embedding")
@@ -201,31 +140,26 @@ CREATE EXTENSION IF NOT EXISTS vector;
 private float[] embedding;
 ```
 
+## PostgreSQL
+
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+```
+
 ## Repositorylar
 
-### `LegalDocumentRepository`
-
-| Metod | Vazifa |
-|-------|--------|
-| `findByDocNumber(String)` | Raqam bo'yicha hujjat topish |
-| `findAllByStatus(DocumentStatus)` | Holat bo'yicha ro'yxat |
-
-### `LawChunkRepository`
-
-| Metod | Vazifa |
-|-------|--------|
-| `findAllByDocumentIdOrderByArticleRefAsc(UUID)` | Hujjatning barcha chunklari |
-| `findByDocumentIdAndArticleRef(UUID, String)` | Bitta chunk (hash diff uchun) |
-| `deleteAllByDocumentId(UUID)` | Hujjat chunklarini tozalash |
+| Repository | Asosiy metodlar |
+|------------|-----------------|
+| `LegalDocumentRepository` | `findByDocNumber`, `findAllByStatus` |
+| `LawChunkRepository` | `findAllByDocumentIdOrderByArticleRefAsc`, `findByDocumentIdAndArticleRef`, `findAllByDocumentIdAndEmbeddingIsNull`, `deleteAllByDocumentId` |
 
 ---
 
 # 2-BOSQICH: Hujjat yuklash va parsing ✅
 
-## Maven dependency (qo'shimcha)
+## Dependency
 
 ```xml
-<!-- Word (.docx) hujjat parsing (RAG) -->
 <dependency>
     <groupId>org.apache.poi</groupId>
     <artifactId>poi-ooxml</artifactId>
@@ -233,190 +167,211 @@ private float[] embedding;
 </dependency>
 ```
 
+## Asosiy komponentlar
+
+| Komponent | Vazifa |
+|-----------|--------|
+| `LegalDocumentParsingService` | `.docx` ierarxik parsing, SHA-256 |
+| `LegalDocumentAdminController` | `POST /api/v1/admin/legal-documents/upload` |
+| `LegalDocumentUploadDTO` | Upload form maydonlari |
+
+## REST API
+
+```
+POST /api/v1/admin/legal-documents/upload
+Content-Type: multipart/form-data
+Ruxsat: ROLE_ADMIN, ROLE_SUPERADMIN
+```
+
+Parametrlar: `file`, `type`, `docNumber`, `docDate`, `title`, `supersededById`
+
+---
+
+# 3-BOSQICH: Hash-Based Diffing ✅
+
+## Komponent
+
+`LegalDocumentDiffService.processDocumentUpdate(existingDoc, newlyParsedChunks)`
+
+| Holat | Harakat |
+|-------|---------|
+| Hash bir xil | Tegilmaydi (embedding saqlanadi) |
+| Hash farqli | `content` yangilanadi, `embedding = null` |
+| Yangi `articleRef` | Yangi chunk qo'shiladi |
+| Eski mapda qolgan | O'chiriladi |
+
+O'zgarish bo'lsa → `DocumentStatus.PARTIALLY_AMENDED`
+
+## Upload — mavjud hujjat
+
+Bir xil `docNumber` bilan qayta yuklash xato emas — aqlli yangilash rejimida ishlaydi.
+
+---
+
+# 4-BOSQICH: Gemini Embedding ✅
+
+## Konfiguratsiya (`application.properties`)
+
+```properties
+gemini.api.key=YOUR_API_KEY
+gemini.embedding.model=text-embedding-004
+gemini.embedding.delay-ms=500
+```
+
+| Property | Default | Tavsif |
+|----------|---------|--------|
+| `gemini.api.key` | — | Gemini API kaliti (chat va embedding uchun umumiy) |
+| `gemini.embedding.model` | `text-embedding-004` | Embedding model nomi |
+| `gemini.embedding.delay-ms` | `500` | So'rovlar orasidagi kechikish (ms) |
+
 ## Yangi fayllar
 
 | Fayl | Vazifa |
 |------|--------|
-| `service/LegalDocumentParsingService.java` | `.docx` ierarxik parsing, chunk yaratish, SHA-256 |
-| `service/LegalDocumentService.java` | Upload orchestration (`@Transactional`) |
-| `controller/LegalDocumentAdminController.java` | Admin upload REST API |
-| `dto/legal/LegalDocumentUploadDTO.java` | Upload form maydonlari |
-| `dto/legal/LegalDocumentUploadResponseDTO.java` | Upload javobi |
-| `test/.../LegalDocumentParsingServiceTest.java` | Parsing unit testlari |
+| `service/GeminiEmbeddingService.java` | Gemini API chaqiruvi, `float[]` qaytarish |
+| `service/DocumentEmbeddingProcessor.java` | `@Async` batch embedding |
+| `exps/GeminiApiException.java` | Gemini API xatolari |
 
-## Upload oqimi
+## O'zgartirilgan fayllar
 
-```
-POST /api/v1/admin/legal-documents/upload
-        │
-        ▼
-LegalDocumentAdminController
-        │
-        ▼
-LegalDocumentService.upload()  [@Transactional]
-        │
-        ├─► docNumber takrorlanishini tekshirish
-        ├─► supersededById mavjudligini tekshirish
-        ├─► LegalDocumentEntity saqlash (status=ACTIVE)
-        ├─► LegalDocumentParsingService.parseAndChunkDocx()
-        └─► LawChunkRepository.saveAll(chunks)
+| Fayl | O'zgarish |
+|------|-----------|
+| `LegalDocumentService.upload()` | Javobdan oldin `processEmbeddingsForDocument()` trigger |
+| `LawChunkRepository` | `findAllByDocumentIdAndEmbeddingIsNull()` |
+| `AsyncConfig` | `embeddingExecutor` thread pool |
+| `application.properties` | Embedding propertylar |
+
+## `GeminiEmbeddingService`
+
+### Metod
+
+```java
+public float[] getEmbedding(String text)
 ```
 
-## REST API
+### API chaqiruvi
 
-### `POST /api/v1/admin/legal-documents/upload`
+```
+POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key={API_KEY}
+```
 
-| Parametr | Turi | Majburiy | Tavsif |
-|----------|------|----------|--------|
-| `file` | MultipartFile | Ha | Faqat `.docx` |
-| `type` | DocumentType | Ha | Hujjat turi |
-| `docNumber` | String | Ha | Masalan: `VMQ-370` |
-| `docDate` | LocalDate | Yo'q | `YYYY-MM-DD` |
-| `title` | String | Ha | Hujjat nomi |
-| `supersededById` | UUID | Yo'q | Almashtirilgan hujjat id si |
-
-**Ruxsat:** `ROLE_ADMIN`, `ROLE_SUPERADMIN`  
-**Content-Type:** `multipart/form-data`
-
-### Javob misoli
+### Request body
 
 ```json
 {
-  "success": true,
-  "message": "Hujjat muvaffaqiyatli yuklandi, chunkCount=142",
-  "data": {
-    "documentId": "a1b2c3d4-...",
-    "type": "CODE",
-    "docNumber": "MK-001",
-    "docDate": "2024-01-15",
-    "title": "O'zbekiston Respublikasining Mehnat kodeksi",
-    "status": "ACTIVE",
-    "chunkCount": 142
+  "model": "models/text-embedding-004",
+  "content": {
+    "parts": [{ "text": "Modda matni..." }]
   }
 }
 ```
 
-### cURL misoli
+### Response (parse qilinadigan qism)
 
-```bash
-curl -X POST "http://localhost:8080/api/v1/admin/legal-documents/upload" \
-  -H "Authorization: Bearer <ADMIN_JWT>" \
-  -F "file=@mehnat-kodeksi.docx" \
-  -F "type=CODE" \
-  -F "docNumber=MK-001" \
-  -F "docDate=2024-01-15" \
-  -F "title=Mehnat kodeksi"
-```
-
-## `LegalDocumentParsingService` — parsing mantiq
-
-### Asosiy metod
-
-```java
-public List<LawChunkEntity> parseAndChunkDocx(
-    MultipartFile file,
-    LegalDocumentEntity document
-)
-```
-
-### Iteratsiya usuli
-
-`XWPFDocument.getBodyElements()` bo'yicha ketma-ket o'qiladi:
-
-| Element turi | Harakat |
-|--------------|---------|
-| `XWPFParagraph` | Hujjat turiga qarab modda/band/bob aniqlash |
-| `XWPFTable` | Markdown jadvalga aylantirish, joriy chunk ga qo'shish |
-
-### Holat o'zgaruvchilari (ParsingContext)
-
-| O'zgaruvchi | Vazifa |
-|-------------|--------|
-| `currentChapter` | Joriy bob konteksti, masalan: `1-BOB. Umumiy qoidalar` |
-| `currentArticleRef` | Chunk identifikatori |
-| `currentContent` | Joriy chunk matni (StringBuilder) |
-
-### Regex patternlar
-
-| Pattern | Maqsad | Misol |
-|---------|--------|-------|
-| `BOB_PATTERN` | Bob sarlavhasi | `1-BOB. Umumiy qoidalar` |
-| `MODDA_PATTERN` | Modda (kodeks/qonun) | `15-modda. Matn...` |
-| `BAND_PATTERN` | Band (qaror/farmon) | `3-band. Matn...` |
-| `NUMBERED_POINT_PATTERN` | Raqamlangan band | `1. Matn...` yoki `1) Matn...` |
-
-### Kodeks / Qonun (`CODE`, `LAW`)
-
-1. `-BOB` topilsa → `currentChapter` yangilanadi (chunk yaratilmaydi)
-2. `-modda` topilsa → oldingi chunk yakunlanadi, yangi chunk boshlanadi
-3. Keyingi paragraflar joriy modda chunkiga qo'shiladi
-4. Chunk yakunlanganda `currentChapter` matn boshiga qo'shiladi
-
-### Qaror / Farmon (qolgan turlar)
-
-1. `-BOB` topilsa → `currentChapter` yangilanadi
-2. `-band` yoki raqamlangan band topilsa → yangi chunk, `articleRef = "1-bob, 3-band"`
-3. Jadval → Markdown formatida joriy chunk ga qo'shiladi
-
-### Chunk yaratish
-
-Har bir chunk uchun:
-
-```java
-chunk.setDocumentId(document.getId());
-chunk.setArticleRef("15-modda");          // yoki "1-bob, 3-band"
-chunk.setContent(chapterContext + body);  // bob konteksti + matn
-chunk.setTextHash(sha256(content));       // SHA-256 (64 belgi hex)
-chunk.setEmbedding(null);                 // 4-bosqichda to'ldiriladi
+```json
+{
+  "embedding": {
+    "values": [0.012, -0.034, ...]
+  }
+}
 ```
 
 ### Xato holatlari
 
-| Xato | Sabab |
-|------|-------|
-| `Yuklanadigan fayl bo'sh!` | Fayl yo'q yoki 0 bayt |
-| `Faqat .docx formatidagi Word hujjat qabul qilinadi!` | Noto'g'ri kengaytma |
-| `Word hujjatini o'qishda xatolik: ...` | IOException (buzilgan fayl) |
-| `Hujjatdan modda yoki band ajratib bo'lmadi!` | Hech qanday chunk topilmadi |
-| `Bu hujjat raqami allaqachon mavjud: ...` | Takroriy `docNumber` |
+| Holat | Harakat |
+|-------|---------|
+| Matn bo'sh | `GeminiApiException` |
+| API kalit yo'q | `GeminiApiException` |
+| HTTP xato / rate limit | `GeminiApiException` + log |
+| `embedding.values` yo'q | `GeminiApiException` |
+| O'lcham ≠ 768 | Warning log, lekin davom etadi |
+
+## `DocumentEmbeddingProcessor`
+
+### Metod
+
+```java
+@Async("embeddingExecutor")
+public void processEmbeddingsForDocument(UUID documentId)
+```
+
+### Algoritm
+
+```
+1. findAllByDocumentIdAndEmbeddingIsNull(documentId)
+2. Har bir chunk uchun:
+   a. geminiEmbeddingService.getEmbedding(content)
+   b. chunk.setEmbedding(vector)
+   c. lawChunkRepository.save(chunk)
+   d. Thread.sleep(500ms)  — rate limit himoyasi
+3. Xato bo'lsa — log, keyingi chunk ga o'tish
+```
+
+### Console log misollari
+
+```
+Embedding boshlandi documentId=a1b2..., pendingCount=142
+Embedding yakunlandi documentId=a1b2..., success=140, failed=2
+Embedding kerak emas documentId=a1b2...
+```
+
+## Async konfiguratsiya
+
+`AsyncConfig` da `@EnableAsync` mavjud (notification va audit bilan birga).
+
+| Bean | Thread prefix | Vazifa |
+|------|---------------|--------|
+| `notificationExecutor` | `notification-` | FCM push |
+| `auditExecutor` | `audit-` | Audit log |
+| `embeddingExecutor` | `embedding-` | Gemini embedding |
+
+## Upload + embedding to'liq oqimi
+
+```
+LegalDocumentService.upload()  [@Transactional]
+        │
+        ├─► Yangi hujjat YOKI hash diff
+        │
+        ├─► HTTP response tayyorlanadi
+        │
+        └─► documentEmbeddingProcessor.processEmbeddingsForDocument(id)
+                ↓ (async, HTTP allaqachon qaytgan)
+            faqat embedding=null chunklar → Gemini → pgvector save
+```
+
+> **Muhim:** Hash diff tufayli o'zgarmagan moddalarda embedding saqlanadi — faqat yangi/o'zgargan moddalar uchun Gemini chaqiriladi.
 
 ## Unit testlar
 
-**Fayl:** `LegalDocumentParsingServiceTest.java`
+### `GeminiEmbeddingServiceTest`
 
 | Test | Tekshiruv |
 |------|-----------|
-| `sha256_generatesConsistentHash` | Hash barqaror va 64 belayli |
-| `parseAndChunkDocx_splitsCodeByModdaAndPrependsChapter` | Kodeks: 2 modda, bob konteksti qo'shilgan |
-| `parseAndChunkDocx_splitsResolutionByBobAndBand` | Qaror: `1-bob, 1-band` va `1-bob, 2-band` |
+| `getEmbedding_parses768DimensionalVector` | JSON javobdan `float[]` parse |
+| `getEmbedding_throwsWhenTextBlank` | Bo'sh matn → exception |
+
+### `DocumentEmbeddingProcessorTest`
+
+| Test | Tekshiruv |
+|------|-----------|
+| `processEmbeddingsForDocument_embedsPendingChunks` | Muvaffaqiyatli embedding + save |
+| `processEmbeddingsForDocument_skipsSaveWhenEmbeddingFails` | Xato bo'lsa save qilinmaydi |
+
+### `LegalDocumentServiceTest`
+
+| Test | Tekshiruv |
+|------|-----------|
+| `upload_existingDocumentUsesDiffServiceInsteadOfCreatingNew` | Upload dan keyin async trigger chaqiriladi |
 
 ---
 
-## Entity munosabatlari diagrammasi
+## Entity diagrammasi
 
 ```
-┌─────────────────────────┐
-│   legal_documents       │
-├─────────────────────────┤
-│ id (UUID) PK            │
-│ type, doc_number        │
-│ doc_date, title         │
-│ status                  │
-│ superseded_by_id        │
-│ created_at / updated_at │
-└───────────┬─────────────┘
-            │ 1
-            │ N
-┌───────────▼─────────────┐
-│   law_chunks            │
-├─────────────────────────┤
-│ id (UUID) PK            │
-│ document_id FK          │
-│ article_ref             │
-│ content (+ bob context) │
-│ text_hash (SHA-256)     │
-│ embedding vector(768)   │  ← hozircha null
-└─────────────────────────┘
+legal_documents (1) ──────< (N) law_chunks
+                              │
+                              ├─ text_hash   → diff kaliti
+                              └─ embedding   → vector(768), Gemini orqali to'ldiriladi
 ```
 
 ---
@@ -425,40 +380,46 @@ chunk.setEmbedding(null);                 // 4-bosqichda to'ldiriladi
 
 ```
 api.ailawyer.uz/
-├── pom.xml                                          [pgvector, hibernate-vector, poi-ooxml]
+├── pom.xml
 └── src/
     ├── main/java/api/ailawyer/uz/
+    │   ├── config/
+    │   │   └── AsyncConfig.java                        [embeddingExecutor — 4-bosqich]
     │   ├── controller/
-    │   │   └── LegalDocumentAdminController.java    [YANGI — 2-bosqich]
+    │   │   └── LegalDocumentAdminController.java       [2-bosqich]
     │   ├── dto/legal/
-    │   │   ├── LegalDocumentUploadDTO.java          [YANGI — 2-bosqich]
-    │   │   └── LegalDocumentUploadResponseDTO.java  [YANGI — 2-bosqich]
+    │   │   ├── LegalDocumentUploadDTO.java             [2-bosqich]
+    │   │   └── LegalDocumentUploadResponseDTO.java       [2-bosqich]
     │   ├── enums/
-    │   │   ├── DocumentStatus.java                  [1-bosqich]
-    │   │   └── DocumentType.java                    [1-bosqich]
+    │   │   ├── DocumentStatus.java                     [1-bosqich]
+    │   │   └── DocumentType.java                       [1-bosqich]
     │   ├── entity/
-    │   │   ├── LegalDocumentEntity.java             [1-bosqich]
-    │   │   └── LawChunkEntity.java                  [1-bosqich]
+    │   │   ├── LegalDocumentEntity.java                [1-bosqich]
+    │   │   └── LawChunkEntity.java                     [1-bosqich]
+    │   ├── exps/
+    │   │   └── GeminiApiException.java                 [YANGI — 4-bosqich]
     │   ├── repository/
-    │   │   ├── LegalDocumentRepository.java         [1-bosqich]
-    │   │   └── LawChunkRepository.java              [1-bosqich]
+    │   │   ├── LegalDocumentRepository.java            [1-bosqich]
+    │   │   └── LawChunkRepository.java                 [1-bosqich, 4-bosqichda yangilandi]
     │   └── service/
-    │       ├── LegalDocumentParsingService.java     [YANGI — 2-bosqich]
-    │       └── LegalDocumentService.java            [YANGI — 2-bosqich]
+    │       ├── LegalDocumentParsingService.java        [2-bosqich]
+    │       ├── LegalDocumentDiffService.java           [3-bosqich]
+    │       ├── LegalDocumentService.java               [2–4-bosqich]
+    │       ├── GeminiEmbeddingService.java             [YANGI — 4-bosqich]
+    │       └── DocumentEmbeddingProcessor.java         [YANGI — 4-bosqich]
     └── test/java/api/ailawyer/uz/service/
-        └── LegalDocumentParsingServiceTest.java     [YANGI — 2-bosqich]
+        ├── LegalDocumentParsingServiceTest.java        [2-bosqich]
+        ├── LegalDocumentDiffServiceTest.java           [3-bosqich]
+        ├── LegalDocumentServiceTest.java               [3–4-bosqich]
+        ├── GeminiEmbeddingServiceTest.java             [YANGI — 4-bosqich]
+        └── DocumentEmbeddingProcessorTest.java         [YANGI — 4-bosqich]
 ```
 
-**Keyingi bosqichlarda yoziladi:**
+**Keyingi bosqichda yoziladi:**
 
 ```
 service/
-├── LegalDocumentDiffService.java       [3-bosqich — hash diffing]
-├── EmbeddingService.java               [4-bosqich — Gemini embedding]
 └── LegalSearchService.java             [5-bosqich — vektor qidiruv]
-
-controller/
-└── LegalDocumentAdminController.java   [status REVOKED API — keyinroq]
 ```
 
 ---
@@ -467,10 +428,9 @@ controller/
 
 | Funksiya | Bosqich |
 |----------|---------|
-| Hash-based diffing (qayta yuklashda faqat o'zgargan moddalar) | 3 |
-| Gemini Embedding API (`text-embedding-004`) | 4 |
 | pgvector cosine qidiruv | 5 |
 | AI suhbatiga kontekst qo'shish | 5 |
+| Faqat `ACTIVE` hujjatlardan qidiruv | 5 |
 | Hujjat holatini `REVOKED` ga o'zgartirish API | Keyinroq |
 | Hujjatlar ro'yxati / qidiruv API | Keyinroq |
 
@@ -486,40 +446,47 @@ cd api.ailawyer.uz
 ./mvnw test
 ```
 
-Natija: **0 xato** (1 va 2-bosqichlar yakunlanganda tasdiqlangan).
+Natija: **0 xato** (1–4-bosqichlar yakunlanganda tasdiqlangan).
 
-### Bazada ma'lumotlarni ko'rish
+### Embedding holatini tekshirish
 
 ```sql
--- Yuklangan hujjatlar
-SELECT id, doc_number, type, status, title
-FROM legal_documents
-ORDER BY created_at DESC;
+-- Embedding kutilayotgan chunklar
+SELECT d.doc_number, c.article_ref, c.text_hash
+FROM law_chunks c
+JOIN legal_documents d ON d.id = c.document_id
+WHERE c.embedding IS NULL;
 
--- Chunklar (embedding hozircha null)
-SELECT document_id, article_ref, LEFT(content, 80) AS preview, text_hash,
-       embedding IS NULL AS embedding_empty
-FROM law_chunks
-ORDER BY article_ref
-LIMIT 20;
-
--- Muayyan hujjat bo'yicha chunklar soni
-SELECT d.doc_number, COUNT(c.id) AS chunk_count
-FROM legal_documents d
-JOIN law_chunks c ON c.document_id = d.id
+-- Embedding muvaffaqiyatli yozilgan chunklar
+SELECT d.doc_number, COUNT(*) AS embedded_count
+FROM law_chunks c
+JOIN legal_documents d ON d.id = c.document_id
+WHERE c.embedding IS NOT NULL
 GROUP BY d.doc_number;
+
+-- Vektor o'lchamini tekshirish (pgvector)
+SELECT article_ref, vector_dims(embedding) AS dims
+FROM law_chunks
+WHERE embedding IS NOT NULL
+LIMIT 5;
+-- Kutilgan: dims = 768
 ```
+
+### Upload + embedding testi
+
+1. `.docx` yuklang → HTTP 200 darhol qaytadi
+2. Console da `Embedding boshlandi...` va `Embedding yakunlandi...` loglarini kuting
+3. SQL da `embedding IS NOT NULL` chunklar soni oshganini tekshiring
+4. Qayta yuklang (faqat 1 modda o'zgartirilgan) → faqat o'sha modda uchun yangi embedding chaqiriladi
 
 ---
 
-## Keyingi bosqich (3-qadam) — reja
+## Keyingi bosqich (5-qadam) — reja
 
-1. Admin hujjatni **qayta yuklash** endpointi (yoki mavjud upload ni yangilash rejimi)
-2. Yangi `.docx` parse qilinadi, har bir chunk uchun yangi `text_hash` hisoblanadi
-3. Eski chunk hash bilan solishtiriladi:
-   - Bir xil → o'tkazib yuboriladi
-   - Farqli → eski chunk o'chiriladi, yangisi embedding uchun navbatga qo'yiladi
-4. `DocumentStatus.PARTIALLY_AMENDED` holati yangilanadi
+1. `LegalSearchService` — foydalanuvchi savolini vektorlaydi
+2. pgvector cosine similarity (`<=>` yoki `cosine_distance`) bilan eng yaqin chunklarni topadi
+3. Faqat `DocumentStatus.ACTIVE` (va `PARTIALLY_AMENDED`) hujjatlardan qidiradi
+4. Topilgan modda matnlarini AI chat kontekstiga qo'shadi
 
 ---
 
@@ -528,14 +495,16 @@ GROUP BY d.doc_number;
 | Nima qilindi | Bosqich | Tafsilot |
 |--------------|---------|----------|
 | ✅ pgvector integratsiyasi | 1 | Maven + Hibernate vector mapping |
-| ✅ `legal_documents` / `law_chunks` | 1 | Entity, enum, repository |
-| ✅ Apache POI parsing | 2 | Ierarxik bob/modda/band ajratish |
-| ✅ Markdown jadvallar | 2 | `XWPFTable` → `\|` format |
-| ✅ SHA-256 hash | 2 | Har chunk uchun `text_hash` |
-| ✅ Admin upload API | 2 | `POST /api/v1/admin/legal-documents/upload` |
-| ✅ Unit testlar | 2 | Kodeks va qaror parsing testlari |
-| ⏳ Hash diff | 3 | Keyingi qadam |
-| ⏳ Gemini embedding | 4 | Rejada |
-| ⏳ Vektor qidiruv | 5 | Rejada |
+| ✅ Entity / enum / repository | 1 | `legal_documents`, `law_chunks` |
+| ✅ Apache POI parsing | 2 | Ierarxik bob/modda/band |
+| ✅ Admin upload API | 2 | `POST /upload` |
+| ✅ Hash-based diffing | 3 | Faqat o'zgargan chunklar |
+| ✅ `PARTIALLY_AMENDED` | 3 | O'zgarishda avtomatik |
+| ✅ Gemini embedding | 4 | `text-embedding-004`, 768 o'lcham |
+| ✅ Async batch processor | 4 | `@Async embeddingExecutor` |
+| ✅ Upload trigger | 4 | HTTP bloklanmaydi |
+| ✅ Rate limit himoyasi | 4 | 500ms delay |
+| ⏳ Vektor qidiruv | 5 | Keyingi qadam |
+| ⏳ AI kontekst | 5 | Rejada |
 
-RAG tizimining **ma'lumotlar qatlami va hujjat yuklash qatlami** tayyor. Keyingi qadam — hash-based aqlli yangilash algoritmi.
+RAG tizimining **ma'lumotlar, parsing, diff va embedding qatlamlari** tayyor. Keyingi qadam — pgvector orqali semantic qidiruv va AI ga kontekst berish.

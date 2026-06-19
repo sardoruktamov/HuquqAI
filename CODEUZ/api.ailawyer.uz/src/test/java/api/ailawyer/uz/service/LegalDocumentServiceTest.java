@@ -39,6 +39,9 @@ class LegalDocumentServiceTest {
     @Mock
     private LegalDocumentDiffService legalDocumentDiffService;
 
+    @Mock
+    private DocumentEmbeddingProcessor documentEmbeddingProcessor;
+
     @InjectMocks
     private LegalDocumentService legalDocumentService;
 
@@ -76,6 +79,7 @@ class LegalDocumentServiceTest {
 
         verify(legalDocumentDiffService).processDocumentUpdate(existing, List.of(parsedChunk));
         verify(lawChunkRepository, never()).saveAll(any());
+        verify(documentEmbeddingProcessor).processEmbeddingsForDocument(documentId);
         assertEquals(documentId, response.getDocumentId());
         assertEquals("New title", existing.getTitle());
         assertEquals(1, response.getChunkCount());
