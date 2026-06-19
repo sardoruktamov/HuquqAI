@@ -1,28 +1,34 @@
-# BOSQICH 8 — RAG (Retrieval-Augmented Generation) Tizimi
+# RAG (Retrieval-Augmented Generation) Tizimi
 
 **Loyiha:** QalqonAI (`api.ailawyer.uz`)  
-**Texnologiya:** Spring Boot 3, Java 17, Hibernate 6, PostgreSQL + pgvector, Apache POI, Gemini Embedding API  
-**Maqsad:** Huquqiy hujjatlarni (kodeks, qonun, VMQ va hokazo) vektor bazaga saqlab, foydalanuvchi savoliga mos moddalarni topish va AI javobiga kontekst sifatida berish.
+**Texnologiya:** Spring Boot 3, Java 17, Hibernate 6, PostgreSQL + pgvector, Apache POI, Gemini API  
+**Maqsad:** Huquqiy hujjatlarni vektor bazaga saqlab, foydalanuvchi savoliga mos moddalarni topish va AI javobiga kontekst sifatida berish.
 
 ---
 
 ## Qisqacha xulosa
 
-QalqonAI uchun **RAG arxitekturasi** bosqichma-bosqich qurilmoqda.
+QalqonAI uchun **RAG arxitekturasi** 5 bosqichda qurildi va **to'liq ishga tayyor**.
 
-| Bosqich | Holat |
-|---------|-------|
-| **1 — Ma'lumotlar qatlami** | ✅ Bajarildi |
-| **2 — Hujjat yuklash va parsing** | ✅ Bajarildi |
-| **3 — Aqlli yangilash (hash diff)** | ✅ Bajarildi |
-| **4 — Gemini embedding** | ✅ Bajarildi |
-| **5 — Vektor qidiruv + AI kontekst** | ⏳ Keyingi |
+| Bosqich | Nomi | Holat |
+|---------|------|-------|
+| **1** | Ma'lumotlar qatlami | ✅ Bajarildi |
+| **2** | Hujjat yuklash va parsing | ✅ Bajarildi |
+| **3** | Aqlli yangilash (hash diff) | ✅ Bajarildi |
+| **4** | Gemini embedding | ✅ Bajarildi |
+| **5** | Vektor qidiruv + Hybrid RAG | ✅ Bajarildi |
 
-Hozirgacha admin `.docx` hujjat yuklay oladi. Tizim uni modda/band bo'laklariga ajratadi, hash diff qiladi va **fonda Gemini `text-embedding-004` orqali 768 o'lchamli vektorlarga aylantiradi**. Upload HTTP javobi embedding tugashini kutmaydi — jarayon `@Async` da ishlaydi.
+**Hozirgi imkoniyatlar:**
+
+- Admin `.docx` hujjat yuklaydi → modda/band bo'laklariga ajratiladi
+- Hash diff faqat o'zgargan chunklarni yangilaydi
+- Fonda Gemini `text-embedding-004` orqali 768 o'lchamli vektorlar yaratiladi
+- Foydalanuvchi AI chat savolida **HNSW + cosine qidiruv** orqali eng yaqin 5 ta modda topiladi
+- Topilgan matnlar **Hybrid Mode** system prompt orqali Gemini chat javobiga uzatiladi
 
 ---
 
-## Umumiy oqim
+## Umumiy oqim (1–5 bosqich)
 
 ```
 Admin .docx yuklaydi (POST /upload)
@@ -34,7 +40,7 @@ Admin .docx yuklaydi (POST /upload)
         ▼
 HTTP 200 javob (sinxron tugaydi)
         │
-        ▼  @Async — embeddingExecutor thread
+        ▼  @Async — embeddingExecutor
 DocumentEmbeddingProcessor.processEmbeddingsForDocument()
         │
         ├─► embedding IS NULL chunklarni topish
@@ -42,62 +48,36 @@ DocumentEmbeddingProcessor.processEmbeddingsForDocument()
         ├─► law_chunks.embedding ga yozish (vector 768)
         └─► 500ms kechikish (rate limit himoyasi)
         │
-        ▼  [KEYINGI BOSQICH — 5]
-pgvector cosine qidiruv → topilgan moddalar AI kontekstiga qo'shiladi
+        ▼  Foydalanuvchi AI chat xabar yuboradi
+AiMessageService.sendUserMessage()
+        │
+        ▼
+GeminiAiProviderImpl.generate()
+        │
+        ├─► LegalSearchService.searchRelevantContext(savol, 5)
+        │       ├─► savolni vektorlaydi (Gemini embedding)
+        │       ├─► pgvector cosine qidiruv (HNSW indeks)
+        │       └─► faqat ACTIVE / PARTIALLY_AMENDED hujjatlar
+        │
+        ├─► top-5 chunk → kontekst matni
+        ├─► Hybrid system prompt (o'zbekcha) yig'iladi
+        └─► Gemini chat API → javob (ragUsed=true agar chunk topilsa)
 ```
-
----
-
-## Umumiy arxitektura rejasi (5 bosqich)
-
-| Bosqich | Nomi | Holat | Tavsif |
-|---------|------|-------|--------|
-| **1** | Ma'lumotlar qatlami | ✅ **Bajarildi** | `legal_documents`, `law_chunks`, enumlar, repositorylar, pgvector |
-| **2** | Hujjat yuklash qatlami | ✅ **Bajarildi** | Apache POI, ierarxik parsing, SHA-256 hash, admin upload API |
-| **3** | Aqlli yangilash | ✅ **Bajarildi** | Hash-based diffing — faqat o'zgargan chunklar yangilanadi |
-| **4** | AI integratsiyasi | ✅ **Bajarildi** | Gemini `text-embedding-004`, async batch embedding |
-| **5** | Qidiruv qatlami | ⏳ Keyingi | Cosine similarity qidiruv, faqat `ACTIVE` hujjatlar, AI kontekst |
 
 ---
 
 ## Dizayn qarorlari
 
-### 1. Fayl formati — `.docx` (PDF emas)
-
-PDF matn emas, dizayn saqlaydi. Qonunlar **asosan `.docx` formatida** yuklanadi.
-
-- **Kutubxona:** Apache POI (`poi-ooxml`)
-- **Parsing:** `XWPFDocument` + `IBodyElement` bo'yicha stateful ierarxik parsing
-
-### 2. Ierarxik parsing
-
-| Hujjat turi | Bo'linish | `articleRef` misoli |
-|-------------|-----------|---------------------|
-| `CODE`, `LAW` | `-modda` | `15-modda` |
-| Qaror/farmon | `-BOB` + `-band` | `1-bob, 3-band` |
-
-Bob konteksti chunk boshiga qo'shiladi. Jadvallar Markdown formatida saqlanadi.
-
-### 3. Hash-based diffing ✅
-
-Qayta yuklashda faqat o'zgargan/yangi/o'chirilgan chunklar yangilanadi. Hash bir xil bo'lsa embedding saqlanadi.
-
-### 4. Async embedding ✅
-
-Embedding uzoq vaqt olishi va Gemini rate limit tufayli **HTTP javobdan keyin fonda** bajariladi. Faqat `embedding IS NULL` chunklar vektorlanadi — hash diff bilan birgalikda API xarajati minimal.
-
-### 5. Embedding model
-
-| Parametr | Qiymat |
-|----------|--------|
-| Model | Gemini `text-embedding-004` |
-| O'lcham | **768** |
-| Saqlash | PostgreSQL `pgvector` (`float[]` + `@JdbcTypeCode(SqlTypes.VECTOR)`) |
-| HTTP client | `RestTemplate` (mavjud `AppConfig` bean) |
-
-### 6. Mustaqil bekor qilish (keyinroq)
-
-`DocumentStatus.REVOKED` bo'lgan hujjatlar RAG qidiruvidan chiqariladi (5-bosqich + status API).
+| # | Qaror | Tavsif |
+|---|-------|--------|
+| 1 | Fayl formati `.docx` | PDF emas; Apache POI (`poi-ooxml`) bilan parsing |
+| 2 | Ierarxik parsing | CODE/LAW → `-modda`; qarorlar → `-bob` + `-band` |
+| 3 | Hash-based diffing | Faqat o'zgargan chunklar yangilanadi; embedding saqlanadi |
+| 4 | Async embedding | HTTP javob embedding tugashini kutmaydi |
+| 5 | Embedding model | Gemini `text-embedding-004`, 768 o'lcham, pgvector |
+| 6 | HNSW indeks | ENN (Exact Nearest Neighbor) bottleneck oldini olish |
+| 7 | Hybrid RAG | Avval bazadagi matn, yetmasa umumiy bilim + ogohlantirish |
+| 8 | Status filtri | Qidiruvda faqat `ACTIVE` va `PARTIALLY_AMENDED` hujjatlar |
 
 ---
 
@@ -151,7 +131,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 | Repository | Asosiy metodlar |
 |------------|-----------------|
 | `LegalDocumentRepository` | `findByDocNumber`, `findAllByStatus` |
-| `LawChunkRepository` | `findAllByDocumentIdOrderByArticleRefAsc`, `findByDocumentIdAndArticleRef`, `findAllByDocumentIdAndEmbeddingIsNull`, `deleteAllByDocumentId` |
+| `LawChunkRepository` | `findAllByDocumentIdOrderByArticleRefAsc`, `findByDocumentIdAndArticleRef`, `findAllByDocumentIdAndEmbeddingIsNull`, `deleteAllByDocumentId`, `findSimilarChunks` *(5-bosqich)* |
 
 ---
 
@@ -185,6 +165,15 @@ Ruxsat: ROLE_ADMIN, ROLE_SUPERADMIN
 
 Parametrlar: `file`, `type`, `docNumber`, `docDate`, `title`, `supersededById`
 
+## Ierarxik parsing
+
+| Hujjat turi | Bo'linish | `articleRef` misoli |
+|-------------|-----------|---------------------|
+| `CODE`, `LAW` | `-modda` | `15-modda` |
+| Qaror/farmon | `-BOB` + `-band` | `1-bob, 3-band` |
+
+Bob konteksti chunk boshiga qo'shiladi. Jadvallar Markdown formatida saqlanadi.
+
 ---
 
 # 3-BOSQICH: Hash-Based Diffing ✅
@@ -201,8 +190,6 @@ Parametrlar: `file`, `type`, `docNumber`, `docDate`, `title`, `supersededById`
 | Eski mapda qolgan | O'chiriladi |
 
 O'zgarish bo'lsa → `DocumentStatus.PARTIALLY_AMENDED`
-
-## Upload — mavjud hujjat
 
 Bir xil `docNumber` bilan qayta yuklash xato emas — aqlli yangilash rejimida ishlaydi.
 
@@ -243,81 +230,24 @@ gemini.embedding.delay-ms=500
 
 ## `GeminiEmbeddingService`
 
-### Metod
-
 ```java
 public float[] getEmbedding(String text)
 ```
-
-### API chaqiruvi
 
 ```
 POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key={API_KEY}
 ```
 
-### Request body
-
-```json
-{
-  "model": "models/text-embedding-004",
-  "content": {
-    "parts": [{ "text": "Modda matni..." }]
-  }
-}
-```
-
-### Response (parse qilinadigan qism)
-
-```json
-{
-  "embedding": {
-    "values": [0.012, -0.034, ...]
-  }
-}
-```
-
-### Xato holatlari
-
-| Holat | Harakat |
-|-------|---------|
-| Matn bo'sh | `GeminiApiException` |
-| API kalit yo'q | `GeminiApiException` |
-| HTTP xato / rate limit | `GeminiApiException` + log |
-| `embedding.values` yo'q | `GeminiApiException` |
-| O'lcham ≠ 768 | Warning log, lekin davom etadi |
-
 ## `DocumentEmbeddingProcessor`
-
-### Metod
 
 ```java
 @Async("embeddingExecutor")
 public void processEmbeddingsForDocument(UUID documentId)
 ```
 
-### Algoritm
-
-```
-1. findAllByDocumentIdAndEmbeddingIsNull(documentId)
-2. Har bir chunk uchun:
-   a. geminiEmbeddingService.getEmbedding(content)
-   b. chunk.setEmbedding(vector)
-   c. lawChunkRepository.save(chunk)
-   d. Thread.sleep(500ms)  — rate limit himoyasi
-3. Xato bo'lsa — log, keyingi chunk ga o'tish
-```
-
-### Console log misollari
-
-```
-Embedding boshlandi documentId=a1b2..., pendingCount=142
-Embedding yakunlandi documentId=a1b2..., success=140, failed=2
-Embedding kerak emas documentId=a1b2...
-```
+Algoritm: `embedding IS NULL` chunklar → Gemini → save → 500ms delay.
 
 ## Async konfiguratsiya
-
-`AsyncConfig` da `@EnableAsync` mavjud (notification va audit bilan birga).
 
 | Bean | Thread prefix | Vazifa |
 |------|---------------|--------|
@@ -325,120 +255,300 @@ Embedding kerak emas documentId=a1b2...
 | `auditExecutor` | `audit-` | Audit log |
 | `embeddingExecutor` | `embedding-` | Gemini embedding |
 
-## Upload + embedding to'liq oqimi
+---
 
-```
-LegalDocumentService.upload()  [@Transactional]
-        │
-        ├─► Yangi hujjat YOKI hash diff
-        │
-        ├─► HTTP response tayyorlanadi
-        │
-        └─► documentEmbeddingProcessor.processEmbeddingsForDocument(id)
-                ↓ (async, HTTP allaqachon qaytgan)
-            faqat embedding=null chunklar → Gemini → pgvector save
-```
+# 5-BOSQICH: Vektor qidiruv va Hybrid RAG ✅
 
-> **Muhim:** Hash diff tufayli o'zgarmagan moddalarda embedding saqlanadi — faqat yangi/o'zgargan moddalar uchun Gemini chaqiriladi.
+Bu bosqichda RAG tizimining **qidiruv (retrieval)** va **AI kontekst (injection)** qatlamlari qo'shildi.
 
-## Unit testlar
+## 5.1. Maqsad
 
-### `GeminiEmbeddingServiceTest`
-
-| Test | Tekshiruv |
-|------|-----------|
-| `getEmbedding_parses768DimensionalVector` | JSON javobdan `float[]` parse |
-| `getEmbedding_throwsWhenTextBlank` | Bo'sh matn → exception |
-
-### `DocumentEmbeddingProcessorTest`
-
-| Test | Tekshiruv |
-|------|-----------|
-| `processEmbeddingsForDocument_embedsPendingChunks` | Muvaffaqiyatli embedding + save |
-| `processEmbeddingsForDocument_skipsSaveWhenEmbeddingFails` | Xato bo'lsa save qilinmaydi |
-
-### `LegalDocumentServiceTest`
-
-| Test | Tekshiruv |
-|------|-----------|
-| `upload_existingDocumentUsesDiffServiceInsteadOfCreatingNew` | Upload dan keyin async trigger chaqiriladi |
+1. PostgreSQL da **HNSW indeks** orqali vektor qidiruvni tezlashtirish
+2. Foydalanuvchi savolini vektorlab, **cosine similarity** bilan eng yaqin moddalarni topish
+3. Faqat **`ACTIVE`** va **`PARTIALLY_AMENDED`** hujjatlardan qidirish
+4. Topilgan matnlarni Gemini chat **Hybrid Mode** system promptiga qo'shish
 
 ---
 
-## Entity diagrammasi
+## 5.2. Yangi fayllar
+
+| Fayl | Paket | Vazifa |
+|------|-------|--------|
+| `RagDatabaseConfig.java` | `config` | HNSW indeksni ilova ishga tushganda yaratish |
+| `LawChunkRepositoryCustom.java` | `repository` | Custom fragment interfeysi (`findSimilarChunks`) |
+| `LawChunkRepositoryImpl.java` | `repository` | Native SQL cosine qidiruv (pgvector binding) |
+| `PgVectorUtils.java` | `util` | `float[]` → PostgreSQL vector literal `[0.1,0.2,...]` |
+| `LegalSearchService.java` | `service` | Savol embedding + qidiruv orkestratsiyasi |
+| `LegalSearchServiceTest.java` | `test/service` | Unit testlar |
+
+## 5.3. O'zgartirilgan fayllar
+
+| Fayl | O'zgarish |
+|------|-----------|
+| `LawChunkRepository.java` | `LawChunkRepositoryCustom` dan meros; `findSimilarChunks()` qo'shildi |
+| `GeminiAiProviderImpl.java` | `LegalSearchService` inject; Hybrid RAG system prompt; `ragUsed` flag |
+| `GeminiAiProviderImplIntegrationTest.java` | `@MockBean LegalSearchService` — embedding/qidiruvni mock qiladi |
+
+---
+
+## 5.4. HNSW indeks — `RagDatabaseConfig`
+
+Ilova ishga tushganda `@PostConstruct` + `JdbcTemplate` orqali xavfsiz bajariladi (Flyway migratsiyasi talab qilinmaydi):
+
+```sql
+CREATE INDEX IF NOT EXISTS law_chunks_embedding_hnsw_idx
+ON law_chunks USING hnsw (embedding vector_cosine_ops);
+```
+
+| Xususiyat | Tavsif |
+|-----------|--------|
+| Indeks nomi | `law_chunks_embedding_hnsw_idx` |
+| Algoritm | HNSW (Hierarchical Navigable Small World) |
+| Masofa metrikasi | `vector_cosine_ops` (cosine distance `<=>`) |
+| Maqsad | Katta hajmdagi vektor bazada ENN bottleneck oldini olish |
+| Xato holati | pgvector yo'q yoki jadval mavjud emas → `log.warn`, ilova ishga tushadi |
+
+---
+
+## 5.5. Native cosine qidiruv — `LawChunkRepository`
+
+### Metod imzosi
+
+```java
+List<LawChunkEntity> findSimilarChunks(float[] queryVector, int topK);
+```
+
+### SQL (native query)
+
+```sql
+SELECT c.*
+FROM law_chunks c
+JOIN legal_documents d ON c.document_id = d.id
+WHERE d.status IN ('ACTIVE', 'PARTIALLY_AMENDED')
+  AND c.embedding IS NOT NULL
+ORDER BY c.embedding <=> CAST(:queryVector AS vector)
+LIMIT :topK
+```
+
+| Filtr | Sabab |
+|-------|-------|
+| `d.status IN ('ACTIVE', 'PARTIALLY_AMENDED')` | Faqat amalda yoki qisman o'zgartirilgan hujjatlar |
+| `c.embedding IS NOT NULL` | Embedding hali yaratilmagan chunklar qidiruvdan chiqariladi |
+| `ORDER BY ... <=>` | pgvector **cosine distance** (kichikroq = o'xshashroq) |
+| `LIMIT :topK` | Eng yaqin N ta natija |
+
+### pgvector parametr bog'lanishi
+
+Spring Data `@Query` bilan `float[]` parametrini to'g'ridan-to'g'ri PostgreSQL `vector` tipiga bog'lay olmaydi. Shuning uchun **Spring Data custom fragment** ishlatiladi:
+
+```
+LawChunkRepository
+    └── extends LawChunkRepositoryCustom
+            └── LawChunkRepositoryImpl  (EntityManager + native SQL)
+                    └── PgVectorUtils.toVectorLiteral(float[])
+```
+
+`PgVectorUtils` vektorni `[0.012,-0.034,...]` formatiga aylantiradi, so'ngra `CAST(:queryVector AS vector)` ishlaydi.
+
+---
+
+## 5.6. Qidiruv servisi — `LegalSearchService`
+
+```java
+@Service
+public class LegalSearchService {
+
+    public List<LawChunkEntity> searchRelevantContext(String userQuestion, int topK);
+}
+```
+
+### Algoritm
+
+```
+1. userQuestion null/bo'sh?  → Collections.emptyList()
+2. vector = geminiEmbeddingService.getEmbedding(userQuestion)
+3. vector null/bo'sh?        → Collections.emptyList()
+4. return lawChunkRepository.findSimilarChunks(vector, topK)
+```
+
+| Kirish | Chiqish |
+|--------|---------|
+| Foydalanuvchi savoli (matn) | Eng yaqin `topK` ta `LawChunkEntity` ro'yxati |
+| `topK = 5` (AI chatda) | Hybrid prompt uchun 5 ta modda |
+
+---
+
+## 5.7. Hybrid RAG — `GeminiAiProviderImpl`
+
+Har bir `AiProvider.generate()` chaqiruvida quyidagi ketma-ketlik bajariladi:
+
+```
+1. extractUserMessage(request)
+       → request.prompt yoki history dagi oxirgi user xabari
+
+2. legalSearchService.searchRelevantContext(userMessage, 5)
+       → top-5 LawChunkEntity
+
+3. buildContextString(chunks)
+       → "[{Hujjat sarlavhasi}, {Modda}]: {Matn}\n"
+
+4. buildHybridSystemPrompt(contextString)
+       → o'zbekcha Hybrid Mode system prompt
+
+5. buildRequestBody(request, hybridSystemPrompt)
+       → Gemini API systemInstruction ga yuboriladi
+
+6. aiResponse.setRagUsed(!ragChunks.isEmpty())
+```
+
+### Kontekst formati
+
+```
+[O'zbekiston Respublikasi Jinoyat kodeksi, 104-modda]: Modda matni...
+[VMQ-370, 12-modda]: Boshqa modda matni...
+```
+
+Hujjat sarlavhasi `LegalDocumentRepository.findAllById()` orqali batch yuklanadi.
+
+### Hybrid system prompt (o'zbekcha)
+
+```
+Sen QalqonAI - O'zbekiston yuridik maslahatchisisan. Foydalanuvchi savoliga birinchi navbatda mana bu matnlarga tayanib javob ber:
+{KontekstMatni}
+
+Agar bu matnlarda savolga to'liq javob bo'lmasa, o'zingning umumiy huquqiy bilimlaring asosida javob ber, lekin javobingning eng oxirida albatta ushbu ogohlantirishni qo'shib qo'y: 'Bu ma'lumot umumiy xarakterga ega, aniq yuridik harakat qilishdan oldin advokat bilan maslahatlashing yoki tizimga yangi qonunlar yuklanishini kuting.'
+```
+
+| Hybrid Mode xususiyati | Tavsif |
+|------------------------|--------|
+| **Retrieval-first** | Avval bazadagi qonun matnlariga tayanadi |
+| **Fallback** | Matnda javob yo'q bo'lsa, umumiy huquqiy bilim ishlatiladi |
+| **Majburiy disclaimer** | Fallback holatda javob oxirida ogohlantirish qo'shiladi |
+| **Kontekst bo'sh bo'lsa ham** | Hybrid prompt yuboriladi (faqat ogohlantirish bilan fallback) |
+
+### `AiResponse.ragUsed`
+
+| Qiymat | Ma'nosi |
+|--------|---------|
+| `true` | Kamida 1 ta chunk topildi va kontekstga qo'shildi |
+| `false` | Hech qanday chunk topilmadi (embedding yo'q yoki bazada mos matn yo'q) |
+
+---
+
+## 5.8. AI chat oqimi (5-bosqich bilan)
+
+```
+Foydalanuvchi → POST /api/v1/ai-chats/{id}/messages
+        │
+        ▼
+AiMessageService.sendUserMessage()
+        ├─► user xabar saqlanadi
+        ├─► oxirgi 6 ta xabar history yig'iladi
+        └─► aiProvider.generate(AiRequest)
+                │
+                ▼
+        GeminiAiProviderImpl.generate()
+                ├─► LegalSearchService (embedding + qidiruv)
+                ├─► Hybrid system prompt
+                └─► Gemini REST API
+                        │
+                        ▼
+                AI javob saqlanadi (ragUsed metadata bilan)
+```
+
+---
+
+## 5.9. Unit testlar (5-bosqich)
+
+### `LegalSearchServiceTest`
+
+| Test | Tekshiruv |
+|------|-----------|
+| `searchRelevantContext_returnsEmptyWhenQuestionBlank` | Bo'sh savol → embedding chaqirilmaydi |
+| `searchRelevantContext_returnsEmptyWhenEmbeddingEmpty` | Bo'sh vektor → repository chaqirilmaydi |
+| `searchRelevantContext_delegatesToRepositoryWhenEmbeddingPresent` | Vektor bor → `findSimilarChunks(vector, topK)` |
+| `searchRelevantContext_returnsEmptyListFromRepository` | Repository bo'sh ro'yxat qaytarsa |
+
+### `GeminiAiProviderImplIntegrationTest`
+
+| O'zgarish | Sabab |
+|-----------|-------|
+| `@MockBean LegalSearchService` | Integration testda haqiqiy embedding/qidiruv chaqirilmasin |
+| `when(...).thenReturn(emptyList())` | Chat API ni mustaqil tekshirish |
+
+---
+
+# Entity diagrammasi
 
 ```
 legal_documents (1) ──────< (N) law_chunks
-                              │
-                              ├─ text_hash   → diff kaliti
-                              └─ embedding   → vector(768), Gemini orqali to'ldiriladi
+        │                         │
+        │ status                  ├─ text_hash   → diff kaliti
+        │ (ACTIVE,                └─ embedding   → vector(768)
+        │  PARTIALLY_AMENDED,              │
+        │  SUPERSEDED, REVOKED)           └─ HNSW indeks (cosine)
+        │
+        └─ RAG qidiruvda faqat ACTIVE va PARTIALLY_AMENDED ishtirok etadi
 ```
 
 ---
 
-## Fayl tuzilmasi (hozirgi holat)
+# Fayl tuzilmasi (to'liq)
 
 ```
 api.ailawyer.uz/
 ├── pom.xml
 └── src/
     ├── main/java/api/ailawyer/uz/
+    │   ├── ai/
+    │   │   └── GeminiAiProviderImpl.java             [5-bosqich — Hybrid RAG]
     │   ├── config/
-    │   │   └── AsyncConfig.java                        [embeddingExecutor — 4-bosqich]
+    │   │   ├── AsyncConfig.java                      [4-bosqich — embeddingExecutor]
+    │   │   └── RagDatabaseConfig.java                [5-bosqich — HNSW indeks]
     │   ├── controller/
-    │   │   └── LegalDocumentAdminController.java       [2-bosqich]
+    │   │   └── LegalDocumentAdminController.java     [2-bosqich]
     │   ├── dto/legal/
-    │   │   ├── LegalDocumentUploadDTO.java             [2-bosqich]
-    │   │   └── LegalDocumentUploadResponseDTO.java       [2-bosqich]
+    │   │   ├── LegalDocumentUploadDTO.java           [2-bosqich]
+    │   │   └── LegalDocumentUploadResponseDTO.java   [2-bosqich]
     │   ├── enums/
-    │   │   ├── DocumentStatus.java                     [1-bosqich]
-    │   │   └── DocumentType.java                       [1-bosqich]
+    │   │   ├── DocumentStatus.java                   [1-bosqich]
+    │   │   └── DocumentType.java                     [1-bosqich]
     │   ├── entity/
-    │   │   ├── LegalDocumentEntity.java                [1-bosqich]
-    │   │   └── LawChunkEntity.java                     [1-bosqich]
+    │   │   ├── LegalDocumentEntity.java              [1-bosqich]
+    │   │   └── LawChunkEntity.java                   [1-bosqich]
     │   ├── exps/
-    │   │   └── GeminiApiException.java                 [YANGI — 4-bosqich]
+    │   │   └── GeminiApiException.java               [4-bosqich]
     │   ├── repository/
-    │   │   ├── LegalDocumentRepository.java            [1-bosqich]
-    │   │   └── LawChunkRepository.java                 [1-bosqich, 4-bosqichda yangilandi]
-    │   └── service/
-    │       ├── LegalDocumentParsingService.java        [2-bosqich]
-    │       ├── LegalDocumentDiffService.java           [3-bosqich]
-    │       ├── LegalDocumentService.java               [2–4-bosqich]
-    │       ├── GeminiEmbeddingService.java             [YANGI — 4-bosqich]
-    │       └── DocumentEmbeddingProcessor.java         [YANGI — 4-bosqich]
-    └── test/java/api/ailawyer/uz/service/
-        ├── LegalDocumentParsingServiceTest.java        [2-bosqich]
-        ├── LegalDocumentDiffServiceTest.java           [3-bosqich]
-        ├── LegalDocumentServiceTest.java               [3–4-bosqich]
-        ├── GeminiEmbeddingServiceTest.java             [YANGI — 4-bosqich]
-        └── DocumentEmbeddingProcessorTest.java         [YANGI — 4-bosqich]
-```
-
-**Keyingi bosqichda yoziladi:**
-
-```
-service/
-└── LegalSearchService.java             [5-bosqich — vektor qidiruv]
+    │   │   ├── LegalDocumentRepository.java          [1-bosqich]
+    │   │   ├── LawChunkRepository.java               [1, 4, 5-bosqich]
+    │   │   ├── LawChunkRepositoryCustom.java         [5-bosqich]
+    │   │   └── LawChunkRepositoryImpl.java           [5-bosqich]
+    │   ├── service/
+    │   │   ├── LegalDocumentParsingService.java      [2-bosqich]
+    │   │   ├── LegalDocumentDiffService.java         [3-bosqich]
+    │   │   ├── LegalDocumentService.java             [2–4-bosqich]
+    │   │   ├── GeminiEmbeddingService.java           [4-bosqich]
+    │   │   ├── DocumentEmbeddingProcessor.java       [4-bosqich]
+    │   │   └── LegalSearchService.java               [5-bosqich]
+    │   └── util/
+    │       └── PgVectorUtils.java                    [5-bosqich]
+    └── test/java/api/ailawyer/uz/
+        ├── ai/
+        │   └── GeminiAiProviderImplIntegrationTest.java  [5-bosqichda yangilandi]
+        └── service/
+            ├── LegalDocumentParsingServiceTest.java    [2-bosqich]
+            ├── LegalDocumentDiffServiceTest.java       [3-bosqich]
+            ├── LegalDocumentServiceTest.java           [3–4-bosqich]
+            ├── GeminiEmbeddingServiceTest.java         [4-bosqich]
+            ├── DocumentEmbeddingProcessorTest.java     [4-bosqich]
+            └── LegalSearchServiceTest.java             [5-bosqich]
 ```
 
 ---
 
-## Hali amalga oshirilmagan funksiyalar
+# Tekshirish
 
-| Funksiya | Bosqich |
-|----------|---------|
-| pgvector cosine qidiruv | 5 |
-| AI suhbatiga kontekst qo'shish | 5 |
-| Faqat `ACTIVE` hujjatlardan qidiruv | 5 |
-| Hujjat holatini `REVOKED` ga o'zgartirish API | Keyinroq |
-| Hujjatlar ro'yxati / qidiruv API | Keyinroq |
-
----
-
-## Tekshirish
-
-### Kompilyatsiya va testlar
+## Kompilyatsiya va testlar
 
 ```bash
 cd api.ailawyer.uz
@@ -446,9 +556,9 @@ cd api.ailawyer.uz
 ./mvnw test
 ```
 
-Natija: **0 xato** (1–4-bosqichlar yakunlanganda tasdiqlangan).
+Kutilgan natija: **0 xato** (1–5-bosqichlar tasdiqlangan).
 
-### Embedding holatini tekshirish
+## PostgreSQL — embedding holati
 
 ```sql
 -- Embedding kutilayotgan chunklar
@@ -464,7 +574,7 @@ JOIN legal_documents d ON d.id = c.document_id
 WHERE c.embedding IS NOT NULL
 GROUP BY d.doc_number;
 
--- Vektor o'lchamini tekshirish (pgvector)
+-- Vektor o'lchamini tekshirish
 SELECT article_ref, vector_dims(embedding) AS dims
 FROM law_chunks
 WHERE embedding IS NOT NULL
@@ -472,25 +582,56 @@ LIMIT 5;
 -- Kutilgan: dims = 768
 ```
 
-### Upload + embedding testi
+## PostgreSQL — HNSW indeks (5-bosqich)
+
+```sql
+-- Indeks mavjudligini tekshirish
+SELECT indexname, indexdef
+FROM pg_indexes
+WHERE tablename = 'law_chunks'
+  AND indexname = 'law_chunks_embedding_hnsw_idx';
+
+-- Indeks ishlatilayotganini EXPLAIN bilan ko'rish
+EXPLAIN ANALYZE
+SELECT c.id
+FROM law_chunks c
+JOIN legal_documents d ON c.document_id = d.id
+WHERE d.status IN ('ACTIVE', 'PARTIALLY_AMENDED')
+  AND c.embedding IS NOT NULL
+ORDER BY c.embedding <=> (SELECT embedding FROM law_chunks WHERE embedding IS NOT NULL LIMIT 1)
+LIMIT 5;
+-- Kutilgan: "Index Scan using law_chunks_embedding_hnsw_idx"
+```
+
+## Upload + embedding testi
 
 1. `.docx` yuklang → HTTP 200 darhol qaytadi
 2. Console da `Embedding boshlandi...` va `Embedding yakunlandi...` loglarini kuting
 3. SQL da `embedding IS NOT NULL` chunklar soni oshganini tekshiring
 4. Qayta yuklang (faqat 1 modda o'zgartirilgan) → faqat o'sha modda uchun yangi embedding chaqiriladi
 
+## Hybrid RAG testi (5-bosqich)
+
+1. Kamida bitta hujjat yuklangan va embedding tugagan bo'lsin
+2. AI chat orqali huquqiy savol bering (masalan: modda mazmuni haqida)
+3. Javob bazadagi matnga mos kelishini tekshiring
+4. `AiResponse.ragUsed = true` bo'lsa — qidiruv ishlagan
+5. Bazada mos matn bo'lmagan savolda — fallback javob + oxirida ogohlantirish bo'lishi kerak
+
 ---
 
-## Keyingi bosqich (5-qadam) — reja
+# Hali amalga oshirilmagan funksiyalar
 
-1. `LegalSearchService` — foydalanuvchi savolini vektorlaydi
-2. pgvector cosine similarity (`<=>` yoki `cosine_distance`) bilan eng yaqin chunklarni topadi
-3. Faqat `DocumentStatus.ACTIVE` (va `PARTIALLY_AMENDED`) hujjatlardan qidiradi
-4. Topilgan modda matnlarini AI chat kontekstiga qo'shadi
+| Funksiya | Reja |
+|----------|------|
+| Hujjat holatini `REVOKED` ga o'zgartirish API | Keyinroq |
+| Hujjatlar ro'yxati / admin qidiruv API | Keyinroq |
+| RAG natijalarini audit logga yozish | Keyinroq |
+| Embedding/qidiruv monitoring dashboard | Keyinroq |
 
 ---
 
-## Xulosa
+# Xulosa
 
 | Nima qilindi | Bosqich | Tafsilot |
 |--------------|---------|----------|
@@ -504,7 +645,11 @@ LIMIT 5;
 | ✅ Async batch processor | 4 | `@Async embeddingExecutor` |
 | ✅ Upload trigger | 4 | HTTP bloklanmaydi |
 | ✅ Rate limit himoyasi | 4 | 500ms delay |
-| ⏳ Vektor qidiruv | 5 | Keyingi qadam |
-| ⏳ AI kontekst | 5 | Rejada |
+| ✅ HNSW indeks | 5 | `law_chunks_embedding_hnsw_idx`, cosine ops |
+| ✅ Cosine qidiruv | 5 | Native SQL, `<=>` operator |
+| ✅ Status filtri | 5 | `ACTIVE`, `PARTIALLY_AMENDED` |
+| ✅ `LegalSearchService` | 5 | Savol embedding + top-K retrieval |
+| ✅ Hybrid RAG prompt | 5 | `GeminiAiProviderImpl`, o'zbekcha |
+| ✅ `ragUsed` flag | 5 | `AiResponse` metadata |
 
-RAG tizimining **ma'lumotlar, parsing, diff va embedding qatlamlari** tayyor. Keyingi qadam — pgvector orqali semantic qidiruv va AI ga kontekst berish.
+**RAG tizimining barcha 5 bosqichi** — ma'lumotlar qatlami, parsing, diff, embedding, qidiruv va AI kontekst — **yakunlandi va ishga tayyor**.

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface LawChunkRepository extends JpaRepository<LawChunkEntity, UUID> {
+public interface LawChunkRepository extends JpaRepository<LawChunkEntity, UUID>, LawChunkRepositoryCustom {
 
     List<LawChunkEntity> findAllByDocumentIdOrderByArticleRefAsc(UUID documentId);
 

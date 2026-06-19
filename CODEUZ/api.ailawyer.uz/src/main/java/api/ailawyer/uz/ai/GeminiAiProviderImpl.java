@@ -1,6 +1,10 @@
 package api.ailawyer.uz.ai;
 
+import api.ailawyer.uz.entity.LawChunkEntity;
+import api.ailawyer.uz.entity.LegalDocumentEntity;
 import api.ailawyer.uz.exps.AppBadException;
+import api.ailawyer.uz.repository.LegalDocumentRepository;
+import api.ailawyer.uz.service.LegalSearchService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Google Gemini REST API (v1beta) integratsiyasi.
@@ -27,6 +34,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class GeminiAiProviderImpl implements AiProvider {
+
+    private static final int RAG_TOP_K = 5;
 
     @Value("${gemini.api.key}")
     private String apiKey;
@@ -39,6 +48,8 @@ public class GeminiAiProviderImpl implements AiProvider {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final LegalSearchService legalSearchService;
+    private final LegalDocumentRepository legalDocumentRepository;
 
     @Override
     public AiResponse generate(AiRequest request) {
@@ -55,7 +66,13 @@ public class GeminiAiProviderImpl implements AiProvider {
         long startedAt = System.currentTimeMillis();
 
         try {
-            Map<String, Object> body = buildRequestBody(request);
+            String userMessage = extractUserMessage(request);
+            List<LawChunkEntity> ragChunks = userMessage != null
+                    ? legalSearchService.searchRelevantContext(userMessage, RAG_TOP_K)
+                    : List.of();
+            String hybridSystemPrompt = buildHybridSystemPrompt(buildContextString(ragChunks));
+
+            Map<String, Object> body = buildRequestBody(request, hybridSystemPrompt);
             String url = buildRequestUrl(normalizedKey, normalizedModel);
 
             HttpHeaders headers = new HttpHeaders();
@@ -79,7 +96,7 @@ public class GeminiAiProviderImpl implements AiProvider {
             aiResponse.setText(text.trim());
             aiResponse.setModel(normalizedModel);
             aiResponse.setLatencyMs(System.currentTimeMillis() - startedAt);
-            aiResponse.setRagUsed(false);
+            aiResponse.setRagUsed(!ragChunks.isEmpty());
 
             JsonNode usage = root.path("usageMetadata");
             if (!usage.isMissingNode()) {
@@ -129,11 +146,11 @@ public class GeminiAiProviderImpl implements AiProvider {
         return value.trim().replaceAll("^\"|\"$", "");
     }
 
-    private Map<String, Object> buildRequestBody(AiRequest request) {
+    private Map<String, Object> buildRequestBody(AiRequest request, String systemPrompt) {
         Map<String, Object> body = new HashMap<>();
 
         Map<String, Object> systemInstruction = new HashMap<>();
-        systemInstruction.put("parts", List.of(Map.of("text", resolveSystemPrompt(request))));
+        systemInstruction.put("parts", List.of(Map.of("text", systemPrompt)));
         body.put("systemInstruction", systemInstruction);
 
         List<Map<String, Object>> contents = buildContents(request);
@@ -142,12 +159,55 @@ public class GeminiAiProviderImpl implements AiProvider {
         return body;
     }
 
-    private String resolveSystemPrompt(AiRequest request) {
-        if (request.getSystemPromptVersion() != null
-                && AiPromptVersion.V1.equals(request.getSystemPromptVersion())) {
-            return AiSystemPrompt.V1;
+    private String extractUserMessage(AiRequest request) {
+        if (request.getPrompt() != null && !request.getPrompt().isBlank()) {
+            return request.getPrompt().trim();
         }
-        return AiSystemPrompt.V1;
+        if (request.getHistory() == null || request.getHistory().isEmpty()) {
+            return null;
+        }
+        for (int i = request.getHistory().size() - 1; i >= 0; i--) {
+            AiChatHistoryItem item = request.getHistory().get(i);
+            if (item.getContent() == null || item.getContent().isBlank()) {
+                continue;
+            }
+            if (!"model".equalsIgnoreCase(item.getRole())) {
+                return item.getContent().trim();
+            }
+        }
+        return null;
+    }
+
+    private String buildContextString(List<LawChunkEntity> chunks) {
+        if (chunks == null || chunks.isEmpty()) {
+            return "";
+        }
+
+        Set<UUID> documentIds = chunks.stream()
+                .map(LawChunkEntity::getDocumentId)
+                .collect(Collectors.toSet());
+
+        Map<UUID, String> titlesByDocumentId = legalDocumentRepository.findAllById(documentIds).stream()
+                .collect(Collectors.toMap(LegalDocumentEntity::getId, LegalDocumentEntity::getTitle));
+
+        StringBuilder context = new StringBuilder();
+        for (LawChunkEntity chunk : chunks) {
+            String title = titlesByDocumentId.getOrDefault(chunk.getDocumentId(), "Noma'lum hujjat");
+            context.append('[')
+                    .append(title)
+                    .append(", ")
+                    .append(chunk.getArticleRef())
+                    .append("]: ")
+                    .append(chunk.getContent())
+                    .append('\n');
+        }
+        return context.toString();
+    }
+
+    private String buildHybridSystemPrompt(String contextString) {
+        return "Sen QalqonAI - O'zbekiston yuridik maslahatchisisan. Foydalanuvchi savoliga birinchi navbatda mana bu matnlarga tayanib javob ber: \n"
+                + contextString
+                + "\n Agar bu matnlarda savolga to'liq javob bo'lmasa, o'zingning umumiy huquqiy bilimlaring asosida javob ber, lekin javobingning eng oxirida albatta ushbu ogohlantirishni qo'shib qo'y: 'Bu ma'lumot umumiy xarakterga ega, aniq yuridik harakat qilishdan oldin advokat bilan maslahatlashing yoki tizimga yangi qonunlar yuklanishini kuting.'";
     }
 
     private List<Map<String, Object>> buildContents(AiRequest request) {

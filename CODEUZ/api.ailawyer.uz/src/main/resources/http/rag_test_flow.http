@@ -1,0 +1,127 @@
+
+# Dastlab login qilib tokenni oling va shu yerga qo'ying (Admin huquqi bo'lishi tavsiya etiladi)
+@token = eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxODYwNDg4LCJleHAiOjE3ODE5NDY4ODh9.gyHiJ0_8BRRUG0so78Gt6CaXM4o2PBRbdaSbj2vwJDdB6B90MiDUk5f9Uf7Z91B7SdOBNwAWjbZowPyt-hRaUA
+# 3-so'rovdan qaytgan ID ni shu yerga qo'yasiz
+@chatId = 00000000-0000-0000-0000-000000000000
+
+### =========================================
+### 1. ADMIN LOGIN (Hujjat yuklash uchun Admin/Superadmin token kerak)
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+> {%
+    // Qaytgan tokenni yuqoridagi @token o'zgaruvchisiga yozib qo'ying!
+%}
+
+
+### =========================================
+### 2. RAG BAZASINI YARATISH: .docx hujjatni yuklash (Multipart Form-Data)
+# Eslatma: mini_mehnat_kodeksi.docx fayli ushbu .http fayl bilan bitta papkada turishi kerak!
+POST http://localhost:8080/api/v1/admin/legal-documents/upload
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxODYwNDg4LCJleHAiOjE3ODE5NDY4ODh9.gyHiJ0_8BRRUG0so78Gt6CaXM4o2PBRbdaSbj2vwJDdB6B90MiDUk5f9Uf7Z91B7SdOBNwAWjbZowPyt-hRaUA
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mini_mehnat_kodeksi.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< ./mini_mehnat_kodeksi.docx
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+CODE
+--WebAppBoundary
+Content-Disposition: form-data; name="docNumber"
+
+MK-2022
+--WebAppBoundary
+Content-Disposition: form-data; name="docDate"
+
+2022-10-28
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
+--WebAppBoundary--
+
+### Kutilayotgan natija: 200 OK. 
+### DIQQAT: Shu so'rovni jo'natgach, IDE konsoliga qarab turing. 
+### Orqa fonda "Gemini Embedding" ishlab, vektorlar bazaga yozilishini (Async) 3-4 soniya kuting.
+
+
+### =========================================
+### 3. YANGI AI CHAT YARATISH (Test qilish uchun xona)
+POST http://localhost:8080/api/v1/ai-chats
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "RAG Test Chat"
+}
+### Kutilayotgan natija: Chat yaratiladi. Qaytgan "id" ni eng tepasidagi @chatId ga yozing!
+
+
+### =========================================
+### 4. TEST 1: RAG QIDIRUV (Aniq qonun bo'yicha savol)
+POST http://localhost:8080/api/v1/ai-chats/{{chatId}}/messages
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "Mening ukam 15 yoshda, u qonuniy ishga kirsa bo'ladimi? Mehnat qonunchiligida nima deyilgan?"
+}
+### Kutilayotgan natija: AI osmondan olib emas, aynan siz yuklagan fayldagi 15-moddaga tayanib, 
+### "Ota-onasining yozma roziligi bilan ishga qabul qilinishi mumkin" deb javob beradi. 
+### Backend loglarida HNSW qidiruvi ishlaganini ko'rasiz. AiResponse dagi "ragUsed" = true bo'ladi.
+
+
+### =========================================
+### 5. TEST 2: GIBRID REJIM (Bazada yo'q qonun bo'yicha savol)
+POST http://localhost:8080/api/v1/ai-chats/{{chatId}}/messages
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "Soliq tekshiruvi qanday qoidalarga asosan o'tkaziladi? Jarimalar qancha?"
+}
+### Kutilayotgan natija: Bazamizda Soliq kodeksi yo'q. Qidiruv hech narsa topa olmaydi. 
+### AI umumiy bilimiga tayanib javob yozadi va oxiriga MAJBURIY DISCLAIMER qo'shadi: 
+### "Bu ma'lumot umumiy xarakterga ega... advokat bilan maslahatlashing...". 
+### AiResponse dagi "ragUsed" = false bo'ladi.
+
+
+### =========================================
+### 6. TEST 3: AQLLI YANGILASH (Hash Diffing Testi)
+# Qadamlar:
+# 1. Kompyuteringizdagi 'mini_mehnat_kodeksi.docx' faylini oching.
+# 2. Ichidagi "o'n besh yoshga to'lgan" degan so'zni "O'N TO'RT YOSHGA TO'LGAN" deb o'zgartirib, saqlang.
+# 3. Va ushbu so'rovni qayta yuboring (docNumber eski MK-2023 ligicha qoladi):
+
+POST http://localhost:8080/api/v1/admin/legal-documents/upload
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mini_mehnat_kodeksi.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< ./mini_mehnat_kodeksi.docx
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+CODE
+--WebAppBoundary
+Content-Disposition: form-data; name="docNumber"
+
+MK-2023
+--WebAppBoundary--
+
+### Kutilayotgan natija: Dastur Exception tashlamaydi! U eski "MK-2023" ni topadi.
+### 1-moddani o'zgarishsiz qoldiradi, faqat 15-moddani o'chiring yangisini bazaga yozadi. 
+### Asosiy hujjat statusi "PARTIALLY_AMENDED" ga aylanadi. 
+### Buni sinash uchun 4-so'rovni (TEST 1) yana jo'natib ko'ring, AI endi "14 yosh" deb javob berishni boshlaydi!
