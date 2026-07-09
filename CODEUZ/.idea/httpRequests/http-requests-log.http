@@ -25,6 +25,226 @@ Content-Disposition: form-data; name="title"
 O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
 --WebAppBoundary--
 
+<> 2026-06-20T105922.200.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats/9ac0988c-e202-451f-b5a6-2cc7174b7014/messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "content": "Mening ukam 15 yoshda, u qonuniy ishga kirsa bo'ladimi? Mehnat qonunchiligida nima deyilgan? mehnat kodeksini qaysidir moddasiga tayanib javob ber."
+}
+
+<> 2026-06-20T100556.200.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "title": "RAG Test Chat"
+}
+
+<> 2026-06-20T100526.200.json
+
+###
+
+POST http://localhost:8080/api/v1/admin/legal-documents/upload
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mini_mehnat_kodeksi.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< E:\WEB\PROJECTS\JAVA\STURTUP\HuquqAI\CODEUZ\api.ailawyer.uz\src\main\resources\http\mini_mehnat_kodeksi.docx
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+CODE
+--WebAppBoundary
+Content-Disposition: form-data; name="docNumber"
+
+MK-2022
+--WebAppBoundary
+Content-Disposition: form-data; name="docDate"
+
+2022-10-28
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
+--WebAppBoundary--
+
+<> 2026-06-20T095520.200.json
+
+###
+
+POST http://localhost:8080/api/v1/admin/legal-documents/upload
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mini_mehnat_kodeksi.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< E:\WEB\PROJECTS\JAVA\STURTUP\HuquqAI\CODEUZ\api.ailawyer.uz\src\main\resources\http\mini_mehnat_kodeksi.docx
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+CODE
+--WebAppBoundary
+Content-Disposition: form-data; name="docNumber"
+
+MK-2022
+--WebAppBoundary
+Content-Disposition: form-data; name="docDate"
+
+2022-10-28
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
+--WebAppBoundary--
+
+<> 2026-06-20T094724.200.json
+
+###
+
+POST http://localhost:8080/api/v1/admin/legal-documents/upload
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mini_mehnat_kodeksi.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< E:\WEB\PROJECTS\JAVA\STURTUP\HuquqAI\CODEUZ\api.ailawyer.uz\src\main\resources\http\mini_mehnat_kodeksi.docx
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+CODE
+--WebAppBoundary
+Content-Disposition: form-data; name="docNumber"
+
+MK-2022
+--WebAppBoundary
+Content-Disposition: form-data; name="docDate"
+
+2022-10-28
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
+--WebAppBoundary--
+
+<> 2026-06-20T093853.200.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats/648da798-59c0-4228-b458-4537a878f985/messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
+}
+
+<> 2026-06-20T093518.400.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats/9ac0988c-e202-451f-b5a6-2cc7174b7014/messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "content": "Mening ukam 15 yoshda, u qonuniy ishga kirsa bo'ladimi? Mehnat qonunchiligida nima deyilgan? mehnat kodeksini qaysidir moddasiga tayanib javob ber."
+}
+
+<> 2026-06-20T093444.400.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats/648da798-59c0-4228-b458-4537a878f985/messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
+}
+
+<> 2026-06-20T092025.400.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "title": "Meros va yer masalasi qanday?"
+}
+
+<> 2026-06-20T092001.200.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats/9ac0988c-e202-451f-b5a6-2cc7174b7014/messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "content": "Mening ukam 15 yoshda, u qonuniy ishga kirsa bo'ladimi? Mehnat qonunchiligida nima deyilgan? mehnat kodeksini qaysidir moddasiga tayanib javob ber."
+}
+
+<> 2026-06-20T091910.400.json
+
+###
+
+POST http://localhost:8080/api/v1/ai-chats
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+
+{
+  "title": "RAG Test Chat"
+}
+
+<> 2026-06-20T091701.200.json
+
+###
+
+POST http://localhost:8080/api/v1/admin/legal-documents/upload
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="mini_mehnat_kodeksi.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< E:\WEB\PROJECTS\JAVA\STURTUP\HuquqAI\CODEUZ\api.ailawyer.uz\src\main\resources\http\mini_mehnat_kodeksi.docx
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+CODE
+--WebAppBoundary
+Content-Disposition: form-data; name="docNumber"
+
+MK-2022
+--WebAppBoundary
+Content-Disposition: form-data; name="docDate"
+
+2022-10-28
+--WebAppBoundary
+Content-Disposition: form-data; name="title"
+
+O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
+--WebAppBoundary--
+
 <> 2026-06-19T184447.200.json
 
 ###
@@ -446,150 +666,6 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
 }
 
 <> 2026-06-13T075055.200.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "E padaringni la'nati ish beruvchi oyligimni bermayapti, uni qanday qamasam bo'ladi xxx jala?"
-}
-
-<> 2026-06-13T074936.200.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Salom, menda muammo bor."
-}
-
-<> 2026-06-13T074830.200.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-13T074307.200.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-13T074036.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-13T073901.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-12T193407.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-12T192547.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-12T191832.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-12T191151.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-12T190807.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Assalomu alaykum. Otamdan 16 sotix yer qolgan, uni ukam bilan qanday teng bo'lishimiz mumkin? Qonunda qanday yozilgan?"
-}
-
-<> 2026-06-12T184810.400.json
-
-###
-
-POST http://localhost:8080/api/v1/ai-chats/20e6f5c0-ffe1-484d-8541-ae3c6f9e88d4/messages
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjkiLCJpYXQiOjE3ODEyNDQxMzIsImV4cCI6MTc4MTMzMDUzMn0.daldnmJ_nNdTIFW3ElvuoXY29q4I9d42WsuCpWlSS4_KQhtXmtnJqA439bfQFZwKJFiZzlkxr0OaYCl6c5VXlA
-
-{
-  "content": "Qo'shnim bilan janjallashib qoldik. U qo'liga qurol olib menga tahdid qildi. Endi uni ustidan sud ga bermoqchiman. Nima qilay?"
-}
-
-<> 2026-06-12T142540.400.json
 
 ###
 

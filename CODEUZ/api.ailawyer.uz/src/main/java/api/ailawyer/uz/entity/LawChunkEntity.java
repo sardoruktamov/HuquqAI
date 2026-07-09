@@ -50,6 +50,6 @@ public class LawChunkEntity {
     /** Gemini text-embedding-004 vektori (768 o'lcham) */
     @Column(name = "embedding")
     @JdbcTypeCode(SqlTypes.VECTOR)
-    @Array(length = 768)
+    @Array(length = 3072)
     private float[] embedding;
 }

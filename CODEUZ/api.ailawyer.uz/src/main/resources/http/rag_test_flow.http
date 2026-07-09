@@ -23,7 +23,7 @@ Accept-Language: UZ
 ### 2. RAG BAZASINI YARATISH: .docx hujjatni yuklash (Multipart Form-Data)
 # Eslatma: mini_mehnat_kodeksi.docx fayli ushbu .http fayl bilan bitta papkada turishi kerak!
 POST http://localhost:8080/api/v1/admin/legal-documents/upload
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOIiwiaWQiOiI5IiwiaWF0IjoxNzgxODYwNDg4LCJleHAiOjE3ODE5NDY4ODh9.gyHiJ0_8BRRUG0so78Gt6CaXM4o2PBRbdaSbj2vwJDdB6B90MiDUk5f9Uf7Z91B7SdOBNwAWjbZowPyt-hRaUA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -58,7 +58,7 @@ O'zbekiston Respublikasining Mehnat Kodeksi (Mini)
 ### 3. YANGI AI CHAT YARATISH (Test qilish uchun xona)
 POST http://localhost:8080/api/v1/ai-chats
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
 
 {
   "title": "RAG Test Chat"
@@ -68,12 +68,12 @@ Authorization: Bearer {{token}}
 
 ### =========================================
 ### 4. TEST 1: RAG QIDIRUV (Aniq qonun bo'yicha savol)
-POST http://localhost:8080/api/v1/ai-chats/{{chatId}}/messages
+POST http://localhost:8080/api/v1/ai-chats/9ac0988c-e202-451f-b5a6-2cc7174b7014/messages
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
 
 {
-  "content": "Mening ukam 15 yoshda, u qonuniy ishga kirsa bo'ladimi? Mehnat qonunchiligida nima deyilgan?"
+  "content": "Mening ukam 15 yoshda, u qonuniy ishga kirsa bo'ladimi? Mehnat qonunchiligida nima deyilgan? mehnat kodeksini qaysidir moddasiga tayanib javob ber."
 }
 ### Kutilayotgan natija: AI osmondan olib emas, aynan siz yuklagan fayldagi 15-moddaga tayanib, 
 ### "Ota-onasining yozma roziligi bilan ishga qabul qilinishi mumkin" deb javob beradi. 
@@ -84,7 +84,7 @@ Authorization: Bearer {{token}}
 ### 5. TEST 2: GIBRID REJIM (Bazada yo'q qonun bo'yicha savol)
 POST http://localhost:8080/api/v1/ai-chats/{{chatId}}/messages
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
 
 {
   "content": "Soliq tekshiruvi qanday qoidalarga asosan o'tkaziladi? Jarimalar qancha?"
@@ -103,7 +103,7 @@ Authorization: Bearer {{token}}
 # 3. Va ushbu so'rovni qayta yuboring (docNumber eski MK-2023 ligicha qoladi):
 
 POST http://localhost:8080/api/v1/admin/legal-documents/upload
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9TVVBFUkFETUlOLFJPTEVfQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3ODE4NzY2NjMsImV4cCI6MTc4MTk2MzA2M30.PM4YqlKMCW62bffwKtnDoCQ5XJS8NjS_TKSLLLJrdvgy3IrDYPrkSP19bIkbCrmI0SB8xQft9JNHDZhplKL1MQ
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -125,3 +125,4 @@ MK-2023
 ### 1-moddani o'zgarishsiz qoldiradi, faqat 15-moddani o'chiring yangisini bazaga yozadi. 
 ### Asosiy hujjat statusi "PARTIALLY_AMENDED" ga aylanadi. 
 ### Buni sinash uchun 4-so'rovni (TEST 1) yana jo'natib ko'ring, AI endi "14 yosh" deb javob berishni boshlaydi!
+

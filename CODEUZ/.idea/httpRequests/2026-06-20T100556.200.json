@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "id": "89b7c916-ec42-4a3f-9c74-0beb3670cdcf",
+    "aiChatId": "9ac0988c-e202-451f-b5a6-2cc7174b7014",
+    "senderType": "AI",
+    "content": "Ha, ukangiz 15 yoshda bo'lsa ham qonuniy ishga kirishi mumkin, ammo buning uchun ma'lum shartlarga rioya qilish lozim.\n\nO'zbekiston Respublikasining Mehnat kodeksiga ko'ra:\n\n1.  **Umumiy qoida:** Xodimning mehnat huquq layoqati va muomala layoqati u **oʻn olti yoshga toʻlgan paytidan eʼtiboran** bir vaqtning oʻzida vujudga keladi. Bu haqda **Mehnat kodeksining 20-moddasi**da belgilangan.\n\n2.  **Istisno (15 yoshlilar uchun):** Biroq, ushbu kodeksda istisnolar ham nazarda tutilgan. **Mehnat kodeksining 31-moddasiga** muvofiq, **oʻn beshdan oʻn olti yoshgacha** shaxslar bilan yakka tartibdagi mehnatga oid munosabatlar, ularni ishga qabul qilishga ushbu Kodeksga muvofiq yoʻl qoʻyiladigan hollarda, **ota-onadan birining (yoki ularning oʻrnini bosuvchi shaxsning) dastlabki yozma roziligi** mavjud boʻlganda mehnat shartnomasi asosida yuzaga keladi.\n\n3.  **Qo'shimcha tasdiq:** Shuningdek, **Mehnat kodeksining 26-moddasi**ga ko'ra, yakka tartibdagi mehnatga oid munosabatlar mehnat shartnomasiga asosan, jumladan, \"ota-onaning har ikkisining yoki ota-onadan birining (ota-onaning oʻrnini bosuvchi shaxsning) roziligi\" natijasida ham yuzaga kelishi mumkin.\n\nDemak, ukangiz 15 yoshda bo'lgani uchun, u ishga kirishi uchun **ota-onangizdan birining yozma roziligi** talab qilinadi. Shuningdek, ish turi va sharoitlari voyaga yetmaganlarning mehnatini tartibga soluvchi boshqa qonunchilik talablariga ham javob berishi kerak.\n\nBu ma'lumot umumiy xarakterga ega, aniq yuridik harakat qilishdan oldin advokat bilan maslahatlashing yoki tizimga yangi qonunlar yuklanishini kuting.",
+    "isEscalation": true,
+    "createdDate": "2026-06-20T10:05:56.7874134",
+    "attachments": []
+  },
+  "timestamp": "2026-06-20T10:05:56.7950336"
+}

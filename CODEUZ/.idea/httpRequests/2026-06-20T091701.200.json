@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Muvaffaqiyatli",
+  "data": {
+    "id": "9ac0988c-e202-451f-b5a6-2cc7174b7014",
+    "clientId": 1,
+    "title": "RAG Test Chat",
+    "status": "ACTIVE",
+    "createdDate": "2026-06-20T09:17:01.1967727"
+  },
+  "timestamp": "2026-06-20T09:17:01.2645474"
+}

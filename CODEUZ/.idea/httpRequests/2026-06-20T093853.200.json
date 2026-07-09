@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Hujjat muvaffaqiyatli yuklandi, chunkCount=101",
+  "data": {
+    "documentId": "b14630b4-3de6-4ba2-a3e1-bb3a9f5eff92",
+    "type": "CODE",
+    "docNumber": "MK-2022",
+    "docDate": "2022-10-28",
+    "title": "O'zbekiston Respublikasining Mehnat Kodeksi (Mini)",
+    "status": "ACTIVE",
+    "chunkCount": 101
+  },
+  "timestamp": "2026-06-20T09:38:53.3927053"
+}

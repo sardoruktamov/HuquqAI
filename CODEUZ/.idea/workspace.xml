@@ -5,10 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acd1fd63-7391-4fde-aa04-5dcbbd3c9df7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T142527.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T142532.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T142536.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T142540.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T184810.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T190807.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T191151.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T191832.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T192547.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-12T193407.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-13T073901.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-13T074036.400.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-13T074307.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-13T074830.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2026-06-13T074936.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/RagDatabaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/config/RagDatabaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/entity/LawChunkEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/java/api/ailawyer/uz/entity/LawChunkEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application-local.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/auth.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/auth.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/mini_mehnat_kodeksi.docx" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/mini_mehnat_kodeksi.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,45 +54,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/WEB/PROJECTS/JAVA/STURTUP/HuquqAI/CODEUZ/api.ailawyer.uz/src/main/resources/http",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.4275862",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "spring.configuration.checksum": "8269b3439396c3a77113b2e2ef7f1d5f",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/WEB/PROJECTS/JAVA/STURTUP/HuquqAI/CODEUZ/api.ailawyer.uz/src/main/resources/http&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4275862&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8269b3439396c3a77113b2e2ef7f1d5f&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\WEB\PROJECTS\JAVA\STURTUP\HuquqAI\CODEUZ\api.ailawyer.uz\src\main\resources\http" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="lawyer | ===================================================================#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="2" requestIdentifier="===================================================================#2" runType="Run single request">
+    <configuration name="chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="4" requestIdentifier="Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="lawyer | ===================================================================#5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="6" requestIdentifier="===================================================================#5" runType="Run single request">
+    <configuration name="chatAi | =========================================" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/chatAi.http" index="3" requestIdentifier="=========================================" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="lawyer | ===================================================================#6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/lawyer.http" index="7" requestIdentifier="===================================================================#6" runType="Run single request">
+    <configuration name="rag_test_flow | Kutilayotgan natija: 200 OK." type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" index="4" requestIdentifier="Kutilayotgan natija: 200 OK." runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="rag_test_flow | =========================================#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" index="2" requestIdentifier="=========================================#1" runType="Run single request">
+    <configuration name="rag_test_flow | Kutilayotgan natija: Chat yaratiladi. Qaytgan &quot;id&quot; ni eng tepasidagi @chatId ga yozing!" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" index="5" requestIdentifier="Kutilayotgan natija: Chat yaratiladi. Qaytgan &quot;id&quot; ni eng tepasidagi @chatId ga yozing!" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="rag_test_flow | =========================================#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api.ailawyer.uz/src/main/resources/http/rag_test_flow.http" index="3" requestIdentifier="=========================================#2" runType="Run single request">
@@ -88,10 +108,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="HTTP Request.rag_test_flow | =========================================#2" />
-        <item itemvalue="HTTP Request.rag_test_flow | =========================================#1" />
-        <item itemvalue="HTTP Request.lawyer | ===================================================================#6" />
-        <item itemvalue="HTTP Request.lawyer | ===================================================================#5" />
-        <item itemvalue="HTTP Request.lawyer | ===================================================================#2" />
+        <item itemvalue="HTTP Request.rag_test_flow | Kutilayotgan natija: Chat yaratiladi. Qaytgan &quot;id&quot; ni eng tepasidagi @chatId ga yozing!" />
+        <item itemvalue="HTTP Request.rag_test_flow | Kutilayotgan natija: 200 OK." />
+        <item itemvalue="HTTP Request.chatAi | Javobdan qaytgan &quot;id&quot; (UUID) ni oling va yuqoridagi @chatId ga yozing!" />
+        <item itemvalue="HTTP Request.chatAi | =========================================" />
       </list>
     </recent_temporary>
   </component>
@@ -109,7 +129,8 @@
       <workItem from="1781375966213" duration="1985000" />
       <workItem from="1781434209277" duration="6479000" />
       <workItem from="1781680193118" duration="8751000" />
-      <workItem from="1781782958177" duration="14101000" />
+      <workItem from="1781782958177" duration="18310000" />
+      <workItem from="1781927659837" duration="8603000" />
     </task>
     <servers />
   </component>
